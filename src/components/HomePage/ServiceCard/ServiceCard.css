@@ -1,0 +1,17 @@
+.serviceCard{
+    width: 370px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    
+
+
+}
+.serviceTitle{
+    color: #24355A;
+}
+.serviceCard p{
+    color: #9195A4;
+
+}
