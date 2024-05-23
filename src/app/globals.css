@@ -11,17 +11,12 @@ body{
   padding:10px
 }
 .sectionService h2{
-
+  text-align: center;
 
 }
 .serviceCardList{
   display: flex;
   justify-content: center;
-
-}
-.serviceIconContainer{
-  height: 50%;
-  background-color: white;
 
 }
 

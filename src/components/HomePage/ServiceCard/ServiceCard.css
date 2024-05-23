@@ -20,11 +20,13 @@
 .serviceIconContainer{
     display: flex;
     height: 45%;
-    background-color: white;
+    background: linear-gradient(to bottom left, #18534F, #ffffff);
     width: 50%;
     border-radius: 10px;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.1); /* Ombre */
+
     
 }
   
