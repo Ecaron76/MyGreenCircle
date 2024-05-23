@@ -9,8 +9,8 @@ type ServiceCardProps = {
 const ServiceCard: React.FC<ServiceCardProps> = ({ title, content  }) => {
   return (
     <div className='serviceCard'>
-        <div>
-            
+        <div className='serviceIconContainer'>
+            icon
         </div>
         <h3 className='serviceTitle'>{title}</h3>
         <p>{content}</p>

@@ -10,4 +10,19 @@ body{
   text-align: center;
   padding:10px
 }
+.sectionService h2{
+
+
+}
+.serviceCardList{
+  display: flex;
+  justify-content: center;
+
+}
+.serviceIconContainer{
+  height: 50%;
+  background-color: white;
+
+}
+
 

@@ -7,16 +7,19 @@ export default function Home() {
     <main>
       <div className="titleApp">My GreenCircle</div>
       <MainButton name='Commencer'/>
+      <section className="sectionService">
+        
 
-      <ServiceCard title="Groupes" content="Rejoignez un groupe  pour collaborer, échange et agir ensemble pour l'environnement !"/>
-      <ServiceCard title="Evénements" content="Organise et participe à des événements écologiques"/>
-      <ServiceCard title="Posts" content="Exprimez-vous, partagez vos expériences et mobilisez la communauté pour l'écologie !"/>
-
-      <h2>Tout ce que nous vous proposons chez GreenLink Tout ce que nous vous proposons chez GreenLink</h2>
-      <h2>Interagissez et inspirez via des posts !</h2>
-      <h2>Dynamisons nos actions écologiques par des événements !</h2>
-      <h2>Les Groupes</h2>
-
+        <h2 className="titleSectionService">Tout ce que nous vous proposons chez GreenLink Tout ce que nous vous proposons chez GreenLink</h2>
+        <div className="serviceCardList">
+          <ServiceCard title="Groupes" content="Rejoignez un groupe  pour collaborer, échange et agir ensemble pour l'environnement !"/>
+          <ServiceCard title="Evénements" content="Organise et participe à des événements écologiques"/>
+          <ServiceCard title="Posts" content="Exprimez-vous, partagez vos expériences et mobilisez la communauté pour l'écologie !"/>
+        </div>
+        <h2 className="serviceTitle">Interagissez et inspirez via des posts !</h2>
+        <h2 className="serviceTitle">Dynamisons nos actions écologiques par des événements !</h2>
+        <h2 className="serviceTitle">Les Groupes</h2>
+      </section>
 
     </main>
   );
