@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    height: 327px;
+    min-height: 327px;
 }
 .serviceCard-title{
     color: #24355A;
@@ -12,12 +12,13 @@
 }
 .serviceCard p{
     color: #9195A4;
-    width: 70%;
+    
+    font-size: 20px;
 
 }
 .serviceIconContainer{
     display: flex;
-    height: 45%;
+    min-height: 45%;
     background: linear-gradient(to bottom left, #18534F, #ffffff);
     width: 50%;
     border-radius: 10px;

@@ -5,8 +5,16 @@ import ServiceCard from "@/components/HomePage/ServiceCard/ServiceCard";
 export default function Home() {
   return (
     <main>
-      <div className="titleApp">
-        <h1>My GreenCircle</h1>
+      <div className="hero">
+        <div className="hero-left">
+          <div className="titleApp">
+            My GreenCircle
+          </div>
+          <h1>Rejoignez une communauté dédiée à un monde plus propre et plus sain !</h1>
+        </div>
+        <div className="hero-right">
+          <Image alt="" src='/assets/images/logo.png' width={200} height={200} className="logo"/>
+        </div>
       </div>
       <MainButton name='Commencer'/>
       <p>Avec nous , tout le monde bénéficie d'un environnement plus vert.</p>
@@ -19,7 +27,7 @@ export default function Home() {
         </div>
         
       </section>
-      <div className="sectionServicePost">
+      <section className="sectionServicePost">
           <div className="postCard">
             <div className="author">
               <Image alt="" src='/assets/images/pp.png' width={60} height={60} className="pp"/>
@@ -39,8 +47,8 @@ export default function Home() {
             <p> Vous pouvez partager vos idées, susciter l'engagement et créer une communauté active.</p>
             <div><MainButton name='Je partage'/></div>
           </div>
-        </div>
-        <div className="sectionServiceEvent">
+        </section>
+        <section className="sectionServiceEvent">
           <div className="presentationSection">
             <h2 className="serviceTitle">Dynamisons nos actions écologiques par des événements !</h2>
             <p> Vous pouvez organiser ou participer à des actions collectives pour le bien de l'environment.</p>
@@ -68,7 +76,7 @@ export default function Home() {
           </div>
           </div>
           
-        </div>
+        </section>
         <h2 className="serviceTitle">Les Groupes</h2>
     </main>
   );

@@ -3,16 +3,52 @@ body{
   padding: 20px;
 
 }
+
+.hero{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px 0 0 50px;
+  height: 400px;
+}
+.hero-left{
+  width: 60%;
+
+}
+.hero-right{
+  display: flex;
+  width: 40%;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+}
+.logo{
+  height: 70%;
+  width: 40%;
+}
+.hero h1{
+  width: 70%;
+  margin-top: 50px;
+  margin-left: 50px;
+  
+
+}
 .titleApp{
+  display: flex;
   background-color: #18534f;
-  width: 200px;
+  width: 300px;
+  justify-content: center;
   color: white;
-  border-radius: 5px;
-  text-align: center;
-  padding:10px
+  border-radius: 20px;
+  font-size: 40px;
+  padding:30px
 }
 
+section{
+  margin-bottom: 50px;
 
+}
 .sectionService h2{
   font-size: 42px;
 }
@@ -22,6 +58,7 @@ body{
 }
 .serviceCardList{
   display: flex;
+  gap: 30px;
   justify-content: center;
 }
 
@@ -120,7 +157,7 @@ body{
   background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* Ombre */
   border-radius: 0 0 10px 10px  ;
-  width: 500px;
+  width: 600px;
   min-height: 300px;
   padding-bottom: 20px;
 }
