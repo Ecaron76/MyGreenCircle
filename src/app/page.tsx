@@ -16,8 +16,8 @@ export default function Home() {
           <Image alt="" src='/assets/images/logo.png' width={200} height={200} className="logo"/>
         </div>
       </div>
-      <MainButton name='Commencer'/>
-      <p>Avec nous , tout le monde bénéficie d'un environnement plus vert.</p>
+    
+      <p className="baitPhrase">Avec nous , tout le monde bénéficie d'un environnement plus vert.</p>
       <section className="sectionService">
         <h2 className="titleSectionService">Tout ce que nous vous proposons chez GreenLink</h2>
         <div className="serviceCardList">
@@ -77,7 +77,33 @@ export default function Home() {
           </div>
           
         </section>
-        <h2 className="serviceTitle">Les Groupes</h2>
+        <section className="sectionServiceGroupe">
+          <div className="groupeCard">
+            <div className="groupeIllustration">
+              <Image alt="" src='/assets/images/groupe.png' width={300} height={200} className="groupeImg"/>
+            </div>
+            <div className="groupeAuthor">
+              <div className="authorIcon">
+                <Image alt="" src='/assets/images/pp.png' width={70} height={70} className="authorIcon"/>
+              </div>
+              <div className="authorInfos">
+                <h3>EcoNormandie</h3>
+                <h4>Juan Pérez</h4>
+              </div>
+            </div>
+            <div className="nbMembres">
+              8.9k membres
+            </div>
+            <div className="groupeBtn">
+              Rejoindre
+            </div>
+          </div>
+          <div className="presentationSection">
+            <h2 className="serviceTitle">Rejoignez une communauté de citoyens engagés !</h2>
+            <p> Rejoignez un groupe  pour collaborer, échange et agir ensemble pour l'environnement !</p>
+            <div><MainButton name='Je rejoins'/></div>
+          </div>
+        </section>
     </main>
   );
 }
