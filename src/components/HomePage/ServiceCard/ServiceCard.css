@@ -5,12 +5,10 @@
     align-items: center;
     text-align: center;
     height: 327px;
-    
-
-
 }
 .serviceTitle{
     color: #24355A;
+    font-size: 25px;
 }
 .serviceCard p{
     color: #9195A4;

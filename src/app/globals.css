@@ -1,5 +1,6 @@
 body{
   background-color: #fbfbfb;
+  padding: 20px;
 
 }
 .titleApp{
@@ -10,9 +11,13 @@ body{
   text-align: center;
   padding:10px
 }
-.sectionService h2{
-  text-align: center;
 
+.sectionService h2{
+  font-size: 42px;
+}
+
+.titleSectionService{
+  text-align: center;
 }
 .serviceCardList{
   display: flex;
@@ -20,4 +25,80 @@ body{
 
 }
 
+.sectionServicePost{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15%;
 
+}
+
+.presentationPost{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.presentationPost p{
+  padding-left: 20px;
+  font-size: 20px;
+  width: 70%;
+  line-height: 40px;
+}
+ .presentationPost div{
+  width: 100%;
+  margin: auto;
+}
+.postCard{
+  padding: 20px;
+  display: flex;
+  width: 415px;
+  min-height: 350px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* Ombre */
+  border-radius: 10px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.postCard p{
+  font-size: 18px;
+  color: #24355A;
+}
+
+.postContent{
+  display: flex;
+  flex-direction: column;
+  height: 40%;
+  gap: 10px;
+}
+
+
+.postTitle{
+  font-size: 24px;
+  color: #24355A;
+}
+
+.postButtons{
+  display: flex;
+  justify-content: space-between;
+}
+
+.postButtons div{
+  background-color: #ECF8F6;
+  width: 30%;
+  padding: 7px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+
+.author{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  color: #24355A;
+}
+.pp{
+  border-radius: 30px;
+}
