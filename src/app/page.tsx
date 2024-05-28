@@ -17,7 +17,9 @@ export default function Home() {
           <ServiceCard title="Evénements" content="Organise et participe à des événements écologiques" image={'/assets/images/iconServiceCard/service-event.png'}/>
           <ServiceCard title="Posts" content="Exprimez-vous, partagez vos expériences et mobilisez la communauté pour l'écologie !" image={'/assets/images/iconServiceCard/service-post.png'} />
         </div>
-        <div className="sectionServicePost">
+        
+      </section>
+      <div className="sectionServicePost">
           <div className="postCard">
             <div className="author">
               <Image alt="" src='/assets/images/pp.png' width={60} height={60} className="pp"/>
@@ -32,16 +34,42 @@ export default function Home() {
               <div><Image alt="" src='/assets/images/iconBtn/comment.png' width={30} height={25}/></div>
             </div>
           </div>
-          <div className="presentationPost">
+          <div className="presentationSection">
             <h2 className="serviceTitle">Interagissez et inspirez via des posts !</h2>
             <p> Vous pouvez partager vos idées, susciter l'engagement et créer une communauté active.</p>
-            <div><MainButton name='Rejoignez-nous'/></div>
+            <div><MainButton name='Je partage'/></div>
           </div>
         </div>
-        <h2 className="serviceTitle">Dynamisons nos actions écologiques par des événements !</h2>
+        <div className="sectionServiceEvent">
+          <div className="presentationSection">
+            <h2 className="serviceTitle">Dynamisons nos actions écologiques par des événements !</h2>
+            <p> Vous pouvez organiser ou participer à des actions collectives pour le bien de l'environment.</p>
+            <div><MainButton name="J'agis"/></div>
+          </div>
+          <div className="eventCard">
+            <div className="eventCard-header">
+              <div className="eventTitle">Recyclage Rouen</div>
+            </div>
+            <div className="eventOrganisation">
+              <div>Organisé par EcoNormandie</div>
+              <div className="eventDate">28/05/2024</div>
+              </div>
+            <div className="eventIllustration">
+              <Image alt="" src='/assets/images/recyclage.jpg' width={200} height={200} className="eventImage"/>
+            </div>
+            
+            <div className="eventContent">
+              <p>Atelier de recyclage, où nous transormerons les déchets collectés en objet utles, sensibiliant ainsi la communauté à l'importance du recyclage.</p>
+            </div>
+            <div className="eventLocation"><Image alt="" src='/assets/images/location.png' width={18} height={18}/>Rouen, 76000</div>
+            <div className="eventButtons">
+              <div className="participBtn"> <Image alt="" src='/assets/images/iconBtn/star.png' width={30} height={30}/> Participer </div>
+              <div className="horraire">10h00</div>
+          </div>
+          </div>
+          
+        </div>
         <h2 className="serviceTitle">Les Groupes</h2>
-      </section>
-
     </main>
   );
 }
