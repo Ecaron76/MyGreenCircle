@@ -1,0 +1,32 @@
+.serviceCard{
+    width: 370px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 327px;
+    
+
+
+}
+.serviceTitle{
+    color: #24355A;
+}
+.serviceCard p{
+    color: #9195A4;
+    width: 70%;
+
+}
+.serviceIconContainer{
+    display: flex;
+    height: 45%;
+    background: linear-gradient(to bottom left, #18534F, #ffffff);
+    width: 50%;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.1); /* Ombre */
+
+    
+}
+  
