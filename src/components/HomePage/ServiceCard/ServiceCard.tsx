@@ -14,7 +14,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, content, image  }) => 
         <div className='serviceIconContainer'>
             <Image src={image} alt='' width={50} height={50} className=''/>
         </div>
-        <h3 className='serviceTitle'>{title}</h3>
+        <h3 className='serviceCard-Title'>{title}</h3>
         <p>{content}</p>
     </div>
   )
