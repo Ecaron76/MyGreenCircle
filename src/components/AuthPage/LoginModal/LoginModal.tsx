@@ -13,9 +13,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    // Handle login logic here
     console.log({ email, password });
-    onClose(); // Close the modal after login (you might want to handle errors and keep it open in a real scenario)
+    onClose(); 
   };
 
   return (
