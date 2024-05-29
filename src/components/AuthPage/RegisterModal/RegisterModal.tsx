@@ -36,7 +36,7 @@ const RegisterModal: React.FC<SignupModalProps> = ({ onClose }) => {
         <h2>My GreenCircle</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="userName">Nom d'utilisateur</label>
+            <label htmlFor="userName">Nom d&apos;utilisateur</label>
             <input 
               type="text" 
               id="userName" 
