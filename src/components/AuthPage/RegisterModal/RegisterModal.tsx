@@ -31,10 +31,9 @@ const RegisterModal: React.FC<SignupModalProps> = ({ onClose }) => {
 
   return (
     <div className="modal">
-      <div className="modal-content">
+      <div className="modal-content-register">
         <span className="close" onClick={onClose}>&times;</span>
         <h2>My GreenCircle</h2>
-        <h3>Inscription</h3>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="userName">Nom d'utilisateur</label>
