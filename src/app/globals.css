@@ -1,33 +1,323 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+body{
+  background-color: #fbfbfb;
+  padding: 20px;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+}
+.baitPhrase{
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+.hero{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px 0 0 50px;
+  height: 400px;
+}
+.hero-left{
+  width: 60%;
+
+}
+.hero-right{
+  display: flex;
+  width: 40%;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+}
+.logo{
+  height: 70%;
+  width: 40%;
+}
+.hero h1{
+  width: 70%;
+  margin-top: 50px;
+  margin-left: 50px;
+  
+
+}
+.titleApp{
+  display: flex;
+  background-color: #18534f;
+  width: 300px;
+  justify-content: center;
+  color: white;
+  border-radius: 20px;
+  font-size: 40px;
+  padding:30px
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+section{
+  margin-bottom: 50px;
+
+}
+.sectionService h2{
+  font-size: 42px;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.titleSectionService{
+  text-align: center;
+}
+.serviceCardList{
+  display: flex;
+  gap: 30px;
+  justify-content: center;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+
+.serviceTitle{
+  
+  font-size: 44px;
+  color: #24355A;
 }
+.sectionServicePost{
+  display: flex;
+  justify-content: center;
+  gap: 10%;
+  align-items: center;
+}
+
+.presentationSection{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+  
+}
+.presentationSection p{
+  padding-left: 20px;
+  font-size: 20px;
+  width: 70%;
+  line-height: 40px;
+}
+ .presentationSection div{
+  display: flex;
+  width: 90%;
+  justify-content: center;
+  
+}
+.postCard{
+  padding: 20px;
+  display: flex;
+  width: 500px;
+  min-height: 350px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* Ombre */
+  border-radius: 10px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.postCard p{
+  font-size: 18px;
+  color: #24355A;
+}
+
+.postContent{
+  display: flex;
+  flex-direction: column;
+  height: 40%;
+  gap: 10px;
+}
+
+
+.postTitle{
+  font-size: 24px;
+  color: #24355A;
+}
+
+.postButtons{
+  display: flex;
+  justify-content: space-between;
+}
+
+.postButtons div{
+  background-color: #ECF8F6;
+  width: 30%;
+  padding: 7px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+
+.author{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  color: #24355A;
+}
+.pp{
+  border-radius: 30px;
+}
+.sectionServiceEvent{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5%;
+}
+.eventCard{
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* Ombre */
+  border-radius: 0 0 10px 10px  ;
+  width: 600px;
+  min-height: 300px;
+  padding-bottom: 20px;
+}
+.eventIllustration{
+  padding-top: 5px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+
+}
+.eventImage{
+  width: 96%;
+  border-radius: 5px;
+}
+.eventCard-header{
+  border-radius: 10px 10px 0 0  ;
+  display: flex;
+  
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  color: #ffffff;
+  background-color: #226d68;
+}
+
+.eventTitle{
+  font-weight: bold;
+  font-size: 25px;
+}
+.eventDate{
+  
+  text-decoration: underline;
+}
+.eventContent{
+  padding: 0 20px 0 20px ;
+}
+
+.eventContent p{
+  color: #24355A;
+  font-weight: bold;
+}
+
+.eventOrganisation{
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+  justify-content: space-between;
+  display: flex;
+  color: #24355A;
+  font-style: italic;
+}
+
+.eventLocation{
+  display: flex;
+  color: #cd5866;
+  align-items: center;
+  gap: 10px;
+  padding: 0 20px 0 20px ;
+}
+.eventButtons{
+  padding: 20px 10px 0 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+}
+.participBtn{
+  display: flex;
+  width: 50%;
+  background-color: #226d68;
+  color: white;
+  align-items: center;
+  padding: 10px;
+  border-radius: 30px;
+  justify-content: center;
+  font-weight: bold;
+  gap: 10px;
+}
+.horraire{
+  display: flex;
+  width: 50%;
+  justify-content: center;
+  color: #24355A;
+  font-weight: bold;
+
+}
+
+.sectionServiceGroupe{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5%;
+}
+
+.groupeCard{
+  width: 400px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* Ombre */
+  border-radius: 10px;
+  padding-bottom: 20px;
+
+}
+.groupeAuthor{
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.authorInfos h3{
+  font-size: 24px;
+}
+.authorInfos h4{
+  font-size: 14px;
+  color: #24355A;
+}
+
+.groupeIllustration{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+
+}
+.groupeImg{
+  width: 100%;
+}
+
+
+.authorIcon{
+  border-radius: 40px;
+
+}
+
+.nbMembres{
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.groupeBtn{
+  margin: auto;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  background-color: #226d68;
+  color: white;
+  width: 40%;
+  padding: 10px;
+  border-radius: 20px;
+  font-weight: bold;
+
+}
+
