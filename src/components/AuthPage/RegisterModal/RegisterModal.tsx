@@ -4,9 +4,10 @@ import MainButton from '@/components/UI/MainButton/MainButton';
 
 type SignupModalProps = {
   onClose: () => void;
+  onSuccess: () => void;
 };
 
-const RegisterModal: React.FC<SignupModalProps> = ({ onClose }) => {
+const RegisterModal: React.FC<SignupModalProps> = ({ onClose, onSuccess }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,6 +16,7 @@ const RegisterModal: React.FC<SignupModalProps> = ({ onClose }) => {
   const [CP, setCP] = useState('');
 
   const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
     const response = await fetch('/api/auth', {
       method: 'POST',
       headers: {
@@ -32,7 +34,7 @@ const RegisterModal: React.FC<SignupModalProps> = ({ onClose }) => {
 
     if (response.ok) {
       console.log("OK")
-      onClose(); 
+      onSuccess(); 
     }
     
   };
