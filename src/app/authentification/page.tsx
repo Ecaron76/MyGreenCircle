@@ -6,7 +6,7 @@ import { useState } from 'react';
 import MainButton from "@/components/UI/MainButton/MainButton";
 import LoginModal from "@/components/AuthPage/LoginModal/LoginModal";
 import RegisterModal from "@/components/AuthPage/RegisterModal/RegisterModal";
-export default function Auth() {
+export default function AuthPage() {
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const [isSignupModalVisible, setIsSignupModalVisible] = useState(false);
   const [isSuccessMessageVisible, setIsSuccessMessageVisible] = useState(false);
