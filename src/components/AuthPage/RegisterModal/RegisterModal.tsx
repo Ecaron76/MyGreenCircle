@@ -17,7 +17,7 @@ const RegisterModal: React.FC<SignupModalProps> = ({ onClose, onSuccess }) => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const response = await fetch('/api/auth', {
+    const response = await fetch('/api/user', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
