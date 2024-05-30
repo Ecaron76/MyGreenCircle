@@ -3,14 +3,15 @@ import './MainButton.css'
 
 type MainButtonProps = {
   name: string;
+  type?: "button" | "submit" | "reset";
   onClick?: () => void;
 };
 
-const MainButton: React.FC<MainButtonProps> = ({ name='Commencer', onClick }) => {
+const MainButton: React.FC<MainButtonProps> = ({ name='Commencer', type= "button", onClick }) => {
   return (
-    <div className='mainBtn' onClick={onClick}>
+    <button className='mainBtn' type={type} onClick={onClick}>
       {name}
-    </div>
+    </button>
   )
 };
 export default MainButton
