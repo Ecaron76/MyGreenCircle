@@ -9,18 +9,18 @@ datasource db {
 
 model User {
   id            String    @id @default(cuid())
-  name          String    @unique
+  username      String    @unique
   email         String    @unique
-  emailVerified DateTime?
+  password      String
   image         String?
   accounts      Account[]
   sessions      Session[]
 
-  address   String
+  address   String?
   ville     String
   CP        String
-  latitude  Float
-  longitude Float
+  latitude  Float?
+  longitude Float?
 
   participate Participate[]
   posts       Post[]        @relation("UserPosts")
