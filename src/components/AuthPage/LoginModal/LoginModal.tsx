@@ -2,19 +2,31 @@
 import React, { useState } from 'react';
 import './loginModal.css';
 import MainButton from '@/components/UI/MainButton/MainButton';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 type LoginModalProps = {
   onClose: () => void;
 };
 
 const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
+  const router = useRouter()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    console.log({ email, password });
-    onClose(); 
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault()
+    const signInData = await signIn('credentials', {
+      email: email,
+      password: password,
+      redirect: false
+    })
+
+    if (signInData?.error) {
+      console.log(signInData.error)
+    } else{
+      router.push('/dashboard')
+    }
   };
 
   return (
@@ -44,7 +56,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
             />
           </div>
           <span className='forget-password'>Mot de passe oublié</span>
-          <MainButton name='Connexion'/>
+          <MainButton name='Connexion' type='submit'/>
           
         </form>
       </div>
