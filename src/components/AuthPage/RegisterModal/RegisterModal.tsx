@@ -4,29 +4,39 @@ import MainButton from '@/components/UI/MainButton/MainButton';
 
 type SignupModalProps = {
   onClose: () => void;
+  onSuccess: () => void;
 };
 
-const RegisterModal: React.FC<SignupModalProps> = ({ onClose }) => {
-  const [userName, setUserName] = useState('');
+const RegisterModal: React.FC<SignupModalProps> = ({ onClose, onSuccess }) => {
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
-  const [userPassword, setUserPassword] = useState('');
-  const [userAvatar, setUserAvatar] = useState('');
+  const [password, setPassword] = useState('');
   const [address, setAddress] = useState('');
   const [ville, setVille] = useState('');
   const [CP, setCP] = useState('');
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    console.log({
-      userName,
-      email,
-      userPassword,
-      userAvatar,
-      address,
-      ville,
-      CP
-    });
-    onClose(); 
+    const response = await fetch('/api/user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: username,
+        email: email,
+        password: password,
+        address: address,
+        ville: ville,
+        CP: CP,
+      })
+    })
+
+    if (response.ok) {
+      console.log("OK")
+      onSuccess(); 
+    }
+    
   };
 
   return (
@@ -39,9 +49,9 @@ const RegisterModal: React.FC<SignupModalProps> = ({ onClose }) => {
             <label htmlFor="userName">Nom d&apos;utilisateur</label>
             <input 
               type="text" 
-              id="userName" 
-              value={userName} 
-              onChange={(e) => setUserName(e.target.value)} 
+              id="username" 
+              value={username} 
+              onChange={(e) => setUsername(e.target.value)} 
               required 
             />
           </div>
@@ -56,12 +66,12 @@ const RegisterModal: React.FC<SignupModalProps> = ({ onClose }) => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="userPassword">Mot de passe</label>
+            <label htmlFor="password">Mot de passe</label>
             <input 
               type="password" 
-              id="userPassword" 
-              value={userPassword} 
-              onChange={(e) => setUserPassword(e.target.value)} 
+              id="password" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
               required 
             />
           </div>
@@ -95,7 +105,7 @@ const RegisterModal: React.FC<SignupModalProps> = ({ onClose }) => {
               required 
             />
           </div>
-          <MainButton name="Confirmer l'inscription" />
+          <MainButton name="Confirmer l'inscription" type='submit'/>
         </form>
       </div>
     </div>
