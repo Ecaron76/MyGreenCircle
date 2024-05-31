@@ -1,0 +1,61 @@
+.postCard{
+    padding: 20px;
+    display: flex;
+    width: 30%;
+    min-height: 350px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* Ombre */
+    border-radius: 10px;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .postCard p{
+    font-size: 18px;
+    color: #24355A;
+  }
+  
+  .postContent{
+    display: flex;
+    flex-direction: column;
+    height: 40%;
+    gap: 10px;
+  }
+  
+  
+  .postTitle{
+    font-size: 24px;
+    color: #24355A;
+  }
+  
+  .postButtons{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .postButtons div{
+    background-color: #ECF8F6;
+    width: 30%;
+    padding: 7px;
+    border-radius: 20px;
+    text-align: center;
+  }
+  
+  
+  .author{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    color: #24355A;
+  }
+  .pp{
+    border-radius: 30px;
+  }
+
+  .postTrending{
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+  
+  }
