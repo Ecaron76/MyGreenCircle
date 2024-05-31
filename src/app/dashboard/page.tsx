@@ -1,3 +1,4 @@
+import Header from "@/components/UI/Header/Header";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 
@@ -7,7 +8,8 @@ const DashboardPage = async () => {
   if (session?.user) {
     return (
         <main>
-          CONNEXION REUSSI / BIENVENUE SUR LE DASHBOARD {session?.user.username}
+          <Header username={session.user.username}/>
+          CONNEXION REUSSI / BIENVENUE SUR LE DASHBOARD 
         </main>
       );    
   } 
