@@ -1,9 +1,12 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { Box, Grid } from "@mui/material";
 import DrawerComponent from "@/app/dashboard/drawer/Page";
-import SearchBar from "@/app/dashboard/searchBar/Page";
-import UserProfile from "./userProfile/Page";
+import SearchBar from "@/app/dashboard/components/searchBar/Page";
+import UserProfile from "./components/userProfile/Page";
 import DashboardContent from "./dashboardContent/Page";
+import AdminUser from "./adminUser/Page";
+import AdminPost from "./adminPost/Page";
 
 interface CardData {
   type: "user" | "group" | "event" | "post";
@@ -26,9 +29,64 @@ const Dashboard: React.FC = () => {
     return acc;
   }, {});
 
+  const [activeContent, setActiveContent] = useState<string>(() => {
+    return localStorage.getItem("activeContent") || "";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("activeContent", activeContent);
+  }, [activeContent]);
+
+  const renderContent = () => {
+    switch (activeContent) {
+      case "Utilisateurs":
+        return (
+          <Grid sx={{ mt: 4, p: 1 }}>
+            <AdminUser></AdminUser>
+          </Grid>
+        );
+      case "Groupes":
+        return (
+          <Grid sx={{ mt: 4, p: 1 }}>
+            <AdminPost></AdminPost>
+          </Grid>
+        );
+      case "Événements":
+        return (
+          <Grid sx={{ mt: 4, p: 1 }}>
+            <AdminPost></AdminPost>
+          </Grid>
+        );
+      case "Posts":
+        return (
+          <Grid sx={{ mt: 4, p: 1 }}>
+            <AdminPost></AdminPost>
+          </Grid>
+        );
+      case "Dashboard":
+
+      default:
+        return (
+          <Grid container spacing={3} sx={{ p: 2, mt: 8 }}>
+            {Object.keys(groupedCards).map((type) => (
+              <Grid item xs={12} sm={6} md={3} lg={3} key={type}>
+                {groupedCards[type].map((card: any, index: any) => (
+                  <DashboardContent
+                    type={card.type}
+                    title={card.title}
+                    value={card.value}
+                  />
+                ))}
+              </Grid>
+            ))}
+          </Grid>
+        );
+    }
+  };
+
   return (
-    <Box sx={{ display: "flex", height: "100vh" }}>
-      <DrawerComponent />
+    <Box sx={{ display: "flex", height: "100%" }}>
+      <DrawerComponent onContentChange={setActiveContent} />
       <Box component="main" sx={{ flexGrow: 1, bgcolor: "#ECF8F6", p: 3 }}>
         <Box
           sx={{
@@ -41,19 +99,7 @@ const Dashboard: React.FC = () => {
           <SearchBar />
           <UserProfile />
         </Box>
-        <Grid container spacing={3} sx={{ p: 2, mt: 8 }}>
-          {Object.keys(groupedCards).map((type) => (
-            <Grid item xs={12} sm={6} md={3} lg={3} key={type}>
-              {groupedCards[type].map((card: any, index: any) => (
-                <DashboardContent
-                  type={card.type}
-                  title={card.title}
-                  value={card.value}
-                />
-              ))}
-            </Grid>
-          ))}
-        </Grid>
+        {renderContent()}
       </Box>
     </Box>
   );

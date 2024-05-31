@@ -13,17 +13,31 @@ import GroupIcon from "@mui/icons-material/Group";
 import EventIcon from "@mui/icons-material/Event";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import LogoutIcon from "@mui/icons-material/Logout";
-
+interface DrawerComponentProps {
+  onContentChange: (content: string) => void;
+}
 const drawerWidth = 200;
 
-const DrawerComponent: React.FC = () => {
-  const [selected, setSelected] = useState<number | null>(null);
+const DrawerComponent: React.FC<DrawerComponentProps> = ({
+  onContentChange,
+}) => {
+  const contentIndexMap: any = {
+    Dashboard: 0,
+    Utilisateurs: 1,
+    Posts: 2,
+    Groupes: 3,
+    Événements: 4,
+  };
 
-  const handleListItemClick = (
-    event: React.MouseEvent<HTMLDivElement>,
-    index: number
-  ): void => {
+  const [selected, setSelected] = useState<number | null>(() => {
+    const savedContent = localStorage.getItem("activeContent");
+    return savedContent ? contentIndexMap[savedContent] : null;
+  });
+  console.log(localStorage.getItem("activeContent"));
+  console.log(selected);
+  const handleListItemClick = (index: number, content: string): void => {
     setSelected(index);
+    onContentChange(content);
   };
 
   return (
@@ -62,9 +76,9 @@ const DrawerComponent: React.FC = () => {
           {["Dashboard", "Utilisateurs", "Posts", "Groupes", "Événements"].map(
             (text, index) => (
               <ListItem
-                button
                 key={text}
-                onClick={(event) => handleListItemClick(event, index)}
+                button
+                onClick={() => handleListItemClick(index, text)}
                 disableRipple
                 sx={{
                   padding: "10px 0px",

@@ -3,7 +3,14 @@ import { Box, Avatar, Typography } from "@mui/material";
 
 const UserProfile = () => {
   return (
-    <Box sx={{ display: "flex", alignItems: "center", mr: 8 }}>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "flex-end",
+        alignItems: "center",
+        mr: 4,
+      }}
+    >
       <Avatar sx={{ bgcolor: "secondary.main", mr: 1 }}>H</Avatar>
       <Box>
         <Typography sx={{ color: "#000000" }}>Hanane Mouder</Typography>
