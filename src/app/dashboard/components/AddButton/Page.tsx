@@ -3,7 +3,7 @@ import { Button, Box } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { AddButtonProps } from "../../types/types";
 
-function AddButton({ disabled = false, title }: AddButtonProps) {
+function AddButton({ disabled = false, title, onClick }: AddButtonProps) {
   return (
     <Box
       sx={{
@@ -18,6 +18,7 @@ function AddButton({ disabled = false, title }: AddButtonProps) {
         <Button
           variant="contained"
           startIcon={<AddIcon />}
+          onClick={onClick}
           sx={{
             backgroundColor: "#D6955B",
             borderRadius: "4px",
@@ -31,7 +32,6 @@ function AddButton({ disabled = false, title }: AddButtonProps) {
             },
             transition: "none",
           }}
-          onClick={() => console.log("Ajout d'un post")}
         >
           {title}
         </Button>

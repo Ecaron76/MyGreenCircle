@@ -12,4 +12,5 @@ export interface DataCardProps {
 export interface AddButtonProps {
   disabled?: boolean;
   title?: string;
+  onClick: any;
 }
