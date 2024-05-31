@@ -2,3 +2,8 @@
     display: flex;
     justify-content: space-around;
 }
+
+.group-list{
+    display: flex;
+    justify-content: space-around;
+}

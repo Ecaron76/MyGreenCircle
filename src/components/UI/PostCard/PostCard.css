@@ -34,7 +34,7 @@
   }
   
   .postButtons div{
-    background-color: #ECF8F6;
+    background-color: #4f766f;
     width: 30%;
     padding: 7px;
     border-radius: 20px;
@@ -57,5 +57,5 @@
     display: flex;
     justify-content: space-between;
     font-weight: bold;
-  
+
   }
