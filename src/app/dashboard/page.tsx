@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import DrawerComponent from "@/app/dashboard/drawer/Page";
 import SearchBar from "@/app/dashboard/components/searchBar/Page";
 import UserProfile from "./components/userProfile/Page";
@@ -48,19 +48,19 @@ const Dashboard: React.FC = () => {
       case "Groupes":
         return (
           <Grid sx={{ mt: 4, p: 1 }}>
-            <AdminPost></AdminPost>
+            <AdminPost type={activeContent}></AdminPost>
           </Grid>
         );
       case "Événements":
         return (
           <Grid sx={{ mt: 4, p: 1 }}>
-            <AdminPost></AdminPost>
+            <AdminPost type={activeContent}></AdminPost>
           </Grid>
         );
       case "Posts":
         return (
           <Grid sx={{ mt: 4, p: 1 }}>
-            <AdminPost></AdminPost>
+            <AdminPost type={activeContent}></AdminPost>
           </Grid>
         );
       case "Dashboard":
@@ -96,7 +96,19 @@ const Dashboard: React.FC = () => {
             marginBottom: 2,
           }}
         >
-          <SearchBar />
+          {activeContent === "Dashboard" ? (
+            <SearchBar />
+          ) : (
+            <Typography
+              sx={{
+                fontWeight: "fontWeightMedium",
+                fontSize: 31,
+                color: "#4C4C4C",
+              }}
+            >
+              {"Gestion des " + activeContent}
+            </Typography>
+          )}
           <UserProfile />
         </Box>
         {renderContent()}
