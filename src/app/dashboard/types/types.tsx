@@ -14,3 +14,27 @@ export interface AddButtonProps {
   title?: string;
   onClick: any;
 }
+
+export interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+}
+
+export interface Comment {
+  commentId: number;
+  content: string;
+  createdAt: Date;
+  userId: number;
+}
+
+export interface Post {
+  id: number;
+  postTitle: string;
+  postContent: string;
+  createdAt: Date;
+  userId: number;
+  comments: Comment[];
+}
