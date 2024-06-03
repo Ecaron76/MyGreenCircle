@@ -1,0 +1,98 @@
+.eventCard{
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* Ombre */
+    border-radius: 0 0 10px 10px  ;
+    width: 600px;
+    min-height: 300px;
+    padding-bottom: 20px;
+  }
+  .eventIllustration{
+    padding-top: 5px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  
+  }
+  .eventImage{
+    width: 96%;
+    border-radius: 5px;
+  }
+  .eventCard-header{
+    border-radius: 10px 10px 0 0  ;
+    display: flex;
+    
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    color: #ffffff;
+    background-color: #226d68;
+  }
+  
+  .eventTitle{
+    font-weight: bold;
+    font-size: 25px;
+  }
+  .eventDate{
+    
+    text-decoration: underline;
+  }
+  .eventContent{
+    margin-top: 10px;
+    padding: 0 20px 0 20px ;
+  }
+  
+  .eventContent p{
+    color: #24355A;
+    font-weight: bold;
+  }
+  
+  .eventOrganisation{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    justify-content: space-between;
+    display: flex;
+    color: #24355A;
+    font-style: italic;
+  }
+  
+  .eventLocation{
+    margin-top: 10px;
+    display: flex;
+    color: #cd5866;
+    align-items: center;
+    gap: 10px;
+    padding: 0 20px 0 20px ;
+  }
+  .eventButtons{
+    padding: 20px 10px 0 10px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  
+  }
+  .participBtn{
+    display: flex;
+    width: 50%;
+    background-color: #226d68;
+    color: white;
+    align-items: center;
+    padding: 10px;
+    border-radius: 30px;
+    justify-content: center;
+    font-weight: bold;
+    gap: 10px;
+  }
+  .horraire{
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    color: #24355A;
+    font-weight: bold;
+  
+  }
+  

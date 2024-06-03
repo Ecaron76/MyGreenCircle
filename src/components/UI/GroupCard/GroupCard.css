@@ -1,0 +1,63 @@
+.groupeCard{
+    width: 25%;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* Ombre */
+    border-radius: 10px;
+    padding-bottom: 20px;
+  
+  }
+  .groupeAuthor{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .authorInfos h3{
+    font-size: 24px;
+  }
+  .authorInfos h4{
+    font-size: 14px;
+    color: #24355A;
+  }
+  
+  .groupeIllustration{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  
+  }
+  .groupeImg{
+    width: 100%;
+  }
+  
+  
+  .authorIcon{
+    border-radius: 40px;
+  
+  }
+  
+  .nbMembres{
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .groupeBtn{
+    margin: auto;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    background-color: #226d68;
+    color: white;
+    width: 40%;
+    padding: 10px;
+    border-radius: 20px;
+    font-weight: bold;
+  
+  }
+
+  .groupeDescription{
+    text-align: center;
+    margin-bottom: 20px;
+
+}
