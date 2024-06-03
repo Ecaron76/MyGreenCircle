@@ -2,7 +2,7 @@ import MainButton from "@/components/UI/MainButton/MainButton";
 import Image from "next/image";
 import './globals.css'
 import ServiceCard from "@/components/HomePage/ServiceCard/ServiceCard";
-export default function HomePage() {
+export default function LandingPage() {
   return (
     <main>
       <div className="hero">
