@@ -2,6 +2,7 @@ import React from 'react'
 
 import Image from 'next/image';
 import './GroupCard.css'
+import AuthorBadge from '../AuthorBadge/AuthorBadge';
 type GroupCardProps = {
   title: string;
   author: string;
@@ -16,15 +17,7 @@ const GroupCard: React.FC<GroupCardProps> = ({ title, author, description, nbMem
             <div className="groupeIllustration">
               <Image alt="" src='/assets/images/groupe.png' width={300} height={200} className="groupeImg"/>
             </div>
-            <div className="groupeAuthor">
-              <div className="authorIcon">
-                <Image alt="" src='/assets/images/pp.png' width={70} height={70} className="authorIcon"/>
-              </div>
-              <div className="authorInfos">
-                <h3>{title}</h3>
-                <h4>{author}</h4>
-              </div>
-            </div>
+            <AuthorBadge author='Ecaron' groupeName='EcoNormandie'/>
             <div className='groupeDescription'>
                 {description}
             </div>

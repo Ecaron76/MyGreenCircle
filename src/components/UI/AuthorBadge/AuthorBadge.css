@@ -1,0 +1,25 @@
+.groupeAuthor{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .authorInfos h3{
+    font-size: 24px;
+  }
+  .authorInfos h4{
+    font-size: 14px;
+    color: #24355A;
+  }
+
+  .authorIcon{
+    border-radius: 40px;
+  
+  }
+  .author{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    color: #24355A;
+  }
