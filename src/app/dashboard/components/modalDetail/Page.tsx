@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { calculateDetailTitle } from "../../function/detailTitle";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface RowDetailsModalProps {
   open: boolean;
@@ -19,12 +20,29 @@ interface RowDetailsModalProps {
   identifier: string;
 }
 
+interface KeyLabels {
+  [key: string]: string;
+}
+
+const keyLabels: KeyLabels = {
+  userId: "User ID",
+  postId: "Post ID",
+  comments: "Liste des Commentaires",
+  createdAt: "Date de Création",
+  PostTitle: "titre du poste",
+  description: "Description",
+  startDate: "Date de Début",
+  endDate: "Date de Fin",
+  location: "Localisation",
+  content: "contenu",
+};
+
 const modalStyle = (hasArray: boolean) => ({
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: hasArray ? "80%" : "40%",
+  width: hasArray ? "100%" : "40%",
   maxWidth: hasArray ? 800 : 400,
   bgcolor: "background.paper",
   boxShadow: 24,
@@ -68,7 +86,7 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
         >
           {Object.keys(item).map((key) => (
             <Typography variant="body2" key={key}>
-              {key}: {String(item[key])}
+              {keyLabels[key] || key}: {String(item[key])}
             </Typography>
           ))}
           <IconButton
@@ -87,6 +105,12 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
   return (
     <Modal open={open} onClose={onClose}>
       <Paper sx={modalStyle(hasArray)}>
+        <IconButton
+          onClick={onClose}
+          sx={{ position: "absolute", right: 8, top: 8, color: "#226D68" }}
+        >
+          <CloseIcon />
+        </IconButton>
         <Typography
           variant="h6"
           sx={{
@@ -111,7 +135,7 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
                   key={key}
                   sx={{
                     display: "flex",
-                    alignItems: "center",
+                    flexDirection: "column",
                     justifyContent: "flex-start",
                     borderBottom: 1,
                     borderColor: "divider",
@@ -122,30 +146,41 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
                     variant="subtitle1"
                     sx={{ fontWeight: "bold", color: "#226D68" }}
                   >
-                    {key.charAt(0).toUpperCase() + key.slice(1)}:
+                    {keyLabels[key] ||
+                      key.charAt(0).toUpperCase() + key.slice(1)}{" "}
+                    :
                   </Typography>
                   <Typography variant="body2" sx={{ ml: 1 }}>
-                    {String(selectedRow[key])}
+                    {String(localData[key])}
                   </Typography>
                 </Grid>
               ))}
           </Grid>
+
           {hasArray && (
-            <Grid item xs={12} md={6}>
-              {Object.keys(localData)
-                .filter((key) => Array.isArray(localData[key]))
-                .map((key) => (
-                  <div key={key}>
-                    <Typography
-                      variant="subtitle1"
-                      sx={{ fontWeight: "bold", color: "#226D68", mb: 1 }}
-                    >
-                      {key.charAt(0).toUpperCase() + key.slice(1)}:
-                    </Typography>
-                    {renderValue(localData[key], key)}
-                  </div>
-                ))}
-            </Grid>
+            <>
+              <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
+
+              <Grid item xs={12} md={6}>
+                {Object.keys(localData)
+                  .filter((key) => Array.isArray(localData[key]))
+                  .map((key) => (
+                    <div key={key}>
+                      <Typography
+                        variant="subtitle1"
+                        sx={{ fontWeight: "bold", color: "#226D68", mb: 1 }}
+                      >
+                        {keyLabels[key] ||
+                          key.charAt(0).toUpperCase() + key.slice(1)}
+                        :
+                      </Typography>
+
+                      {renderValue(localData[key], key)}
+                      <Divider sx={{ mb: 2 }} />
+                    </div>
+                  ))}
+              </Grid>
+            </>
           )}
         </Grid>
       </Paper>
