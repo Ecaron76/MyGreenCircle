@@ -41,7 +41,10 @@
     font-weight: bold;
     text-align: center;
   }
+  .groupeBtn-container{
+    display: flex;
   
+  }
   .groupeBtn{
     margin: auto;
     margin-top: 10px;

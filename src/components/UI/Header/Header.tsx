@@ -1,6 +1,7 @@
 import React from 'react'
 import './Header.css'
 import Image from 'next/image';
+import Link from 'next/link';
 
 type HeaderProps = {
     username: string,
@@ -15,7 +16,7 @@ const Header: React.FC<HeaderProps> = ({  username  }) => {
             </div>
             <div className='header-nav'>
                 <div>Accueil</div>
-                <div>Groupes</div>
+                <Link href='/dashboard/groupes'><div>Groupes</div></Link>
                 <div>Evénements</div>
             </div>
             <div className='header-profile'>

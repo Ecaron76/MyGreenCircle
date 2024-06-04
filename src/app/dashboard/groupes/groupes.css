@@ -33,7 +33,7 @@
 main{
     width: 100%;
 }
-.mygroups-section{
+.groups-section{
     padding-left: 5%;
     display: flex;
     flex-direction: column;
@@ -46,7 +46,7 @@ h2{
     font-weight: 700;
 }
 
-.mygroups-list{
+.groups-list{
     margin-top: 30px;
     width: 90%;
     display: flex;
@@ -56,3 +56,13 @@ h2{
     row-gap: 30px;
 }
 
+.creategrp-section{
+    gap: 20px;
+    margin-top: 30px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+}
