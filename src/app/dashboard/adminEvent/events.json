@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "title": "Summer Music Festival",
+    "location": "Central Park",
+    "description": "Join us for a day of fun, music, and sun at the annual Summer Music Festival!",
+    "startDate": "2024-07-01T14:00:00.000Z",
+    "endDate": "2024-07-01T22:00:00.000Z",
+    "status": "Scheduled",
+    "limitSubscriptionDate": "2024-06-25T00:00:00.000Z",
+    "address": "100 Central Park West",
+    "ville": "New York",
+    "CP": "10023",
+    "latitude": 40.7829,
+    "longitude": -73.9654,
+    "groupId": 101,
+    "group": {
+      "groupId": 101,
+      "groupName": "Festival Organizers",
+      "groupDescription": "Organizing the best events in the city!",
+      "groupLocation": "New York",
+      "users": [],
+      "posts": [],
+      "events": []
+    },
+    "participants": [
+      {
+        "userId": "u101",
+        "eventId": 1,
+        "user": {
+          "userId": "u101",
+          "firstName": "John",
+          "lastName": "Doe",
+          "email": "john.doe@example.com"
+        },
+        "event": {
+          "eventId": 1,
+          "title": "Summer Music Festival"
+        }
+      },
+      {
+        "userId": "u102",
+        "eventId": 1,
+        "user": {
+          "userId": "u102",
+          "firstName": "Jane",
+          "lastName": "Smith",
+          "email": "jane.smith@example.com"
+        },
+        "event": {
+          "eventId": 1,
+          "title": "Summer Music Festival"
+        }
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Local Art Exhibition",
+    "location": "City Art Gallery",
+    "description": "Explore the latest works by local artists at our annual exhibition.",
+    "startDate": "2024-08-15T10:00:00.000Z",
+    "endDate": "2024-08-15T18:00:00.000Z",
+    "status": "Scheduled",
+    "limitSubscriptionDate": null,
+    "address": "200 Gallery Lane",
+    "ville": "San Francisco",
+    "CP": "94102",
+    "latitude": 37.7749,
+    "longitude": -122.4194,
+    "groupId": 102,
+    "group": {
+      "groupId": 102,
+      "groupName": "Art Lovers Group",
+      "groupDescription": "We love and support local art and artists.",
+      "groupLocation": "San Francisco",
+      "users": [],
+      "posts": [],
+      "events": []
+    },
+    "participants": [
+      {
+        "userId": "u103",
+        "eventId": 2,
+        "user": {
+          "userId": "u103",
+          "firstName": "Alice",
+          "lastName": "Johnson",
+          "email": "alice.johnson@example.com"
+        },
+        "event": {
+          "eventId": 2,
+          "title": "Local Art Exhibition"
+        }
+      }
+    ]
+  }
+]
