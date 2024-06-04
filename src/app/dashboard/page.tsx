@@ -7,6 +7,8 @@ import UserProfile from "./components/userProfile/Page";
 import DashboardContent from "./dashboardContent/Page";
 import AdminUser from "./adminUser/Page";
 import AdminPost from "./adminPost/Page";
+import AdminGroupe from "./adminGroupe/Page";
+import AdminEvent from "./adminEvent/Page";
 
 interface CardData {
   type: "user" | "group" | "event" | "post";
@@ -48,13 +50,13 @@ const Dashboard: React.FC = () => {
       case "Groupes":
         return (
           <Grid sx={{ mt: 4, p: 1 }}>
-            <AdminPost type={activeContent}></AdminPost>
+            <AdminGroupe type={activeContent}></AdminGroupe>
           </Grid>
         );
       case "Événements":
         return (
           <Grid sx={{ mt: 4, p: 1 }}>
-            <AdminPost type={activeContent}></AdminPost>
+            <AdminEvent type={activeContent}></AdminEvent>
           </Grid>
         );
       case "Posts":
