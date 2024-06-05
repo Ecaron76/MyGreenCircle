@@ -1,5 +1,5 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { NextAuthOptions } from "next-auth";
+import { getServerSession, NextAuthOptions } from "next-auth";
 
 import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "./db";
@@ -51,10 +51,12 @@ export const authOptions: NextAuthOptions = {
   callbacks:{
     async jwt({ token, user }){
       console.log(token, user)
+      console.log(token)
       if (user) {
         return {
           ...token,
-          username: user.username
+          username: user.username,
+          id: user.id
         }
       }
       return token
@@ -65,9 +67,11 @@ export const authOptions: NextAuthOptions = {
         ...session,
         user: {
           ...session.user,
-          username: token.username
+          username: token.username,
+          id: token.id
         }
       }
     }
   }
 };
+export const getAuthSession = () => getServerSession(authOptions)

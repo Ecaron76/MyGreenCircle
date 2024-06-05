@@ -26,9 +26,9 @@ const DashboardPage = async () => {
             <h2>Groupes</h2>
             <br></br>
             <div className="group-list">
-              <GroupCard title="EcoNormandie" description="Nous agissons pour la normandie" author="Ecaron" nbMember='5.2 K' btn={true}/>
-              <GroupCard title="EcoNormandie" description="Nous agissons pour la normandie" author="Ecaron" nbMember='5.2 K' btn={true}/>
-              <GroupCard title="EcoNormandie" description="Nous agissons pour la normandie" author="Ecaron" nbMember='5.2 K' btn={true}/>
+              <GroupCard title="EcoNormandie" description="Nous agissons pour la normandie" author="Ecaron" nbMember='5.2 K'/>
+              <GroupCard title="EcoNormandie" description="Nous agissons pour la normandie" author="Ecaron" nbMember='5.2 K' />
+              <GroupCard title="EcoNormandie" description="Nous agissons pour la normandie" author="Ecaron" nbMember='5.2 K' />
             </div>
           </div>
           <div>

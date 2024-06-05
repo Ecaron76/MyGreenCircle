@@ -8,23 +8,31 @@ type GroupCardProps = {
   author: string;
   description?: string
   nbMember: string;
-  btn?: boolean
+  myGroup?: boolean
+
 };
 
-const GroupCard: React.FC<GroupCardProps> = ({ title, author, description, nbMember, btn  }) => {
+const GroupCard: React.FC<GroupCardProps> = ({ title, author, description, nbMember, myGroup  }) => {
   return (
     <div className="groupeCard">
             <div className="groupeIllustration">
               <Image alt="" src='/assets/images/groupe.png' width={300} height={200} className="groupeImg"/>
             </div>
-            <AuthorBadge author='Ecaron' groupeName='EcoNormandie'/>
+            <AuthorBadge author='Ecaron' groupeName={title}/>
             <div className='groupeDescription'>
                 {description}
             </div>
             <div className="nbMembres">
             {nbMember} membres
             </div>
-            {btn ? <div className="groupeBtn">Rejoindre</div> : null}
+            {
+              myGroup ? <div className="groupeBtn">Consulter</div> 
+              : 
+              <div className='groupeBtn-container'>
+                <div className="groupeBtn">Rejoindre</div> 
+                <div className="groupeBtn">Infos</div> 
+              </div>
+            }
             
           </div>
   )

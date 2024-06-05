@@ -22,7 +22,7 @@ const PostCard: React.FC<PostCardProps> = ({ title, content, author, nbComment, 
         <p>{content}</p>
     </div>
     <div className='postTrending'>
-      <div>{nbLike} j'aime</div>
+      <div>{nbLike} j&apos;aime</div>
       <div>{nbComment} commentaires</div>
     </div>
     <div className="postButtons">
