@@ -11,7 +11,6 @@ interface Group {
     groupId: number;
     author: string;
     groupName: string;
-    // Ajoutez d'autres propriétés si nécessaire
   }
 
 const GroupesPage = () => {
@@ -25,54 +24,40 @@ const GroupesPage = () => {
 
     
 
-    useEffect(() => {
-        const getNewGroups = async () => {
-            setIsLoading(true);
-            try {
-                console.log(session?.user.id)
-                const response = await fetch('/api/groupe/'); 
-                if (!response.ok) {
-                    throw new Error('Failed to fetch groups');
-                }
-                const data = await response.json();
-                setNewGroups(data);
-                
-            } catch (error) {
-                if (error instanceof Error) {
-                    setError(error.message);
-                } else {
-                    setError('An unknown error occurred');
-                }
-            } finally {
-                setIsLoading(false);
-            }
-        };
+    const refreshGroups = async () => {
+        setIsLoading(true);
+        try {
+            const [newGroupsResponse, myGroupsResponse] = await Promise.all([
+                fetch('/api/groupe/'),
+                fetch('/api/groupe/usergrps')
+            ]);
 
-        const getMyGroups = async () => {
-            setIsLoading(true);
-            try {
-                console.log(session?.user.id)
-                const response = await fetch('/api/groupe/usergrps'); 
-                if (!response.ok) {
-                    throw new Error('Failed to fetch groups');
-                }
-                const data = await response.json();
-                setMyGroups(data);
-                
-            } catch (error) {
-                if (error instanceof Error) {
-                    setError(error.message);
-                } else {
-                    setError('An unknown error occurred');
-                }
-            } finally {
-                setIsLoading(false);
+            if (!newGroupsResponse.ok || !myGroupsResponse.ok) {
+                throw new Error('Failed to fetch groups');
             }
-        };
-    
-        getNewGroups();
-        getMyGroups();
-    }, [session]);
+
+            const [newGroupsData, myGroupsData] = await Promise.all([
+                newGroupsResponse.json(),
+                myGroupsResponse.json()
+            ]);
+
+            setNewGroups(newGroupsData);
+            setMyGroups(myGroupsData);
+
+        } catch (error) {
+            if (error instanceof Error) {
+                setError(error.message);
+            } else {
+                setError('An unknown error occurred');
+            }
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        refreshGroups();
+    }, []);
 
 
     const handleCreateGrpClick = () => {
@@ -83,7 +68,7 @@ const GroupesPage = () => {
         setIsCreateGrpModalVisible(false);
       };
 
-      const handleSignupSuccess = () => {
+      const handleCreateGrpSuccess = () => {
         setIsCreateGrpModalVisible(false);
       };
 
@@ -115,6 +100,7 @@ const GroupesPage = () => {
                             myGroups.map(myGroup => (
                             <GroupCard
                                 key={myGroup.groupId}
+                                groupId={myGroup.groupId}
                                 author={myGroup.author} 
                                 title={myGroup.groupName}
                                 nbMember="5,2K" 
@@ -136,16 +122,18 @@ const GroupesPage = () => {
                             newGroups.map(newGroup => (
                             <GroupCard
                                 key={newGroup.groupId}
+                                groupId={newGroup.groupId}
                                 author={newGroup.author} 
                                 title={newGroup.groupName}
                                 nbMember="5,2K" 
+                                refreshGroups={refreshGroups}
                             />
                            
                             ))
                         )}
                     </div>
                 </section>
-                {isCreateGrpModalVisible && <CreateGrpModal onClose={closeCreateGrpModal} onSuccess={handleSignupSuccess}/>}
+                {isCreateGrpModalVisible && <CreateGrpModal onClose={closeCreateGrpModal} onSuccess={handleCreateGrpSuccess}/>}
 
             </main>
         );
