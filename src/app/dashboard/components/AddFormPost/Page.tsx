@@ -11,7 +11,7 @@ import CloudUploadIcon from "@mui/icons-material/Download";
 import { useDropzone } from "react-dropzone";
 import AlertComponent from "../Alert/Page";
 
-function AddFormComponent({ typeForm }: any) {
+function AddFormPost({ typeForm, onFormClose }: any) {
   const { getRootProps, getInputProps } = useDropzone();
   const {
     control,
@@ -24,6 +24,30 @@ function AddFormComponent({ typeForm }: any) {
   const onSubmit = (data: any) => {
     console.log(data);
     setShowAlert(true);
+    setTimeout(() => {
+      onFormClose();
+    }, 1000);
+  };
+
+  const customStyles = {
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "#226D68",
+      },
+      "&:hover fieldset": {
+        borderColor: "#226D68",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "#226D68",
+      },
+    },
+    "& .MuiInputLabel-root": {
+      color: "#666666",
+      "&.Mui-focused": {
+        color: "#666666",
+      },
+    },
+    marginBottom: 3,
   };
 
   return (
@@ -32,7 +56,7 @@ function AddFormComponent({ typeForm }: any) {
         sx={{
           maxWidth: 345,
           mx: "auto",
-          mt: -5,
+          mt: -12,
           backgroundColor: "inherit",
           boxShadow: "none",
           border: "none",
@@ -64,26 +88,7 @@ function AddFormComponent({ typeForm }: any) {
                 placeholder="Saisir un titre"
                 error={!!fieldState.error}
                 helperText={fieldState.error ? fieldState.error.message : null}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: "#226D68",
-                    },
-                    "&:hover fieldset": {
-                      borderColor: "#226D68",
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: "#226D68",
-                    },
-                  },
-                  "& .MuiInputLabel-root": {
-                    color: "#666666",
-                    "&.Mui-focused": {
-                      color: "#666666",
-                    },
-                  },
-                  marginBottom: 3,
-                }}
+                sx={{ ...customStyles }}
               />
             )}
           />
@@ -176,4 +181,4 @@ function AddFormComponent({ typeForm }: any) {
   );
 }
 
-export default AddFormComponent;
+export default AddFormPost;
