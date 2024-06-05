@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DataGridComponent from "../components/dataGrid/Page";
@@ -69,6 +69,19 @@ function AdminUser() {
 
   return (
     <Box sx={{ height: 400, width: "100%" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          pb: 2,
+          pt: 1,
+        }}
+      >
+        <Typography fontSize={18} sx={{ width: "100%" }}>
+          Liste des Utilisateurs
+        </Typography>
+      </Box>
       <DataGridComponent
         rows={rows}
         columns={columns}

@@ -22,6 +22,7 @@ const SearchBar = () => {
           "& .MuiInputBase-input": {
             paddingLeft: "14px",
           },
+          p: 0.5,
         }}
         placeholder="Rechercher"
         inputProps={{ "aria-label": "search" }}

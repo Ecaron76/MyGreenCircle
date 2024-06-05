@@ -1,21 +1,15 @@
 import React, { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DataGridComponent from "../components/dataGrid/Page";
 import ModalDelete from "../components/modalDelete/Page";
 import rowsData from "./groupes.json";
 import { Group } from "../types/types";
-import AddFormComponent from "../components/AddForm/Page";
-import AddButton from "../components/AddButton/Page";
 import CommentIcon from "@mui/icons-material/Comment";
 
 function AdminGroupe({ type }: any) {
   const [showForm, setShowForm] = useState(false);
-
-  const toggleForm = () => {
-    setShowForm(!showForm);
-  };
   const [rows, setRows] = useState<any>(rowsData);
   const [open, setOpen] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
@@ -76,19 +70,20 @@ function AdminGroupe({ type }: any) {
 
   return (
     <Box sx={{ height: 400, width: "100%" }}>
-      {showForm ? (
-        <AddFormComponent typeForm={type} />
-      ) : (
-        <>
-          <AddButton onClick={toggleForm} title="Ajout d'un Post" />
-
-          <DataGridComponent
-            rows={rows}
-            columns={columns}
-            identifier="Groupe"
-          />
-        </>
-      )}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          pb: 2,
+          pt: 1,
+        }}
+      >
+        <Typography fontSize={18} sx={{ width: "100%" }}>
+          Liste des Groupes
+        </Typography>
+      </Box>
+      <DataGridComponent rows={rows} columns={columns} identifier="Groupe" />
       <ModalDelete
         open={open}
         onClose={handleClose}

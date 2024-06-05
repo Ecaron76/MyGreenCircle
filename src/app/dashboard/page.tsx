@@ -87,9 +87,17 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", height: "100%" }}>
+    <Box
+      sx={{
+        display: "flex",
+        height: "100%",
+        bgcolor: "#ECF8F6",
+        margin: 0,
+        padding: 0,
+      }}
+    >
       <DrawerComponent onContentChange={setActiveContent} />
-      <Box component="main" sx={{ flexGrow: 1, bgcolor: "#ECF8F6", p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Box
           sx={{
             display: "flex",

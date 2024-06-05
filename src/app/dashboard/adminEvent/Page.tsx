@@ -1,29 +1,35 @@
-import React, { useState } from "react";
-import { Box } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Typography } from "@mui/material";
 import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DataGridComponent from "../components/dataGrid/Page";
 import ModalDelete from "../components/modalDelete/Page";
 import rowsData from "./events.json";
-import AddFormComponent from "../components/AddForm/Page";
 import AddButton from "../components/AddButton/Page";
 import { Event } from "../types/types";
+import AddFormEvent from "../components/AddFormEvent/Page";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function AdminEvent({ type }: any) {
-  const [showForm, setShowForm] = useState(false);
-
-  const toggleForm = () => {
-    setShowForm(!showForm);
-  };
   const [rows, setRows] = useState<any>(rowsData);
   const [open, setOpen] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [showForm, setShowForm] = useState(
+    () => localStorage.getItem("showForm") === "true"
+  );
+
+  useEffect(() => {
+    localStorage.setItem("showForm", showForm.toString());
+  }, [showForm]);
 
   const handleClickOpen = (id: number) => {
     setDeleteId(id);
     setOpen(true);
   };
-
+  const handleBack = () => {
+    setShowForm(false);
+    localStorage.setItem("showForm", "false");
+  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -31,6 +37,15 @@ function AdminEvent({ type }: any) {
   const handleDelete = (id: number) => {
     setRows(rows.filter((row: any) => row.id !== id));
     handleClose();
+  };
+  const toggleForm = () => {
+    setShowForm(!showForm);
+    localStorage.setItem("showForm", (!showForm).toString());
+  };
+
+  const handleFormClose = () => {
+    setShowForm(false);
+    localStorage.setItem("showForm", "false");
   };
 
   const columns: GridColDef<Event>[] = [
@@ -98,11 +113,27 @@ function AdminEvent({ type }: any) {
   return (
     <Box sx={{ height: 400, width: "100%" }}>
       {showForm ? (
-        <AddFormComponent typeForm={type} />
+        <>
+          <ArrowBackIcon
+            onClick={handleBack}
+            sx={{ cursor: "pointer", mb: 2 }}
+          />
+          <AddFormEvent typeForm={type} onFormClose={handleFormClose} />
+        </>
       ) : (
         <>
-          <AddButton onClick={toggleForm} title="Ajout d'un Post" />
-
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Typography fontSize={18} sx={{ width: "100%" }}>
+              Liste des Événements
+            </Typography>
+            <AddButton onClick={toggleForm} title="Ajout d'un événement" />
+          </Box>
           <DataGridComponent
             rows={rows}
             columns={columns}
