@@ -3,16 +3,38 @@ import React from 'react'
 import Image from 'next/image';
 import './GroupCard.css'
 import AuthorBadge from '../AuthorBadge/AuthorBadge';
+import Link from 'next/link';
 type GroupCardProps = {
   title: string;
   author: string;
   description?: string
   nbMember: string;
   myGroup?: boolean
-
+  groupId: number;
+  refreshGroups?: () => void;
 };
 
-const GroupCard: React.FC<GroupCardProps> = ({ title, author, description, nbMember, myGroup  }) => {
+const GroupCard: React.FC<GroupCardProps> = ({ title, author, description, nbMember, myGroup, groupId, refreshGroups  }) => {
+  const handleJoinGroup = async () => {
+    try {
+      const response = await fetch(`/api/groupe/join/${groupId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Joined group successfully:', data);
+        refreshGroups && refreshGroups();
+      } else {
+        console.error('Failed to join group:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
   return (
     <div className="groupeCard">
             <div className="groupeIllustration">
@@ -26,10 +48,10 @@ const GroupCard: React.FC<GroupCardProps> = ({ title, author, description, nbMem
             {nbMember} membres
             </div>
             {
-              myGroup ? <div className="groupeBtn">Consulter</div> 
+              myGroup ? <Link  href={`/dashboard/groupes/${groupId}`}><div className="groupeBtn">Consulter</div></Link>
               : 
               <div className='groupeBtn-container'>
-                <div className="groupeBtn">Rejoindre</div> 
+                <div className="groupeBtn" onClick={handleJoinGroup}>Rejoindre</div> 
                 <div className="groupeBtn">Infos</div> 
               </div>
             }

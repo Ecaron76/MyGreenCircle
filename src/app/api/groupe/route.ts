@@ -15,7 +15,6 @@ export const POST = async (req: Request) => {
       const body = await req.json();
       const { groupName, groupDescription, groupLocation } = body;
   
-      // Créer le groupe
       const group = await prisma.group.create({
         data: {
           groupName,
@@ -24,7 +23,6 @@ export const POST = async (req: Request) => {
         },
       });
   
-      // Associer l'utilisateur en tant qu'administrateur dans le modèle Join
       const join = await prisma.join.create({
         data: {
           userId: session.user.id,

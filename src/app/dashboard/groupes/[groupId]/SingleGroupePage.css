@@ -1,0 +1,25 @@
+.group-details-container {
+    margin: auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    
+  }
+  .group-details-container h2 {
+    margin-bottom: 10px;
+  }
+  .group-details-container p {
+    margin: 5px 0;
+  }
+  .group-details-container button {
+    padding: 10px 20px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .group-details-container button:hover {
+    background-color: #c9302c;
+  }
