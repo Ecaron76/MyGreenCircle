@@ -3,6 +3,7 @@ import React from 'react'
 import Image from 'next/image';
 import './GroupCard.css'
 import AuthorBadge from '../AuthorBadge/AuthorBadge';
+import Link from 'next/link';
 type GroupCardProps = {
   title: string;
   author: string;
@@ -47,7 +48,7 @@ const GroupCard: React.FC<GroupCardProps> = ({ title, author, description, nbMem
             {nbMember} membres
             </div>
             {
-              myGroup ? <div className="groupeBtn">Consulter</div> 
+              myGroup ? <Link  href={`/dashboard/groupes/${groupId}`}><div className="groupeBtn">Consulter</div></Link>
               : 
               <div className='groupeBtn-container'>
                 <div className="groupeBtn" onClick={handleJoinGroup}>Rejoindre</div> 

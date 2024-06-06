@@ -33,3 +33,49 @@ export const POST = async (req: Request,  { params }: {params: {groupId: number}
         
     }
 };
+
+export const DELETE = async (req: Request,  { params }: {params: {groupId: number} }) => {
+    const { groupId } = params
+    try {
+        const session = await getAuthSession();
+
+        if (!session || !session.user) {
+            return NextResponse.json(
+                { message: 'Not Authenticated' },
+                { status: 403 }
+            );
+        }
+        
+        const userInGroup = await prisma.join.findUnique({
+            where: {
+              userId_groupId: {
+                userId: session.user.id,
+                groupId: Number(groupId),
+              },
+            },
+          });
+
+          if (!userInGroup) {
+            return NextResponse.json(
+              { message: 'User is not a member of this group' },
+              { status: 400 }
+            );
+          }
+
+          await prisma.join.delete({
+            where: {
+              userId_groupId: {
+                userId: session.user.id,
+                groupId: Number(groupId),
+              },
+            },
+          });
+
+
+        return NextResponse.json({ message: 'Left the group successfully' }, { status: 200 });
+
+    } catch (error) {
+        return NextResponse.json({error:'Something went wrong'}, {status: 500})
+        
+    }
+};
