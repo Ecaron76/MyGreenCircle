@@ -13,7 +13,7 @@ export default function LandingPage() {
           <h1>Rejoignez une communauté dédiée à un monde plus propre et plus sain !</h1>
         </div>
         <div className="hero-right">
-          <Image alt="" src='/assets/images/logo.png' width={200} height={200} className="logo"/>
+          <Image alt="" src='/assets/images/logo.png' width={200} height={200} className="logo" />
         </div>
       </div>
     
@@ -38,8 +38,8 @@ export default function LandingPage() {
               <p>Bonjour éco-amis ! Partageons nos astuces pour réduire les déchets. Quelle est votre méthode favorite ? 🌿🌍</p>
             </div>
             <div className="postButtons">
-              <div><Image alt="" src='/assets/images/iconBtn/like.png' width={35} height={25}/></div>
-              <div><Image alt="" src='/assets/images/iconBtn/comment.png' width={30} height={25}/></div>
+              <div><Image alt="like" src='/assets/images/iconBtn/like.png' width={35} height={25}/></div>
+              <div><Image alt="comment" src='/assets/images/iconBtn/comment.png' width={30} height={25}/></div>
             </div>
           </div>
           <div className="presentationSection">
@@ -80,7 +80,7 @@ export default function LandingPage() {
         <section className="sectionServiceGroupe">
           <div className="groupeCard">
             <div className="groupeIllustration">
-              <Image alt="" src='/assets/images/groupe.png' width={300} height={200} className="groupeImg"/>
+              <Image alt="" src='/assets/images/groupe.png' width={300} height={200} className="groupeImg" />
             </div>
             <div className="groupeAuthor">
               <div className="authorIcon">
