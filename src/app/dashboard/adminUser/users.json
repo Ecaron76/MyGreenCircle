@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "lastName": "Snow",
+    "firstName": "Jon",
+    "email": "jon@snow.com",
+    "role": "Lord Commander"
+  },
+  {
+    "id": 2,
+    "lastName": "Lannister",
+    "firstName": "Cersei",
+    "email": "cersei@lannister.com",
+    "role": "Queen"
+  },
+  {
+    "id": 3,
+    "lastName": "Lannister",
+    "firstName": "Jaime",
+    "email": "jaime@lannister.com",
+    "role": "Knight"
+  },
+  {
+    "id": 4,
+    "lastName": "Stark",
+    "firstName": "Arya",
+    "email": "arya@stark.com",
+    "role": "Assassin"
+  },
+  {
+    "id": 5,
+    "lastName": "Targaryen",
+    "firstName": "Daenerys",
+    "email": "dany@targaryen.com",
+    "role": "Queen"
+  },
+  {
+    "id": 6,
+    "lastName": "Melisandre",
+    "firstName": null,
+    "email": "melisandre@redpriestess.com",
+    "role": "Priestess"
+  },
+  {
+    "id": 7,
+    "lastName": "Clifford",
+    "firstName": "Ferrara",
+    "email": "clifford@ferrara.com",
+    "role": "Clerk"
+  },
+  {
+    "id": 8,
+    "lastName": "Frances",
+    "firstName": "Rossini",
+    "email": "frances@rossini.com",
+    "role": "Actor"
+  },
+  {
+    "id": 9,
+    "lastName": "Roxie",
+    "firstName": "Harvey",
+    "email": "roxie@harvey.com",
+    "role": "Singer"
+  }
+]
