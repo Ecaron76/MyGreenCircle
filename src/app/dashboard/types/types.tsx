@@ -40,7 +40,7 @@ export interface Post {
 }
 
 export interface Group {
-  id: number;
+  groupId: number;
   groupName: string;
   groupDescription: string;
   groupLocation: string;

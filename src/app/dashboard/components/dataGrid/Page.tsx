@@ -1,17 +1,26 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import { DataGrid, GridColDef, GridRowParams } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColDef,
+  GridRowIdGetter,
+  GridRowParams,
+} from "@mui/x-data-grid";
 import DetailsModal from "../modalDetail/Page";
 
 interface DataGridComponentProps {
   rows: any;
   columns: GridColDef[];
+  getRowId: GridRowIdGetter<any>;
+  loading: boolean;
   identifier: string;
 }
 
 const DataGridComponent: React.FC<DataGridComponentProps> = ({
   rows,
   columns,
+  getRowId,
+  loading,
   identifier,
 }) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -30,6 +39,7 @@ const DataGridComponent: React.FC<DataGridComponentProps> = ({
     <Box sx={{ height: 400, width: "100%" }}>
       <DataGrid
         rows={rows}
+        getRowId={getRowId}
         columns={columns}
         initialState={{
           pagination: {
@@ -38,6 +48,7 @@ const DataGridComponent: React.FC<DataGridComponentProps> = ({
             },
           },
         }}
+        loading={loading}
         pageSizeOptions={[5, 10, 15]}
         checkboxSelection
         disableRowSelectionOnClick

@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DataGridComponent from "../components/dataGrid/Page";
 import ModalDelete from "../components/modalDelete/Page";
-import rowsData from "./groupes.json";
 import { Group } from "../types/types";
-import CommentIcon from "@mui/icons-material/Comment";
+// import CommentIcon from "@mui/icons-material/Comment";
+import { getAllGroups } from "../services/groupe.service";
 
-function AdminGroupe({ type }: any) {
-  const [showForm, setShowForm] = useState(false);
-  const [rows, setRows] = useState<any>(rowsData);
+function AdminGroupe() {
+  const [rows, setRows] = useState<Group[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const handleClickOpen = (id: number) => {
     setDeleteId(id);
@@ -24,7 +24,7 @@ function AdminGroupe({ type }: any) {
   };
 
   const handleDelete = (id: number) => {
-    setRows(rows.filter((row: any) => row.id !== id));
+    setRows(rows.filter((row: Group) => row.groupId !== id));
     handleClose();
   };
 
@@ -47,12 +47,12 @@ function AdminGroupe({ type }: any) {
       width: 180,
       editable: false,
     },
-    {
-      field: "posts",
-      headerName: "Posts / evenemenet / users",
-      width: 150,
-      renderCell: (params) => <CommentIcon />,
-    },
+    // {
+    //   field: "posts",
+    //   headerName: "Posts / evenemenet / users",
+    //   width: 150,
+    //   renderCell: (params) => <CommentIcon />,
+    // },
     {
       field: "actions",
       type: "actions",
@@ -62,11 +62,24 @@ function AdminGroupe({ type }: any) {
         <GridActionsCellItem
           icon={<DeleteIcon />}
           label="Supprimer"
-          onClick={() => handleClickOpen(row.id)}
+          onClick={() => handleClickOpen(row.groupId)}
         />,
       ],
     },
   ];
+
+  useEffect(() => {
+    setLoading(true);
+    getAllGroups()
+      .then((data) => {
+        setRows(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch groups:", error);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <Box sx={{ height: 400, width: "100%" }}>
@@ -83,7 +96,13 @@ function AdminGroupe({ type }: any) {
           Liste des Groupes
         </Typography>
       </Box>
-      <DataGridComponent rows={rows} columns={columns} identifier="Groupe" />
+      <DataGridComponent
+        rows={rows}
+        columns={columns}
+        getRowId={(row) => row.groupId}
+        loading={loading}
+        identifier="Groupe"
+      />
       <ModalDelete
         open={open}
         onClose={handleClose}
