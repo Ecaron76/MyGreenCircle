@@ -48,7 +48,7 @@ const GroupCard: React.FC<GroupCardProps> = ({ title, author, description, nbMem
             {nbMember} membres
             </div>
             {
-              myGroup ? <Link  href={`/dashboard/groupes/${groupId}`}><div className="groupeBtn">Consulter</div></Link>
+              myGroup ? <Link  href={`/home/groupes/${groupId}`}><div className="groupeBtn">Consulter</div></Link>
               : 
               <div className='groupeBtn-container'>
                 <div className="groupeBtn" onClick={handleJoinGroup}>Rejoindre</div> 

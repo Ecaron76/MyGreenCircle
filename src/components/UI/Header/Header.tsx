@@ -15,8 +15,8 @@ const Header: React.FC<HeaderProps> = ({  username  }) => {
                 <p>My GreenCircle</p>
             </div>
             <div className='header-nav'>
-                <Link href='/dashboard'><div>Accueil</div></Link>
-                <Link href='/dashboard/groupes'><div>Groupes</div></Link>
+                <Link href='/home'><div>Accueil</div></Link>
+                <Link href='/home/groupes'><div>Groupes</div></Link>
                 <div>Evénements</div>
             </div>
             <div className='header-profile'>

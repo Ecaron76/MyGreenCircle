@@ -56,7 +56,7 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
             if (!response.ok) throw new Error('Failed to leave group');
 
             alert('You have left the group successfully');
-            router.push('/dashboard/groupes');        
+            router.push('/home/groupes');        
         } catch (error) {
             console.error('Error leaving group:', error);
         }

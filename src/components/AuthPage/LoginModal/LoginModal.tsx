@@ -25,7 +25,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
     if (signInData?.error) {
       console.log(signInData.error)
     } else{
-      router.push('/dashboard')
+      router.push('/home')
     }
   };
 

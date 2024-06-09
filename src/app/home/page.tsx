@@ -2,11 +2,11 @@ import Header from "@/components/UI/Header/Header";
 import PostCard from "@/components/UI/PostCard/PostCard";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import './dashboard.css'
+import './home.css'
 import GroupCard from "@/components/UI/GroupCard/GroupCard";
 import EventCard from "@/components/UI/EventCard/EventCard";
 
-const DashboardPage = async () => {
+const HomePage = async () => {
   const session = await getServerSession(authOptions)
 
   if (session?.user) {
@@ -44,4 +44,4 @@ const DashboardPage = async () => {
     }
 }
 
-export default DashboardPage
+export default HomePage
