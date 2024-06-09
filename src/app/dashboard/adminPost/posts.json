@@ -1,0 +1,119 @@
+[
+  {
+    "id": 1,
+    "postTitle": "Winter is Coming",
+    "postContent": "The longest winter is about to begin.",
+    "createdAt": "2024-06-01T12:00:00Z",
+    "userId": 1,
+    "comments": [
+      {
+        "commentId": 1,
+        "content": "Indeed, it is cold.",
+        "createdAt": "2024-06-02T15:00:00Z",
+        "userId": 2
+      },
+      {
+        "commentId": 2,
+        "content": "Can't wait for it!",
+        "createdAt": "2024-06-03T14:00:00Z",
+        "userId": 1
+      },
+      {
+        "commentId": 3,
+        "content": "Can't wait for it!",
+        "createdAt": "2024-06-03T14:00:00Z",
+        "userId": 1
+      },
+      {
+        "commentId": 4,
+        "content": "Can't wait for it!",
+        "createdAt": "2024-06-03T14:00:00Z",
+        "userId": 1
+      },
+      {
+        "commentId": 5,
+        "content": "Can't wait for it!",
+        "createdAt": "2024-06-03T14:00:00Z",
+        "userId": 1
+      },
+      {
+        "commentId": 5,
+        "content": "Can't wait for it!",
+        "createdAt": "2024-06-03T14:00:00Z",
+        "userId": 1
+      },
+      {
+        "commentId": 5,
+        "content": "Can't wait for it!",
+        "createdAt": "2024-06-03T14:00:00Z",
+        "userId": 1
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "postTitle": "The Faceless Man",
+    "postContent": "A man has no name.",
+    "createdAt": "2024-06-04T12:00:00Z",
+    "userId": 2,
+    "comments": [
+      {
+        "commentId": 3,
+        "content": "Who is this?",
+        "createdAt": "2024-06-05T11:00:00Z",
+        "userId": 1
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "postTitle": "The King in the North",
+    "postContent": "There must always be a Stark in Winterfell.",
+    "createdAt": "2024-06-07T10:00:00Z",
+    "userId": 1,
+    "comments": [
+      {
+        "commentId": 4,
+        "content": "The North remembers!",
+        "createdAt": "2024-06-08T09:00:00Z",
+        "userId": 2
+      },
+      {
+        "commentId": 5,
+        "content": "Winter is here.",
+        "createdAt": "2024-06-09T08:00:00Z",
+        "userId": 1
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "postTitle": "Fire and Blood",
+    "postContent": "The Targaryen motto speaks of dragons and their fiery breath.",
+    "createdAt": "2024-06-10T07:00:00Z",
+    "userId": 2,
+    "comments": [
+      {
+        "commentId": 6,
+        "content": "Dragons are not slaves.",
+        "createdAt": "2024-06-11T06:00:00Z",
+        "userId": 2
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "postTitle": "Valar Morghulis",
+    "postContent": "All men must die, but we are not men.",
+    "createdAt": "2024-06-12T05:00:00Z",
+    "userId": 1,
+    "comments": [
+      {
+        "commentId": 7,
+        "content": "Valar Dohaeris.",
+        "createdAt": "2024-06-13T04:00:00Z",
+        "userId": 2
+      }
+    ]
+  }
+]

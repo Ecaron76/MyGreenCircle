@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "groupName": "Explorers Club",
+    "groupDescription": "A group for adventure lovers and globe-trotters.",
+    "groupLocation": "New York",
+    "users": [
+      {
+        "userId": 1,
+        "userName": "John Doe",
+        "userRole": "Member"
+      },
+      {
+        "userId": 2,
+        "userName": "Jane Smith",
+        "userRole": "Admin"
+      }
+    ],
+    "posts": [
+      {
+        "postId": 1,
+        "postTitle": "Upcoming Adventure Trips",
+        "postContent": "Let's explore the world together!"
+      }
+    ],
+    "events": [
+      {
+        "eventId": 1,
+        "eventName": "Annual Hiking",
+        "eventDate": "2024-07-15"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "groupName": "Tech Innovators",
+    "groupDescription": "Group for sharing the latest in technology and innovation.",
+    "groupLocation": "Silicon Valley",
+    "users": [
+      {
+        "userId": 3,
+        "userName": "Alice Johnson",
+        "userRole": "Member"
+      },
+      {
+        "userId": 4,
+        "userName": "Bob Lee",
+        "userRole": "Admin"
+      }
+    ],
+    "posts": [
+      {
+        "postId": 2,
+        "postTitle": "Virtual Reality Trends",
+        "postContent": "Exploring the future of VR."
+      }
+    ],
+    "events": [
+      {
+        "eventId": 2,
+        "eventName": "Monthly Tech Talks",
+        "eventDate": "2024-08-20"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "groupName": "Fitness Freaks",
+    "groupDescription": "A group to share workouts, nutrition tips, and fitness plans.",
+    "groupLocation": "Los Angeles",
+    "users": [
+      {
+        "userId": 5,
+        "userName": "Clara Oswald",
+        "userRole": "Member"
+      },
+      {
+        "userId": 6,
+        "userName": "Danny Pink",
+        "userRole": "Admin"
+      }
+    ],
+    "posts": [
+      {
+        "postId": 3,
+        "postTitle": "Best Workouts for 2024",
+        "postContent": "Getting in shape for the new year."
+      }
+    ],
+    "events": [
+      {
+        "eventId": 3,
+        "eventName": "Weekly Yoga Sessions",
+        "eventDate": "2024-09-10"
+      }
+    ]
+  }
+]
