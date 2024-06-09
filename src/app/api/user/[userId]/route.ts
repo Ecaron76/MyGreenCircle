@@ -40,3 +40,58 @@ export const GET = async (req: Request, { params }: { params: { userId: string }
       );
     }
   };
+
+  export const DELETE = async (req: Request, { params }: { params: { userId: string } }) => {
+    try {
+      const session = await getAuthSession();
+  
+      if (!session || !session.user) {
+        return NextResponse.json(
+          { message: 'Not Authenticated' },
+          { status: 403 }
+        );
+      }
+  
+      if (!session.user.admin) {
+        return NextResponse.json(
+          { message: 'Unauthorized' },
+          { status: 403 }
+        );
+      }
+  
+      const { userId } = params;
+  
+      if (!userId) {
+        return NextResponse.json(
+          { message: 'User ID is required' },
+          { status: 400 }
+        );
+      }
+  
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+  
+      if (!user) {
+        return NextResponse.json(
+          { message: 'User not found' },
+          { status: 404 }
+        );
+      }
+  
+      await prisma.user.delete({
+        where: { id: userId },
+      });
+  
+      return NextResponse.json(
+        { message: 'User deleted successfully' },
+        { status: 200 }
+      );
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      return NextResponse.json(
+        { message: 'Something went wrong' },
+        { status: 500 }
+      );
+    }
+  };
