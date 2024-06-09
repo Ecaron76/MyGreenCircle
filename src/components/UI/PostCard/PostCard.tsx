@@ -2,6 +2,7 @@ import React from 'react'
 
 import Image from 'next/image';
 import './PostCard.css'
+import AuthorBadge from '../AuthorBadge/AuthorBadge';
 type PostCardProps = {
   title: string;
   content: string;
@@ -14,10 +15,8 @@ type PostCardProps = {
 const PostCard: React.FC<PostCardProps> = ({ title, content, author, nbComment, nbLike  }) => {
   return (
     <div className="postCard">
-    <div className="author">
-        <Image alt="" src='/assets/images/pp.png' width={60} height={60} className="pp" />
-        <div>{author}</div>
-    </div>
+    <AuthorBadge author='Ecaron' groupeName='EcoNormandie'/>
+
     <div className="postContent">
         <div className="postTitle">{title}</div>
         <p>{content}</p>
