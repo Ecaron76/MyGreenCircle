@@ -27,6 +27,7 @@ model User {
   posts       Post[]        @relation("UserPosts")
   comments    Comment[]
   userGroups  Join[]
+  likes       Like[]  
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -81,8 +82,20 @@ model Post {
   userId    String
   user      User      @relation(fields: [userId], references: [id], name: "UserPosts", onDelete: Cascade)
   comments  Comment[]
-  groupId   Int
-  group     Group     @relation(fields: [groupId], references: [groupId])
+  groupId   Int?
+  group     Group?     @relation(fields: [groupId], references: [groupId])
+  likes     Like[]
+}
+
+model Like {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [postId], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  
+  @@unique([userId, postId])  // Un utilisateur ne peut liker un post qu'une seule fois
 }
 
 model Comment {
