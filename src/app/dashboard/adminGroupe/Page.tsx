@@ -23,9 +23,21 @@ function AdminGroupe() {
     setOpen(false);
   };
 
-  const handleDelete = (id: number) => {
-    setRows(rows.filter((row: Group) => row.groupId !== id));
+  const handleDelete = async (groupId: number) => {
     handleClose();
+    const response = await fetch("/api/groupe", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ groupId }),
+    });
+
+    if (response.ok) {
+      console.log("Group deleted successfully");
+    } else {
+      console.error("Failed to delete group");
+    }
   };
 
   const columns: GridColDef<Group>[] = [
