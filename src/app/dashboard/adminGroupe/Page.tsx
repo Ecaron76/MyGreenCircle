@@ -6,7 +6,7 @@ import DataGridComponent from "../components/dataGrid/Page";
 import ModalDelete from "../components/modalDelete/Page";
 import { Group } from "../types/types";
 // import CommentIcon from "@mui/icons-material/Comment";
-import { getAllGroups } from "../services/groupe.service";
+import { deleteGroup, getAllGroups } from "../services/groupe.service";
 
 function AdminGroupe() {
   const [rows, setRows] = useState<Group[]>([]);
@@ -24,20 +24,13 @@ function AdminGroupe() {
   };
 
   const handleDelete = async (groupId: number) => {
-    handleClose();
-    const response = await fetch("/api/groupe", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ groupId }),
-    });
-
-    if (response.ok) {
+    try {
+      await deleteGroup(groupId);
       console.log("Group deleted successfully");
-    } else {
-      console.error("Failed to delete group");
+    } catch (error) {
+      console.error("Failed to handle delete", error);
     }
+    handleClose();
   };
 
   const columns: GridColDef<Group>[] = [

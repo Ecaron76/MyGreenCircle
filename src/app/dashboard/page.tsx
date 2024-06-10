@@ -50,7 +50,7 @@ const Dashboard: React.FC = () => {
       case "Groupes":
         return (
           <Grid sx={{ mt: 4, p: 1 }}>
-            <AdminGroupe type={activeContent}></AdminGroupe>
+            <AdminGroupe></AdminGroupe>
           </Grid>
         );
       case "Événements":
