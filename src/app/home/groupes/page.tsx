@@ -11,10 +11,10 @@ interface Group {
     groupId: number;
     author: string;
     groupName: string;
-  }
+}
 
 const GroupesPage = () => {
-    const {data: session} = useSession()
+    const { data: session } = useSession()
     console.log(session?.user.id)
     const [isCreateGrpModalVisible, setIsCreateGrpModalVisible] = useState(false);
     const [newGroups, setNewGroups] = useState<Group[]>([]);
@@ -22,7 +22,7 @@ const GroupesPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
 
-    
+
 
     const refreshGroups = async () => {
         setIsLoading(true);
@@ -62,17 +62,17 @@ const GroupesPage = () => {
 
     const handleCreateGrpClick = () => {
         setIsCreateGrpModalVisible(true);
-      };
+    };
 
-      const closeCreateGrpModal = () => {
+    const closeCreateGrpModal = () => {
         setIsCreateGrpModalVisible(false);
-      };
+    };
 
-      const handleCreateGrpSuccess = () => {
+    const handleCreateGrpSuccess = () => {
         setIsCreateGrpModalVisible(false);
-      };
+    };
 
-    
+
     if (session?.user) {
         return (
             <main>
@@ -86,27 +86,27 @@ const GroupesPage = () => {
                 <section className="creategrp-section">
                     <h2>Initiateur d&apos;actions collectives ?</h2>
                     <p>Créez votre groupe et rassemblez des citoyens pour agir ensemble pour l&apos;écologie !</p>
-                    <MainButton name="Créer un groupe" type="button" onClick={handleCreateGrpClick}/>
+                    <MainButton name="Créer un groupe" type="button" onClick={handleCreateGrpClick} />
                 </section>
-                
+
                 <section className="groups-section">
                     <h2>Vos Groupes</h2>
                     <div className="groups-list">
-                    {isLoading ? (
+                        {isLoading ? (
                             <p>Loading...</p>
                         ) : error ? (
                             <p>Error: {error}</p>
                         ) : (
                             myGroups.map(myGroup => (
-                            <GroupCard
-                                key={myGroup.groupId}
-                                groupId={myGroup.groupId}
-                                author={myGroup.author} 
-                                title={myGroup.groupName}
-                                nbMember="5,2K" 
-                                myGroup
-                            />
-                           
+                                <GroupCard
+                                    key={myGroup.groupId}
+                                    groupId={myGroup.groupId}
+                                    author={myGroup.author}
+                                    title={myGroup.groupName}
+                                    nbMember="5,2K"
+                                    myGroup
+                                />
+
                             ))
                         )}
                     </div>
@@ -119,21 +119,22 @@ const GroupesPage = () => {
                         ) : error ? (
                             <p>Error: {error}</p>
                         ) : (
-                            newGroups.map(newGroup => (
-                            <GroupCard
-                                key={newGroup.groupId}
-                                groupId={newGroup.groupId}
-                                author={newGroup.author} 
-                                title={newGroup.groupName}
-                                nbMember="5,2K" 
-                                refreshGroups={refreshGroups}
-                            />
-                           
-                            ))
+                            newGroups
+                                .filter(newGroup => !myGroups.some(myGroup => myGroup.groupId === newGroup.groupId))
+                                .map(newGroup => (
+                                    <GroupCard
+                                        key={newGroup.groupId}
+                                        groupId={newGroup.groupId}
+                                        author={newGroup.author}
+                                        title={newGroup.groupName}
+                                        nbMember="5,2K"
+                                        refreshGroups={refreshGroups}
+                                    />
+                                ))
                         )}
                     </div>
                 </section>
-                {isCreateGrpModalVisible && <CreateGrpModal onClose={closeCreateGrpModal} onSuccess={handleCreateGrpSuccess}/>}
+                {isCreateGrpModalVisible && <CreateGrpModal onClose={closeCreateGrpModal} onSuccess={handleCreateGrpSuccess} />}
 
             </main>
         );
