@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DataGridComponent from "../components/dataGrid/Page";
 import ModalDelete from "../components/modalDelete/Page";
-import rowsData from "./users.json";
 import { User } from "../types/types";
+import { getAllUsers } from "../services/user.service";
 
 function AdminUser() {
-  const [rows, setRows] = useState<any>(rowsData);
+  const [rows, setRows] = useState<User[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const handleClickOpen = (id: number) => {
     setDeleteId(id);
@@ -28,29 +29,35 @@ function AdminUser() {
 
   const columns: GridColDef<User>[] = [
     {
-      field: "firstName",
-      headerName: "Nom",
-      width: 200,
-      editable: true,
-    },
-    {
-      field: "lastName",
-      headerName: "Prenom",
-      width: 200,
+      field: "username",
+      headerName: "Nom d'utilisateur",
+      width: 150,
       editable: true,
     },
     {
       field: "email",
       headerName: "Email",
-      width: 300,
+      width: 150,
       editable: true,
     },
     {
-      field: "role",
-      headerName: "Role",
+      field: "createdAt",
+      headerName: "Date de création",
       description: "This column has a value getter and is not sortable.",
       sortable: false,
       width: 200,
+    },
+    {
+      field: "address",
+      headerName: "Adresse",
+      width: 200,
+      editable: true,
+    },
+    {
+      field: "CP",
+      headerName: "Code postal",
+      width: 200,
+      editable: true,
     },
     {
       field: "actions",
@@ -66,6 +73,19 @@ function AdminUser() {
       ],
     },
   ];
+
+  useEffect(() => {
+    setLoading(true);
+    getAllUsers()
+      .then((data) => {
+        setRows(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch users:", error);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <Box sx={{ height: 400, width: "100%" }}>
@@ -85,6 +105,8 @@ function AdminUser() {
       <DataGridComponent
         rows={rows}
         columns={columns}
+        getRowId={(row) => row.id}
+        loading={loading}
         identifier="utilisateur"
       />
       <ModalDelete

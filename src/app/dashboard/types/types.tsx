@@ -17,10 +17,16 @@ export interface AddButtonProps {
 
 export interface User {
   id: number;
-  firstName: string;
-  lastName: string;
+  username: string;
   email: string;
-  role: string;
+  createdAt: string;
+  address: string;
+  CP: string;
+  ville: string;
+  latitude: string;
+  longitude: string;
+  password: string;
+  image: Blob;
 }
 
 export interface Comment {
