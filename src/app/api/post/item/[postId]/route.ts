@@ -1,10 +1,87 @@
 import { getAuthSession } from "@/lib/auth";
 import { NextResponse } from "next/server";
 
+
+
+export const GET = async (req: Request, { params }: { params: { postId: number } }) => {
+    try {
+        const session = await getAuthSession();
+        if (!session || !session.user) {
+            return NextResponse.json(
+                { message: 'Not Authenticated' },
+                { status: 403 }
+            );
+        }
+        
+        const { postId } = params;
+        const post = await prisma.post.findUnique({
+            where: { postId: Number(postId) },
+            include: { group: true }
+        });
+
+        if (!post) {
+            return NextResponse.json(
+                { message: 'Post not found' },
+                { status: 404 }
+            );
+        }
+
+        if (session.user.admin) {
+            return NextResponse.json(post, { status: 200 });
+        }
+
+        if (post.groupId) {
+            const userIsMember = await prisma.join.findFirst({
+                where: {
+                    userId: session.user.id,
+                    groupId: post.groupId,
+                    isAccepted: true
+                },
+            });
+
+            if (!userIsMember) {
+                return NextResponse.json(
+                    { message: 'User is not a member of the group' },
+                    { status: 403 }
+                );
+            }
+
+            if (userIsMember.role === 'admin') {
+                return NextResponse.json(post, { status: 200 });
+            }
+
+            if (post.isVisible) {
+                return NextResponse.json(post, { status: 200 });
+            } else {
+                return NextResponse.json(
+                    { message: 'Post is not visible' },
+                    { status: 403 }
+                );
+            }
+        }
+
+        if (post.isVisible) {
+            return NextResponse.json(post, { status: 200 });
+        } else {
+            return NextResponse.json(
+                { message: 'Post is not visible' },
+                { status: 403 }
+            );
+        }
+
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json(
+            { message: 'Something went wrong' },
+            { status: 500 }
+        );
+    }
+};
+
+
 export const DELETE = async (req: Request, { params }: { params: { postId: number } }) => {
     try {
         const session = await getAuthSession();
-
         if (!session || !session.user) {
             return NextResponse.json(
                 { message: 'Not Authenticated' },
