@@ -1,3 +1,4 @@
+'use client'
 import Header from "@/components/UI/Header/Header";
 import PostCard from "@/components/UI/PostCard/PostCard";
 import { authOptions } from "@/lib/auth";
@@ -5,9 +6,44 @@ import { getServerSession } from "next-auth";
 import './home.css'
 import GroupCard from "@/components/UI/GroupCard/GroupCard";
 import EventCard from "@/components/UI/EventCard/EventCard";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
-const HomePage = async () => {
-  const session = await getServerSession(authOptions)
+
+
+interface Post {
+  postId: number;
+  title: string;
+  content: string;
+
+};
+
+const HomePage =  () => {
+  const { data: session } = useSession();
+
+    const [allPosts, setAllPosts] = useState<Post[]>([]);
+
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState('');
+
+    const fetchAllPost = async () => {
+      setIsLoading(true);
+      try {
+          const response = await fetch(`/api/post/`);
+          if (!response.ok) throw new Error('Failed to fetch group details');
+
+          const dataPosts = await response.json();
+          setAllPosts(dataPosts);
+      } catch (error) {
+
+      } finally {
+          setIsLoading(false);
+      }
+  };
+
+  useEffect(() => {
+    fetchAllPost()
+  }, []);
 
   if (session?.user) {
     return (
@@ -17,9 +53,24 @@ const HomePage = async () => {
             <h2>Publications</h2>
             <br></br>
             <div className="post-list">
-              <PostCard title='Éco-Tips du Mois !' nbComment={50} nbLike={100} author="Ecaron" content="Bonjour éco-amis ! Partageons nos astuces pour réduire les déchets. Quelle est votre méthode favorite ? 🌿🌍"/>
-              <PostCard title='Éco-Tips du Mois !' nbComment={50} nbLike={100} author="Ecaron" content="Bonjour éco-amis ! Partageons nos astuces pour réduire les déchets. Quelle est votre méthode favorite ? 🌿🌍"/>
-              <PostCard title='Éco-Tips du Mois !' nbComment={50} nbLike={100} author="Ecaron" content="Bonjour éco-amis ! Partageons nos astuces pour réduire les déchets. Quelle est votre méthode favorite ? 🌿🌍"/>
+            {isLoading ? (
+                        <p>Loading...</p>
+                    ) : error ? (
+                        <p>Error: {error}</p>
+                    ) : allPosts.length > 0 ? (
+                        allPosts.map((post: Post) => (
+                            <PostCard
+                                key={post.postId}
+                                title={post.title}
+                                content={post.content}
+                                author={'author'}
+                                nbComment={5}
+                                nbLike={5}
+                            />
+                        ))
+                    ) : (
+                        <p>No Posts found</p>
+                    )}
             </div>
           </div>
           <div>
