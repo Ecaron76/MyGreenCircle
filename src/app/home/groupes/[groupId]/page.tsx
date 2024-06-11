@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 import './SingleGroupePage.css'
 import { redirect, useRouter } from "next/navigation";
+import PostCard from "@/components/UI/PostCard/PostCard";
 
 type SingleGroupePageProps = {
     params: {
@@ -20,13 +21,23 @@ interface GroupDetails {
     groupDescription: string;
     groupLocation: string;
 };
+
+interface Post {
+    postId: number;
+    title: string;
+    content: string;
+    author: string
+}
+
+
 const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
     const { data: session } = useSession();
     const router = useRouter();
 
     const { groupId } = params;
-    console.log(groupId)
     const [groupDetails, setGroupDetails] = useState<GroupDetails>();
+    const [allPosts, setAllPosts] = useState<Post[]>([]);
+
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -40,6 +51,21 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
 
             const data = await response.json();
             setGroupDetails(data);
+        } catch (error) {
+
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const getAllGroupPosts = async () => {
+        if (!groupId) return;
+            setIsLoading(true);
+        try {
+            const response = await fetch(`/api/post/${groupId}`);
+            if (!response.ok) throw new Error('Failed to get posts of the group');
+            const dataPosts = await response.json();
+            setAllPosts(dataPosts);
         } catch (error) {
 
         } finally {
@@ -64,7 +90,9 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
 
     useEffect(() => {
         fetchGroupDetails();
-      }, [groupId]);
+        getAllGroupPosts();
+        
+      }, []);
 
 
     if (session?.user) {
@@ -87,8 +115,24 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
                         <p>No group details found</p>
                     )}
                 </div>
-
-
+                <h2>Publications</h2>
+                <div className="post-list">
+                    
+                    {
+                        allPosts  ? (
+                            allPosts.map((post: Post) => (
+                                <PostCard
+                                    key={post.postId}
+                                    title={post.title}
+                                    content={post.content}
+                                    author='author'
+                                    nbComment={5}
+                                    nbLike={5}
+                                />
+                            ))
+                        ) : null
+                    }
+                </div>
             </main>
         );
     }
