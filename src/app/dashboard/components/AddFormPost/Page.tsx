@@ -25,7 +25,7 @@ function AddFormPost({ typeForm, onFormClose }: any) {
   const onSubmit = async (data: any) => {
     try {
       const postData = {
-        title: data.titre,
+        title: data.title,
         content: data.content,
         // picture: data.picture // Gérez l'ajout d'image si nécessaire
       };
