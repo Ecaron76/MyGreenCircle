@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 import './SingleGroupePage.css'
 import { redirect, useRouter } from "next/navigation";
+import PostCard from "@/components/UI/PostCard/PostCard";
 
 type SingleGroupePageProps = {
     params: {
@@ -20,6 +21,13 @@ interface GroupDetails {
     groupDescription: string;
     groupLocation: string;
 };
+
+interface Post {
+    postId: number;
+    title: string;
+    content: string;
+
+};
 const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
     const { data: session } = useSession();
     const router = useRouter();
@@ -27,6 +35,8 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
     const { groupId } = params;
     console.log(groupId)
     const [groupDetails, setGroupDetails] = useState<GroupDetails>();
+    const [allGroupPosts, setAllGroupPosts] = useState<Post[]>([]);
+
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -40,6 +50,23 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
 
             const data = await response.json();
             setGroupDetails(data);
+        } catch (error) {
+
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const fetchAllGroupPost = async () => {
+        if (!groupId) return;
+
+        setIsLoading(true);
+        try {
+            const response = await fetch(`/api/post/${groupId}`);
+            if (!response.ok) throw new Error('Failed to fetch group details');
+
+            const dataPosts = await response.json();
+            setAllGroupPosts(dataPosts);
         } catch (error) {
 
         } finally {
@@ -64,6 +91,7 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
 
     useEffect(() => {
         fetchGroupDetails();
+        fetchAllGroupPost()
       }, [groupId]);
 
 
@@ -85,6 +113,27 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
                         </div>
                     ) : (
                         <p>No group details found</p>
+                    )}
+                </div>
+                <h2>Publications</h2>
+                <div className="post-list">
+                {isLoading ? (
+                        <p>Loading...</p>
+                    ) : error ? (
+                        <p>Error: {error}</p>
+                    ) : allGroupPosts.length > 0 ? (
+                        allGroupPosts.map((post: Post) => (
+                            <PostCard
+                                key={post.postId}
+                                title={post.title}
+                                content={post.content}
+                                author={'author'}
+                                nbComment={5}
+                                nbLike={5}
+                            />
+                        ))
+                    ) : (
+                        <p>No Posts found</p>
                     )}
                 </div>
 
