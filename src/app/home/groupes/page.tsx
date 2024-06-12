@@ -1,11 +1,13 @@
 'use client'
 import Header from "@/components/UI/Header/Header";
 import './groupes.css'
-import GroupCard from "@/components/UI/GroupCard/GroupCard";
-import MainButton from "@/components/UI/MainButton/MainButton";
+
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import MainButton from "@/components/UI/MainButton/MainButton";
+import GroupCard from "@/components/UI/GroupCard/GroupCard";
 import CreateGrpModal from "@/components/GroupePage/CreateGrpModal/CreateGrpModal";
+
 
 interface Group {
     groupId: number;

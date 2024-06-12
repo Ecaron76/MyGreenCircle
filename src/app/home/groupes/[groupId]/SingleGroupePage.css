@@ -23,3 +23,10 @@
   .group-details-container button:hover {
     background-color: #c9302c;
   }
+
+  .post-list{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    row-gap: 20px;
+  }
