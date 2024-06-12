@@ -10,9 +10,10 @@ import {
 import CloudUploadIcon from "@mui/icons-material/Download";
 import { useDropzone } from "react-dropzone";
 import AlertComponent from "../Alert/Page";
+import { createPost } from "../../services/post.service";
 
 function AddFormPost({ typeForm, onFormClose }: any) {
-  const { getRootProps, getInputProps } = useDropzone();
+  const { getRootProps, getInputProps, acceptedFiles } = useDropzone();
   const {
     control,
     handleSubmit,
@@ -21,12 +22,22 @@ function AddFormPost({ typeForm, onFormClose }: any) {
 
   const [showAlert, setShowAlert] = useState(false);
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    setShowAlert(true);
-    setTimeout(() => {
-      onFormClose();
-    }, 1000);
+  const onSubmit = async (data: any) => {
+    try {
+      const postData = {
+        title: data.titre,
+        content: data.content,
+        // picture: data.picture // Gérez l'ajout d'image si nécessaire
+      };
+
+      const newPost = await createPost(postData);
+      setShowAlert(true);
+      setTimeout(() => {
+        onFormClose();
+      }, 1000);
+    } catch (error) {
+      console.error("Erreur lors de la création du post: ", error);
+    }
   };
 
   const customStyles = {
@@ -76,7 +87,7 @@ function AddFormPost({ typeForm, onFormClose }: any) {
             Ajout d'un nouveau {typeForm.slice(0, -1)}
           </Typography>
           <Controller
-            name="titre"
+            name="title"
             control={control}
             rules={{ required: "Le titre est requis" }}
             render={({ field, fieldState }) => (
@@ -93,7 +104,7 @@ function AddFormPost({ typeForm, onFormClose }: any) {
             )}
           />
           <Controller
-            name="contenu"
+            name="content"
             control={control}
             rules={{ required: "Le contenu est requis" }}
             render={({ field, fieldState }) => (

@@ -38,8 +38,8 @@ export interface Comment {
 
 export interface Post {
   id: number;
-  postTitle: string;
-  postContent: string;
+  title: string;
+  content: string;
   createdAt: Date;
   userId: number;
   comments: Comment[];
