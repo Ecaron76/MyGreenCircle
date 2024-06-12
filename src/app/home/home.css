@@ -1,3 +1,21 @@
+h2{
+    font-size: 28px;
+    width: 25%;
+    padding: 17px;
+    border-radius: 20px;
+    text-align: center;
+}
+h1{
+    font-size: 42px;
+    text-align: center;
+    padding-bottom: 15px;
+    border-bottom: solid 8px #226D68;
+    color: #226D68;
+    margin: auto;
+    margin-bottom: 30px;
+    width: 70%;
+    
+}
 .post-list{
     display: flex;
     justify-content: space-around;
@@ -14,3 +32,24 @@
     display: flex;
     justify-content: space-around;
 }
+
+.content-page{
+    padding: 50px;
+}
+
+.posts-admins h2{
+    background-color: #D6955B;  
+}
+
+.posts-groups h2{
+    background-color: #FEEAA1;  
+}
+
+.posts-admins{
+    margin-bottom: 30px;
+}
+
+.posts-groups{
+    margin-bottom: 30px;
+}
+

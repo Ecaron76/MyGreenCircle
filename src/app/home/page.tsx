@@ -57,62 +57,67 @@ const HomePage = () => {
     return (
       <main>
         <Header username={session.user.username} />
-        <div>
-          <h2>Publications Générales</h2>
-          <br />
-          <div className="post-list">
-            {isLoading ? (
-              <p>Loading...</p>
-            ) : error ? (
-              <p>Error: {error}</p>
-            ) : adminPosts.length > 0 ? (
-              adminPosts.map((post: Post) => (
-                <PostCard
-                  key={post.postId}
-                  title={post.title}
-                  content={post.content}
-                  author='author'
-                  nbComment={5}
-                  nbLike={5}
-                />
-              ))
-            ) : (
-              <p>No Posts found</p>
-            )}
-          </div>
-          <h2>Publications de vos groupes</h2>
-          <br />
-          <div className="post-list">
-            {isLoading ? (
-              <p>Loading...</p>
-            ) : error ? (
-              <p>Error: {error}</p>
-            ) : groupPosts.length > 0 ? (
-              groupPosts.map((post: Post) => (
-                <PostCard
-                  key={post.postId}
-                  title={post.title}
-                  content={post.content}
-                  author='author'
-                  nbComment={5}
-                  nbLike={5}
-                />
-              ))
-            ) : (
-              <p>No Posts found</p>
-            )}
-          </div>
-        </div>
-        <div>
-          <h2>Events</h2>
-          <br></br>
-          <div className="event-list">
-            <EventCard author="EcoNormandie" title="Recyclons Ensemble !" date="03/06/2024" description="Atelier de recyclage, où nous transormerons les déchets collectés en objet utles, sensibiliant ainsi la communauté à l&apos;importance du recyclage." location="Rouen, 76000" hourly="10h00" />
-            <EventCard author="EcoNormandie" title="Recyclons Ensemble !" date="03/06/2024" description="Atelier de recyclage, où nous transormerons les déchets collectés en objet utles, sensibiliant ainsi la communauté à l&apos;importance du recyclage." location="Rouen, 76000" hourly="10h00" />
-            <EventCard author="EcoNormandie" title="Recyclons Ensemble !" date="03/06/2024" description="Atelier de recyclage, où nous transormerons les déchets collectés en objet utles, sensibiliant ainsi la communauté à l&apos;importance du recyclage." location="Rouen, 76000" hourly="10h00" />
-          </div>
-        </div>
+        <div className="content-page">
+          <section className="post-section">
+            <h1>Publications</h1>
+            <div className="posts-admins">
+              <h2>Publications Générales</h2>
+              <br />
+              <div className="post-list">
+                {isLoading ? (
+                  <p>Loading...</p>
+                ) : error ? (
+                  <p>Error: {error}</p>
+                ) : adminPosts.length > 0 ? (
+                  adminPosts.map((post: Post) => (
+                    <PostCard
+                      key={post.postId}
+                      title={post.title}
+                      content={post.content}
+                      author='author'
+                      nbComment={5}
+                      nbLike={5}
+                    />
+                  ))
+                ) : (
+                  <p>No Posts found</p>
+                )}
+              </div>
+            </div>
+            <div className="posts-groups">
+              <h2>Publications de vos groupes</h2>
+              <br />
+              <div className="post-list">
+                {isLoading ? (
+                  <p>Loading...</p>
+                ) : error ? (
+                  <p>Error: {error}</p>
+                ) : groupPosts.length > 0 ? (
+                  groupPosts.map((post: Post) => (
+                    <PostCard
+                      key={post.postId}
+                      title={post.title}
+                      content={post.content}
+                      author='author'
+                      nbComment={5}
+                      nbLike={5}
+                    />
+                  ))
+                ) : (
+                  <p>No Posts found</p>
+                )}
+              </div>
+            </div>
 
+          </section>
+
+          <div>
+            <h2>Events</h2>
+            <br></br>
+            <div className="event-list">
+            </div>
+          </div>
+        </div>
       </main>
     );
   }
