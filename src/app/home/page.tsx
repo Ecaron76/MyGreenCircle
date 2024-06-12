@@ -15,30 +15,38 @@ interface Post {
   postId: number;
   title: string;
   content: string;
+  groupId?: number;
 
 };
 
-const HomePage =  () => {
+const HomePage = () => {
   const { data: session } = useSession();
 
-    const [allPosts, setAllPosts] = useState<Post[]>([]);
+  const [groupPosts, setGroupPosts] = useState<Post[]>([]);
+  const [adminPosts, setAdminPosts] = useState<Post[]>([]);
 
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
 
-    const fetchAllPost = async () => {
-      setIsLoading(true);
-      try {
-          const response = await fetch(`/api/post/`);
-          if (!response.ok) throw new Error('Failed to fetch group details');
+  const fetchAllPost = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(`/api/post/`);
+      if (!response.ok) throw new Error('Failed to fetch group details');
 
-          const dataPosts = await response.json();
-          setAllPosts(dataPosts);
-      } catch (error) {
+      const dataPosts: Post[] = await response.json();
+      const groupPosts = dataPosts.filter(post => post.groupId !== null);
+      const adminPosts = dataPosts.filter(post => post.groupId === null);
 
-      } finally {
-          setIsLoading(false);
-      }
+      console.log(groupPosts)
+      console.log(adminPosts)
+      setGroupPosts(groupPosts);
+      setAdminPosts(adminPosts);
+    } catch (error) {
+
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -47,52 +55,74 @@ const HomePage =  () => {
 
   if (session?.user) {
     return (
-        <main>
-          <Header username={session.user.username}/>
-          <div>
-            <h2>Publications</h2>
-            <br></br>
-            <div className="post-list">
+      <main>
+        <Header username={session.user.username} />
+        <div>
+          <h2>Publications Générales</h2>
+          <br />
+          <div className="post-list">
             {isLoading ? (
-                        <p>Loading...</p>
-                    ) : error ? (
-                        <p>Error: {error}</p>
-                    ) : allPosts.length > 0 ? (
-                        allPosts.map((post: Post) => (
-                            <PostCard
-                                key={post.postId}
-                                title={post.title}
-                                content={post.content}
-                                author={'author'}
-                                nbComment={5}
-                                nbLike={5}
-                            />
-                        ))
-                    ) : (
-                        <p>No Posts found</p>
-                    )}
-            </div>
+              <p>Loading...</p>
+            ) : error ? (
+              <p>Error: {error}</p>
+            ) : adminPosts.length > 0 ? (
+              adminPosts.map((post: Post) => (
+                <PostCard
+                  key={post.postId}
+                  title={post.title}
+                  content={post.content}
+                  author='author'
+                  nbComment={5}
+                  nbLike={5}
+                />
+              ))
+            ) : (
+              <p>No Posts found</p>
+            )}
           </div>
-          <div>
-            <h2>Events</h2>
-            <br></br>
-            <div className="event-list">
-              <EventCard author="EcoNormandie" title="Recyclons Ensemble !" date="03/06/2024" description="Atelier de recyclage, où nous transormerons les déchets collectés en objet utles, sensibiliant ainsi la communauté à l&apos;importance du recyclage." location="Rouen, 76000" hourly="10h00"/>
-              <EventCard author="EcoNormandie" title="Recyclons Ensemble !" date="03/06/2024" description="Atelier de recyclage, où nous transormerons les déchets collectés en objet utles, sensibiliant ainsi la communauté à l&apos;importance du recyclage." location="Rouen, 76000" hourly="10h00"/>
-              <EventCard author="EcoNormandie" title="Recyclons Ensemble !" date="03/06/2024" description="Atelier de recyclage, où nous transormerons les déchets collectés en objet utles, sensibiliant ainsi la communauté à l&apos;importance du recyclage." location="Rouen, 76000" hourly="10h00"/>
-            </div>
+          <h2>Publications de vos groupes</h2>
+          <br />
+          <div className="post-list">
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : error ? (
+              <p>Error: {error}</p>
+            ) : groupPosts.length > 0 ? (
+              groupPosts.map((post: Post) => (
+                <PostCard
+                  key={post.postId}
+                  title={post.title}
+                  content={post.content}
+                  author='author'
+                  nbComment={5}
+                  nbLike={5}
+                />
+              ))
+            ) : (
+              <p>No Posts found</p>
+            )}
           </div>
-          
-        </main>
-      );    
-  } 
+        </div>
+        <div>
+          <h2>Events</h2>
+          <br></br>
+          <div className="event-list">
+            <EventCard author="EcoNormandie" title="Recyclons Ensemble !" date="03/06/2024" description="Atelier de recyclage, où nous transormerons les déchets collectés en objet utles, sensibiliant ainsi la communauté à l&apos;importance du recyclage." location="Rouen, 76000" hourly="10h00" />
+            <EventCard author="EcoNormandie" title="Recyclons Ensemble !" date="03/06/2024" description="Atelier de recyclage, où nous transormerons les déchets collectés en objet utles, sensibiliant ainsi la communauté à l&apos;importance du recyclage." location="Rouen, 76000" hourly="10h00" />
+            <EventCard author="EcoNormandie" title="Recyclons Ensemble !" date="03/06/2024" description="Atelier de recyclage, où nous transormerons les déchets collectés en objet utles, sensibiliant ainsi la communauté à l&apos;importance du recyclage." location="Rouen, 76000" hourly="10h00" />
+          </div>
+        </div>
+
+      </main>
+    );
+  }
   else {
     return (
-        <main>
-            Vous devez être connecté pour voir cette page.
-        </main>
+      <main>
+        Vous devez être connecté pour voir cette page.
+      </main>
     )
-    }
+  }
 }
 
 export default HomePage
