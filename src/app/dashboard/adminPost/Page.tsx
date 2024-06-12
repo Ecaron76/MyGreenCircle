@@ -10,6 +10,7 @@ import AddButton from "../components/AddButton/Page";
 import CommentIcon from "@mui/icons-material/Comment";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AddFormPost from "../components/AddFormPost/Page";
+import { getAllPosts } from "../services/post.service";
 
 function AdminPost({ type }: any) {
   const [showForm, setShowForm] = useState(
@@ -20,9 +21,10 @@ function AdminPost({ type }: any) {
     localStorage.setItem("showForm", showForm.toString());
   }, [showForm]);
 
-  const [rows, setRows] = useState<any>(rowsData);
+  const [rows, setRows] = useState<Post[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const handleBack = () => {
     setShowForm(false);
@@ -54,13 +56,13 @@ function AdminPost({ type }: any) {
   };
   const columns: GridColDef<Post>[] = [
     {
-      field: "postTitle",
+      field: "title",
       headerName: "Titre",
       width: 200,
       editable: true,
     },
     {
-      field: "postContent",
+      field: "content",
       headerName: "Contenu",
       width: 300,
       editable: false,
@@ -98,6 +100,19 @@ function AdminPost({ type }: any) {
     },
   ];
 
+  useEffect(() => {
+    setLoading(true);
+    getAllPosts()
+      .then((data) => {
+        setRows(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch groups:", error);
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <Box sx={{ height: 400, width: "100%" }}>
       {showForm ? (
@@ -122,7 +137,13 @@ function AdminPost({ type }: any) {
             </Typography>
             <AddButton onClick={toggleForm} title="Ajout d'un Post" />
           </Box>
-          <DataGridComponent rows={rows} columns={columns} identifier="Post" />
+          <DataGridComponent
+            rows={rows}
+            columns={columns}
+            identifier="Post"
+            getRowId={(row) => row.postId}
+            loading={loading}
+          />
         </>
       )}
       <ModalDelete
