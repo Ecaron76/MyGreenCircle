@@ -27,6 +27,7 @@ export interface User {
   longitude: string;
   password: string;
   image: Blob;
+  admin: Boolean;
 }
 
 export interface Comment {
