@@ -11,7 +11,30 @@ export const getAllUsers = async (): Promise<User[]> => {
     const data: User[] = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to fetch group data:", error);
+    console.error("Failed to fetch user data:", error);
     throw error;
   }
 };
+
+export async function deleteUser(userId: number): Promise<void> {
+  try {
+    const response = await fetch(`${BASE_URL}/user/${userId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId }),
+    });
+
+    if (response.ok) {
+      console.log("User deleted successfully");
+    } else {
+      const errorData = await response.json();
+      console.error("Failed to delete user:", errorData.message);
+      throw new Error(errorData.message);
+    }
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    throw error;
+  }
+}

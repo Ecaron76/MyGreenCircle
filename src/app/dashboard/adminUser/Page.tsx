@@ -5,7 +5,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import DataGridComponent from "../components/dataGrid/Page";
 import ModalDelete from "../components/modalDelete/Page";
 import { User } from "../types/types";
-import { getAllUsers } from "../services/user.service";
+import { deleteUser, getAllUsers } from "../services/user.service";
 
 function AdminUser() {
   const [rows, setRows] = useState<User[]>([]);
@@ -22,8 +22,13 @@ function AdminUser() {
     setOpen(false);
   };
 
-  const handleDelete = (id: number) => {
-    setRows(rows.filter((row: any) => row.id !== id));
+  const handleDelete = async (userId: number) => {
+    try {
+      await deleteUser(userId);
+      console.log("User deleted successfully");
+    } catch (error) {
+      console.error("Failed to handle delete", error);
+    }
     handleClose();
   };
 
