@@ -28,6 +28,7 @@ model User {
   comments    Comment[]
   userGroups  Join[]
   likes       Like[]  
+  createdEvents Event[]     @relation("UserEvents")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -132,9 +133,12 @@ model Event {
   CP                    String
   latitude              Float
   longitude             Float
-  groupId               Int
-  group                 Group         @relation(fields: [groupId], references: [groupId])
+  groupId               Int?
+  group                 Group?         @relation(fields: [groupId], references: [groupId])
   participants          Participate[]
+  isGlobal              Boolean        @default(false)
+  createdById           String
+  createdBy             User           @relation("UserEvents", fields: [createdById], references: [id], onDelete: Cascade)
 }
 
 model Join {
