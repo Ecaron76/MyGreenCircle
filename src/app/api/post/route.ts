@@ -16,7 +16,8 @@ export const GET = async (req: Request) => {
 
         const adminPosts = await prisma.post.findMany({
             where: {
-                groupId: null
+                groupId: null,
+                isVisible: true
             }
         });
 
