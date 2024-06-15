@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import './SingleGroupePage.css'
 import { redirect, useRouter } from "next/navigation";
 import PostCard from "@/components/UI/PostCard/PostCard";
+import MainButton from "@/components/UI/MainButton/MainButton";
+import Link from "next/link";
 
 type SingleGroupePageProps = {
     params: {
@@ -99,6 +101,7 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
         return (
             <main>
                 <Header username={session.user.username} />
+                <Link href={`/home/groupes/${groupId}/write`}><MainButton name="Ecrire un post"/></Link>
                 <div className="group-details-container">
                     {isLoading ? (
                         <p>Loading...</p>

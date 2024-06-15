@@ -1,7 +1,7 @@
 import MainButton from "@/components/UI/MainButton/MainButton";
 import Image from "next/image";
 import './globals.css'
-import ServiceCard from "@/components/HomePage/ServiceCard/ServiceCard";
+import ServiceCard from "@/components/UI/ServiceCard/ServiceCard";
 export default function LandingPage() {
   return (
     <main>
