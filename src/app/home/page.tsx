@@ -3,6 +3,7 @@
 // import Header from "@/components/UI/Header/Header";
 // import PostCard from "@/components/UI/PostCard/PostCard";
 // import './home.css'
+// import EventCard from "@/components/UI/EventCard/EventCard";
 // import { useEffect, useState } from "react";
 // import { useSession } from "next-auth/react";
 
@@ -11,14 +12,26 @@
 //   title: string;
 //   content: string;
 //   groupId?: number;
-// };
+// }
+
+// interface Event {
+//   eventId: number;
+//   title: string;
+//   description: string;
+//   location: string;
+//   startDate: string;
+//   endDate: string;
+//   createdBy: {
+//     username: string;
+//   };
+// }
 
 // const HomePage = () => {
 //   const { data: session } = useSession();
 
 //   const [groupPosts, setGroupPosts] = useState<Post[]>([]);
 //   const [adminPosts, setAdminPosts] = useState<Post[]>([]);
-
+//   const [events, setEvents] = useState<Event[]>([]);
 //   const [isLoading, setIsLoading] = useState(true);
 //   const [error, setError] = useState('');
 
@@ -32,19 +45,40 @@
 //       const groupPosts = dataPosts.filter(post => post.groupId !== null);
 //       const adminPosts = dataPosts.filter(post => post.groupId === null);
 
-//       console.log(groupPosts)
-//       console.log(adminPosts)
 //       setGroupPosts(groupPosts);
 //       setAdminPosts(adminPosts);
-//     } catch (error) {
+//     } catch (error: unknown) {
+//       if (error instanceof Error) {
+//         setError(error.message);
+//       } else {
+//         setError(String(error));
+//       }
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
 
+//   const fetchUserEvents = async () => {
+//     setIsLoading(true);
+//     try {
+//       const response = await fetch('/api/event/userEvents');
+//       if (!response.ok) throw new Error('Failed to fetch events');
+//       const dataEvents: Event[] = await response.json();
+//       setEvents(dataEvents);
+//     } catch (error: unknown) {
+//       if (error instanceof Error) {
+//         setError(error.message);
+//       } else {
+//         setError(String(error));
+//       }
 //     } finally {
 //       setIsLoading(false);
 //     }
 //   };
 
 //   useEffect(() => {
-//     fetchAllPost()
+//     fetchAllPost();
+//     fetchUserEvents();
 //   }, []);
 
 //   if (session?.user) {
@@ -102,30 +136,46 @@
 //                 )}
 //               </div>
 //             </div>
-
 //           </section>
 
 //           <div>
 //             <h2>Events</h2>
-//             <br></br>
+//             <br />
 //             <div className="event-list">
+//               {isLoading ? (
+//                 <p>Loading...</p>
+//               ) : error ? (
+//                 <p>Error: {error}</p>
+//               ) : events.length > 0 ? (
+//                 events.map((event: Event) => (
+//                   <EventCard
+//                     key={event.eventId}
+//                     title={event.title}
+//                     author={event.createdBy.username}
+//                     description={event.description}
+//                     date={new Date(event.startDate).toLocaleDateString()}
+//                     location={event.location}
+//                     hourly={`${new Date(event.startDate).toLocaleTimeString()} - ${new Date(event.endDate).toLocaleTimeString()}`}
+//                   />
+//                 ))
+//               ) : (
+//                 <p>No Events found</p>
+//               )}
 //             </div>
 //           </div>
 //         </div>
 //       </main>
 //     );
-//   }
-//   else {
+//   } else {
 //     return (
 //       <main>
 //         Vous devez être connecté pour voir cette page.
 //       </main>
-//     )
+//     );
 //   }
-// }
+// };
 
-// export default HomePage
-
+// export default HomePage;
 
 'use client'
 import Header from "@/components/UI/Header/Header";
@@ -152,6 +202,9 @@ interface Event {
   createdBy: {
     username: string;
   };
+  participants: {
+    userId: string;
+  }[];
 }
 
 const HomePage = () => {
@@ -284,6 +337,8 @@ const HomePage = () => {
                     date={new Date(event.startDate).toLocaleDateString()}
                     location={event.location}
                     hourly={`${new Date(event.startDate).toLocaleTimeString()} - ${new Date(event.endDate).toLocaleTimeString()}`}
+                    isCreator={event.createdBy.username === session.user.username}
+                    isParticipant={event.participants.some(p => p.userId === session.user.id)}
                   />
                 ))
               ) : (
