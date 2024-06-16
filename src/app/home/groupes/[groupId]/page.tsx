@@ -101,7 +101,8 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
         return (
             <main>
                 <Header username={session.user.username} />
-                <Link href={`/home/groupes/${groupId}/write`}><MainButton name="Ecrire un post"/></Link>
+                
+                
                 <div className="group-details-container">
                     {isLoading ? (
                         <p>Loading...</p>
@@ -109,7 +110,7 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
                         <p>Error: {error}</p>
                     ) : groupDetails ? (
                         <div>
-                            <h2>{groupDetails.groupName}</h2>
+                            <h1 className="group-title">{groupDetails.groupName}</h1>
                             <p>{groupDetails.groupDescription}</p>
                             <p>{groupDetails.groupLocation}</p>
                             <button onClick={handleLeaveGroup}>Quitter le groupe</button>
@@ -118,6 +119,10 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
                         <p>No group details found</p>
                     )}
                 </div>
+                <nav className="group-navbar">
+                    <div>Mes posts</div>
+                    <Link href={`/home/groupes/${groupId}/write`}><MainButton name="Ecrire un post"/></Link>
+                    </nav>    
                 <h2>Publications</h2>
                 <div className="post-list">
                 {isLoading ? (

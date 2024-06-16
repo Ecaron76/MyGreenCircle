@@ -59,7 +59,7 @@ const HomePage = () => {
         <Header username={session.user.username} />
         <div className="content-page">
           <section className="post-section">
-            <h1>Publications</h1>
+            <h1 className="title-section">Publications</h1>
             <div className="posts-admins">
               <h2>Publications Générales</h2>
               <br />

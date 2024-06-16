@@ -225,7 +225,6 @@ export async function PUT(req: Request, { params }: { params: { postId: string }
                 { status: 404 }
             );
         }
-
         if (post.groupId) {
             const MemberAdminGroup = await prisma.join.findFirst({
                 where: {
