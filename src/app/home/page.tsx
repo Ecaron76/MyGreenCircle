@@ -80,7 +80,7 @@ const HomePage = () => {
           <section className="post-section">
             <h1 className="title-section">Publications</h1>
             <div className="posts-admins">
-              <h2>Publications Générales</h2>
+              <h2 className="title-posts-section">Publications Générales</h2>
               <br />
               <div className="post-list">
                 {isLoading ? (
@@ -104,7 +104,7 @@ const HomePage = () => {
               </div>
             </div>
             <div className="posts-groups">
-              <h2>Publications de vos groupes</h2>
+              <h2 className="title-posts-section">Publications de vos groupes</h2>
               <br />
               <div className="post-list">
                 {isLoading ? (
