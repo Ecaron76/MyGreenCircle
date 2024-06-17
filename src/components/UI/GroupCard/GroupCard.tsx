@@ -52,7 +52,6 @@ const GroupCard: React.FC<GroupCardProps> = ({ title, description, nbMember, myG
               : 
               <div className='groupeBtn-container'>
                 <div className="groupeBtn" onClick={handleJoinGroup}>Rejoindre</div> 
-                <div className="groupeBtn">Infos</div> 
               </div>
             }
             
