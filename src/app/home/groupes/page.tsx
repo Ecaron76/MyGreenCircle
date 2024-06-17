@@ -126,9 +126,9 @@ const GroupesPage = () => {
                                 <GroupCard
                                     key={myGroup.groupId}
                                     groupId={myGroup.groupId}
-                                    author={myGroup.author}
                                     title={myGroup.groupName}
                                     nbMember={myGroup.membersCount}
+                                    group={true}
                                     myGroup
                                 />
 
@@ -150,10 +150,10 @@ const GroupesPage = () => {
                                     <GroupCard
                                         key={newGroup.groupId}
                                         groupId={newGroup.groupId}
-                                        author={newGroup.author}
                                         title={newGroup.groupName}
                                         nbMember={newGroup.membersCount}
                                         refreshGroups={refreshGroups}
+                                        group={true}
                                     />
                                 ))
                         )}

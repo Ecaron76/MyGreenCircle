@@ -143,9 +143,10 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
                                 key={post.postId}
                                 title={post.title}
                                 content={post.content}
-                                author={'author'}
+                                author="Ecaron"
                                 nbComment={5}
                                 nbLike={5}
+                                group={true}
                             />
                         ))
                     ) : (

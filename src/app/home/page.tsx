@@ -4,8 +4,7 @@ import PostCard from "@/components/UI/PostCard/PostCard";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import './home.css'
-import GroupCard from "@/components/UI/GroupCard/GroupCard";
-import EventCard from "@/components/UI/EventCard/EventCard";
+
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
@@ -120,7 +119,8 @@ const HomePage = () => {
                       title={post.title}
                       content={post.content}
                       groupName={post.groupName}
-                      author=""
+                      group
+                      author="Ecaron"
                       nbComment={5}
                       nbLike={5}
                     />
