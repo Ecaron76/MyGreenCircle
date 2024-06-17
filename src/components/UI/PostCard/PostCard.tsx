@@ -18,7 +18,7 @@ const PostCard: React.FC<PostCardProps> = ({ title, content, author, nbComment, 
   return (
     <div className="postCard">
     <div className='header-card'>
-      <AuthorBadge author='Ecaron' groupName={groupName}/>
+      <AuthorBadge author={author} groupName={groupName}/>
       {isVisible !== undefined ? (
         isVisible ? 
         ( <div className='published tag'>Publié</div> ) : 

@@ -24,7 +24,7 @@ const AuthorBadge: React.FC<AuthorBadgeProps> = ({ groupName, author }) => {
         return (
             <div className="groupeAuthor">
                 <div className="authorIcon">
-                    <Image alt="" src='/assets/images/pp.png' width={70} height={70} className="authorIcon" />
+                    <Image alt="" src='/assets/images/logo.png' width={70} height={70} className="authorIcon" />
                 </div>
                 <div className="authorInfos">
                     <h3>{author}</h3>

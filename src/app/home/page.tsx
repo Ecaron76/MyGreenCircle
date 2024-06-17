@@ -94,7 +94,7 @@ const HomePage = () => {
                       key={post.postId}
                       title={post.title}
                       content={post.content}
-                      author='author'
+                      author='MyGreenCircle'
                       nbComment={5}
                       nbLike={5}
                     />

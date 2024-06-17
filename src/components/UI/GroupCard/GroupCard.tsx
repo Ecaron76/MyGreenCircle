@@ -8,7 +8,7 @@ type GroupCardProps = {
   title: string;
   author: string;
   description?: string
-  nbMember: string;
+  nbMember: number;
   myGroup?: boolean
   groupId: number;
   refreshGroups?: () => void;
