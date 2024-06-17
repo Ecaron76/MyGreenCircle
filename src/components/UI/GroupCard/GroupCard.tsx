@@ -40,7 +40,7 @@ const GroupCard: React.FC<GroupCardProps> = ({ title, author, description, nbMem
             <div className="groupeIllustration">
               <Image alt="" src='/assets/images/groupe.png' width={300} height={200} className="groupeImg"/>
             </div>
-            <AuthorBadge author='Ecaron' groupeName={title}/>
+            <AuthorBadge author='Ecaron' groupName={title}/>
             <div className='groupeDescription'>
                 {description}
             </div>
