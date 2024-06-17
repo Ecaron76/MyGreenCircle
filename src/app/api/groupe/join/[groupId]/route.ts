@@ -54,6 +54,9 @@ export const DELETE = async (req: Request,  { params }: {params: {groupId: numbe
               },
             },
           });
+          if (userInGroup?.role==="admin") {
+            return NextResponse.json({ message: 'The member is the admin of the group and cant leave the group. ' }, { status: 403 });
+          }
 
           if (!userInGroup) {
             return NextResponse.json(
