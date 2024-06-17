@@ -11,7 +11,7 @@ const Header: React.FC<HeaderProps> = ({  username  }) => {
     return (
         <header>
             <div className='header-logo'>
-                <Image alt='' src='/assets/images/logo.png' width={50} height={50} />
+                <Image alt='' src='/assets/images/logo.png' width={60} height={60} />
                 <p>My GreenCircle</p>
             </div>
             <div className='header-nav'>
