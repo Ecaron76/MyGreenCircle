@@ -6,16 +6,25 @@ import AuthorBadge from '../AuthorBadge/AuthorBadge';
 type PostCardProps = {
   title: string;
   content: string;
+  isVisible?: boolean;
   author: string;
   nbLike: number;
   nbComment: number;
 
 };
 
-const PostCard: React.FC<PostCardProps> = ({ title, content, author, nbComment, nbLike  }) => {
+const PostCard: React.FC<PostCardProps> = ({ title, content, author, nbComment, nbLike, isVisible  }) => {
   return (
     <div className="postCard">
-    <AuthorBadge author='Ecaron' groupeName='EcoNormandie'/>
+    <div className='header-card'>
+      <AuthorBadge author='Ecaron' groupeName='EcoNormandie'/>
+      {isVisible !== undefined ? (
+        isVisible ? 
+        ( <div className='published tag'>Publié</div> ) : 
+        ( <div className='unpublished tag'>Non publié</div> )
+        ) : null}
+    </div>
+    
 
     <div className="postContent">
         <div className="postTitle">{title}</div>

@@ -15,7 +15,7 @@
   .group-details-container p {
     margin: 5px 0;
   }
-  .group-details-container button {
+  .leave-btn {
     padding: 10px 20px;
     background-color: #d9534f;
     color: white;
@@ -23,7 +23,7 @@
     border-radius: 4px;
     cursor: pointer;
   }
-  .group-details-container button:hover {
+  .leave-btn:hover {
     background-color: #c9302c;
   }
 
@@ -38,6 +38,8 @@
     display: flex;
     background-color: #18534fc0;
     padding: 20px;
+    align-items: center;
+    justify-content: center;
   }
 
   .group-navbar div{
