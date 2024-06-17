@@ -4,8 +4,7 @@ import PostCard from "@/components/UI/PostCard/PostCard";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import './home.css'
-import GroupCard from "@/components/UI/GroupCard/GroupCard";
-import EventCard from "@/components/UI/EventCard/EventCard";
+
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
@@ -16,14 +15,19 @@ interface Post {
   title: string;
   content: string;
   groupId?: number;
+  groupName: string;
+
 
 };
+
 
 const HomePage = () => {
   const { data: session } = useSession();
 
   const [groupPosts, setGroupPosts] = useState<Post[]>([]);
   const [adminPosts, setAdminPosts] = useState<Post[]>([]);
+  const [groupAuthors, setGroupAuthors] = useState<string[]>([]);
+
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
@@ -38,16 +42,31 @@ const HomePage = () => {
       const groupPosts = dataPosts.filter(post => post.groupId !== null);
       const adminPosts = dataPosts.filter(post => post.groupId === null);
 
-      console.log(groupPosts)
-      console.log(adminPosts)
       setGroupPosts(groupPosts);
       setAdminPosts(adminPosts);
+
+      const groupAuthorsPromises = groupPosts.map(post => fetchGroupDetails(post.groupId!).then(groupName => ({ ...post, groupName })));
+      const postsWithGroupNames = await Promise.all(groupAuthorsPromises);
+      setGroupPosts(postsWithGroupNames);
     } catch (error) {
 
     } finally {
       setIsLoading(false);
     }
   };
+
+  const fetchGroupDetails = async (groupId: number) => {
+    try {
+        const response = await fetch(`/api/groupe/${groupId}`);
+        if (!response.ok) throw new Error('Failed to fetch group details');
+
+        const groupDetails = await response.json();
+        return groupDetails.groupName;
+    } catch (error) {
+        console.error('Error fetching group details:', error);
+        return ''; 
+    }
+};
 
   useEffect(() => {
     fetchAllPost()
@@ -59,7 +78,7 @@ const HomePage = () => {
         <Header username={session.user.username} />
         <div className="content-page">
           <section className="post-section">
-            <h1>Publications</h1>
+            <h1 className="title-section">Publications</h1>
             <div className="posts-admins">
               <h2>Publications Générales</h2>
               <br />
@@ -74,7 +93,7 @@ const HomePage = () => {
                       key={post.postId}
                       title={post.title}
                       content={post.content}
-                      author='author'
+                      author='MyGreenCircle'
                       nbComment={5}
                       nbLike={5}
                     />
@@ -93,16 +112,20 @@ const HomePage = () => {
                 ) : error ? (
                   <p>Error: {error}</p>
                 ) : groupPosts.length > 0 ? (
-                  groupPosts.map((post: Post) => (
+                  groupPosts.map((post: Post, index: number) => {
+                    return (
                     <PostCard
                       key={post.postId}
                       title={post.title}
                       content={post.content}
-                      author='author'
+                      groupName={post.groupName}
+                      group
+                      author="Ecaron"
                       nbComment={5}
                       nbLike={5}
                     />
-                  ))
+                    )}
+                  )
                 ) : (
                   <p>No Posts found</p>
                 )}

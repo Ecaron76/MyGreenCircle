@@ -6,15 +6,15 @@ import AuthorBadge from '../AuthorBadge/AuthorBadge';
 import Link from 'next/link';
 type GroupCardProps = {
   title: string;
-  author: string;
   description?: string
-  nbMember: string;
+  nbMember: number;
   myGroup?: boolean
+  group?: boolean;
   groupId: number;
   refreshGroups?: () => void;
 };
 
-const GroupCard: React.FC<GroupCardProps> = ({ title, author, description, nbMember, myGroup, groupId, refreshGroups  }) => {
+const GroupCard: React.FC<GroupCardProps> = ({ title, description, nbMember, myGroup, groupId, refreshGroups, group  }) => {
   const handleJoinGroup = async () => {
     try {
       const response = await fetch(`/api/groupe/join/${groupId}`, {
@@ -40,7 +40,7 @@ const GroupCard: React.FC<GroupCardProps> = ({ title, author, description, nbMem
             <div className="groupeIllustration">
               <Image alt="" src='/assets/images/groupe.png' width={300} height={200} className="groupeImg"/>
             </div>
-            <AuthorBadge author='Ecaron' groupeName={title}/>
+            <AuthorBadge groupName={title} group={group}/>
             <div className='groupeDescription'>
                 {description}
             </div>
