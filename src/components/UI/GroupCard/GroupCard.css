@@ -6,18 +6,11 @@
     padding-bottom: 20px;
   
   }
-  .groupeAuthor{
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .authorInfos h3{
-    font-size: 24px;
-  }
-  .authorInfos h4{
-    font-size: 14px;
-    color: #24355A;
+
+
+
+  .title-group{
+    text-align: center;
   }
   
   .groupeIllustration{
