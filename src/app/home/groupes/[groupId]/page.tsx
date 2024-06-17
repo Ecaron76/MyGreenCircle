@@ -16,7 +16,10 @@ type SingleGroupePageProps = {
     }
 
 }
-
+interface UserRole {
+    groupId: number;
+    role: string;
+}
 interface GroupDetails {
     groupId: number;
     groupName: string;
@@ -33,15 +36,16 @@ interface Post {
 const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
     const { data: session } = useSession();
     const router = useRouter();
-
     const { groupId } = params;
-    console.log(groupId)
+
     const [groupDetails, setGroupDetails] = useState<GroupDetails>();
     const [allGroupPosts, setAllGroupPosts] = useState<Post[]>([]);
+    const role = session?.user.roles.find((r: UserRole) => r.groupId === Number(groupId)).role;
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
 
+    
     const fetchGroupDetails = async () => {
         if (!groupId) return;
 
@@ -93,8 +97,11 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
 
     useEffect(() => {
         fetchGroupDetails();
-        fetchAllGroupPost()
+        fetchAllGroupPost();
       }, [groupId]);
+
+      
+      
 
 
     if (session?.user) {
@@ -113,7 +120,12 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
                             <h1 className="group-title">{groupDetails.groupName}</h1>
                             <p>{groupDetails.groupDescription}</p>
                             <p>{groupDetails.groupLocation}</p>
-                            <button className="leave-btn" onClick={handleLeaveGroup}>Quitter le groupe</button>
+                            { role !== 'admin' ? 
+                            (
+                                <button className="leave-btn" onClick={handleLeaveGroup}>Quitter le groupe</button>
+
+                            ) : null
+                            }
                         </div>
                     ) : (
                         <p>No group details found</p>

@@ -19,6 +19,7 @@ interface Post {
 
 };
 
+
 const HomePage = () => {
   const { data: session } = useSession();
 
@@ -48,7 +49,6 @@ const HomePage = () => {
       setIsLoading(false);
     }
   };
-
   useEffect(() => {
     fetchAllPost()
   }, []);
