@@ -14,7 +14,6 @@ type SingleGroupePageProps = {
     params: {
         groupId: number
     }
-
 }
 interface UserRole {
     groupId: number;
@@ -108,8 +107,6 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
         return (
             <main>
                 <Header username={session.user.username} />
-                
-                
                 <div className="group-details-container">
                     {isLoading ? (
                         <p>Loading...</p>

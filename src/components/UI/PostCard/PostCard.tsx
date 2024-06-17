@@ -10,14 +10,15 @@ type PostCardProps = {
   author: string;
   nbLike: number;
   nbComment: number;
+  groupName?: string
 
 };
 
-const PostCard: React.FC<PostCardProps> = ({ title, content, author, nbComment, nbLike, isVisible  }) => {
+const PostCard: React.FC<PostCardProps> = ({ title, content, author, nbComment, nbLike, isVisible, groupName  }) => {
   return (
     <div className="postCard">
     <div className='header-card'>
-      <AuthorBadge author='Ecaron' groupeName='EcoNormandie'/>
+      <AuthorBadge author='Ecaron' groupName={groupName}/>
       {isVisible !== undefined ? (
         isVisible ? 
         ( <div className='published tag'>Publié</div> ) : 
