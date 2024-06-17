@@ -4,21 +4,20 @@ import Header from "@/components/UI/Header/Header";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
-import './SingleGroupePage.css'
 import { redirect, useRouter } from "next/navigation";
 import PostCard from "@/components/UI/PostCard/PostCard";
 import MainButton from "@/components/UI/MainButton/MainButton";
 import Link from "next/link";
 
+import './MyPosts.css'
+
 type SingleGroupePageProps = {
     params: {
         groupId: number
     }
+
 }
-interface UserRole {
-    groupId: number;
-    role: string;
-}
+
 interface GroupDetails {
     groupId: number;
     groupName: string;
@@ -30,21 +29,19 @@ interface Post {
     postId: number;
     title: string;
     content: string;
+    isVisible: boolean;
 
 };
-const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
+const MyPosts = ({ params }: SingleGroupePageProps) => {
     const { data: session } = useSession();
     const router = useRouter();
     const { groupId } = params;
-
+    const [allMyPostsGroup, setAllMyPostsGroup] = useState<Post[]>([]);
     const [groupDetails, setGroupDetails] = useState<GroupDetails>();
-    const [allGroupPosts, setAllGroupPosts] = useState<Post[]>([]);
-    const role = session?.user.roles.find((r: UserRole) => r.groupId === Number(groupId)).role;
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
 
-    
     const fetchGroupDetails = async () => {
         if (!groupId) return;
 
@@ -62,16 +59,16 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
         }
     };
 
-    const fetchAllGroupPost = async () => {
+    const fetchAllMyPostsGroup = async () => {
         if (!groupId) return;
 
         setIsLoading(true);
         try {
-            const response = await fetch(`/api/post/${groupId}`);
+            const response = await fetch(`/api/post/${groupId}/me`);
             if (!response.ok) throw new Error('Failed to fetch group details');
 
             const dataPosts = await response.json();
-            setAllGroupPosts(dataPosts);
+            setAllMyPostsGroup(dataPosts);
         } catch (error) {
 
         } finally {
@@ -79,28 +76,12 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
         }
     };
 
-    const handleLeaveGroup = async () => {
-        try {
-            const response = await fetch(`/api/groupe/join/${groupId}`, {
-                method: 'DELETE',
-            });
-
-            if (!response.ok) throw new Error('Failed to leave group');
-
-            alert('You have left the group successfully');
-            router.push('/home/groupes');        
-        } catch (error) {
-            console.error('Error leaving group:', error);
-        }
-    };
+    
 
     useEffect(() => {
-        fetchGroupDetails();
-        fetchAllGroupPost();
+        fetchGroupDetails()
+        fetchAllMyPostsGroup()
       }, [groupId]);
-
-      
-      
 
 
     if (session?.user) {
@@ -117,42 +98,39 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
                             <h1 className="group-title">{groupDetails.groupName}</h1>
                             <p>{groupDetails.groupDescription}</p>
                             <p>{groupDetails.groupLocation}</p>
-                            { role !== 'admin' ? 
-                            (
-                                <button className="leave-btn" onClick={handleLeaveGroup}>Quitter le groupe</button>
+                            <Link href={`/home/groupes/${groupId}/write`}><MainButton name="Ecrire un post"/></Link>
 
-                            ) : null
-                            }
                         </div>
+                        
                     ) : (
                         <p>No group details found</p>
                     )}
                 </div>
-                <nav className="group-navbar">
-                    <Link href={`/home/groupes/${groupId}/myposts`}><div>Mes posts</div></Link>
-                    </nav>    
-                <h2>Publications</h2>
+                <h1 className="title-myposts">Toutes vos publications</h1>
                 <div className="post-list">
                 {isLoading ? (
                         <p>Loading...</p>
                     ) : error ? (
                         <p>Error: {error}</p>
-                    ) : allGroupPosts.length > 0 ? (
-                        allGroupPosts.map((post: Post) => (
+                    ) : allMyPostsGroup.length > 0 ? (
+                        allMyPostsGroup.map((post: Post) => (
                             <PostCard
                                 key={post.postId}
                                 title={post.title}
                                 content={post.content}
-                                author="Ecaron"
+                                author={'author'}
                                 nbComment={5}
                                 nbLike={5}
-                                group={true}
+                                isVisible={post.isVisible}
                             />
                         ))
                     ) : (
                         <p>No Posts found</p>
                     )}
                 </div>
+                
+                
+               
 
 
             </main>
@@ -162,4 +140,4 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
 
 
 
-export default SingleGroupePage
+export default MyPosts

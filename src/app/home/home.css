@@ -1,11 +1,11 @@
-h2{
+.title-posts-section{
     font-size: 28px;
     width: 25%;
     padding: 17px;
     border-radius: 20px;
     text-align: center;
 }
-h1{
+.title-section{
     font-size: 42px;
     text-align: center;
     padding-bottom: 15px;

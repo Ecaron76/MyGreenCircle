@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -5,7 +7,7 @@
 
 header{
     
-    padding: 10px 0cm 10px 0;
+    padding: 15px 0cm 15px 0;
     display: flex;
     background-color: #18534F;
     width: 100%;
@@ -19,10 +21,15 @@ header div{
 }
 
 .header-logo{
+    padding-left: 10px;
     justify-content: center;
-    width: 13%;
+    
     gap: 20px;
 
+}
+.header-logo p{
+    font-family: 'Akaya Kanadaka', cursive;
+    font-size: 34px;
 }
 .header-nav{
     width: 50%;

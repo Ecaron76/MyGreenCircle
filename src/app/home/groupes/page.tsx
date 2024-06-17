@@ -10,9 +10,11 @@ import CreateGrpModal from "@/components/GroupePage/CreateGrpModal/CreateGrpModa
 
 
 interface Group {
+    membersCount: number;
     groupId: number;
     author: string;
     groupName: string;
+    groupDescription: string;
 }
 
 const GroupesPage = () => {
@@ -24,7 +26,20 @@ const GroupesPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
 
+    const fetchMembersCount = async (groupId: number) => {
+        try {
+            const response = await fetch(`/api/groupe/join/${groupId}/count`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch members count');
+            }
 
+            const data = await response.json();
+            return data.membersCount;
+        } catch (error) {
+            console.error('Error:', error);
+            return 0;
+        }
+    };
 
     const refreshGroups = async () => {
         setIsLoading(true);
@@ -42,9 +57,18 @@ const GroupesPage = () => {
                 newGroupsResponse.json(),
                 myGroupsResponse.json()
             ]);
+            const newGroupsDataWithMembersCount = await Promise.all(newGroupsData.map(async (group: Group) => {
+                const membersCount = await fetchMembersCount(group.groupId);
+                return { ...group, membersCount: membersCount };
+            }));
 
-            setNewGroups(newGroupsData);
-            setMyGroups(myGroupsData);
+            const myGroupsDataWithMembersCount = await Promise.all(myGroupsData.map(async (group: Group) => {
+                const membersCount = await fetchMembersCount(group.groupId);
+                return { ...group, membersCount: membersCount };
+            }));
+
+            setNewGroups(newGroupsDataWithMembersCount);
+            setMyGroups(myGroupsDataWithMembersCount);
 
         } catch (error) {
             if (error instanceof Error) {
@@ -103,9 +127,9 @@ const GroupesPage = () => {
                                 <GroupCard
                                     key={myGroup.groupId}
                                     groupId={myGroup.groupId}
-                                    author={myGroup.author}
                                     title={myGroup.groupName}
-                                    nbMember="5,2K"
+                                    nbMember={myGroup.membersCount}
+                                    description={myGroup.groupDescription}
                                     myGroup
                                 />
 
@@ -127,10 +151,11 @@ const GroupesPage = () => {
                                     <GroupCard
                                         key={newGroup.groupId}
                                         groupId={newGroup.groupId}
-                                        author={newGroup.author}
                                         title={newGroup.groupName}
-                                        nbMember="5,2K"
+                                        nbMember={newGroup.membersCount}
+                                        description={newGroup.groupDescription}
                                         refreshGroups={refreshGroups}
+                                        group={true}
                                     />
                                 ))
                         )}

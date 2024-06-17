@@ -58,20 +58,30 @@ export const authOptions: NextAuthOptions = {
           ...token,
           username: user.username,
           admin: user.admin,
-          id: user.id
+          id: user.id,
         }
       }
       return token
     
     },
     async session({session, token}){
+      const roles = await prisma.join.findMany({
+        where: {
+            userId: String(token.id),
+        },
+        select: {
+            groupId: true,
+            role: true,
+        },
+    });
       return {
         ...session,
         user: {
           ...session.user,
           username: token.username,
           admin: token.admin,
-          id: token.id
+          id: token.id,
+          roles: roles,
         }
       }
     }

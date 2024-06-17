@@ -196,3 +196,88 @@ export async function PATCH(req: Request, { params }: { params: { postId: string
         );
     }
 }
+
+
+
+
+export async function PUT(req: Request, { params }: { params: { postId: string } }) {
+    try {
+        const session = await getAuthSession();
+
+        if (!session || !session.user) {
+            return NextResponse.json(
+                { message: 'Not Authenticated' },
+                { status: 403 }
+            );
+        }
+        const { postId } = params;
+        const body = await req.json();
+        const { isVisible } = body;
+
+        const post = await prisma.post.findUnique({
+            where: { postId: Number(postId) },
+            include: { group: true }
+        });
+
+        if (!post) {
+            return NextResponse.json(
+                { message: 'Post not found' },
+                { status: 404 }
+            );
+        }
+        if (post.groupId) {
+            const MemberAdminGroup = await prisma.join.findFirst({
+                where: {
+                    userId: session.user.id,
+                    groupId: Number(post.groupId),
+                    isAccepted: true,
+                    role: 'admin'
+                }
+            });
+            if (MemberAdminGroup) {
+                const updatedPost = await prisma.post.update({
+                    where: { postId: Number(postId) },
+                    data: {
+                        isVisible
+                    }
+                });
+
+                return NextResponse.json({ updatedPost }, { status: 200 });  
+            }
+
+            if (session.user.admin && isVisible == false) {
+                const updatedPost = await prisma.post.update({
+                    where: { postId: Number(postId) },
+                    data: {
+                        isVisible
+                    }
+                });
+        
+                return NextResponse.json({ updatedPost }, { status: 200 });
+            }
+            else{
+                return NextResponse.json({ message: 'User is not authorized to change the visibility of this post.' }, { status: 403 });
+            }
+        }
+
+        if (!post.groupId && session.user.admin) {
+            const updatedPost = await prisma.post.update({
+                where: { postId: Number(postId) },
+                data: {
+                    isVisible
+                }
+            });
+    
+            return NextResponse.json({ updatedPost }, { status: 200 });
+        } else{
+            return NextResponse.json({ message: 'User is not authorized to change the visibility of this post.' }, { status: 403 });
+        }
+
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json(
+            { message: 'Something went wrong' },
+            { status: 500 }
+        );
+    }
+}

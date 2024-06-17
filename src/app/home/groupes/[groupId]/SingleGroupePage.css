@@ -1,18 +1,21 @@
 .group-details-container {
-    margin: auto;
+  justify-content: center;
+    display: flex;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
     
   }
-  .group-details-container h2 {
+  .group-details-container .group-title {
     margin-bottom: 10px;
+    border-bottom: 0;
   }
   .group-details-container p {
     margin: 5px 0;
   }
-  .group-details-container button {
+  .leave-btn {
     padding: 10px 20px;
     background-color: #d9534f;
     color: white;
@@ -20,7 +23,7 @@
     border-radius: 4px;
     cursor: pointer;
   }
-  .group-details-container button:hover {
+  .leave-btn:hover {
     background-color: #c9302c;
   }
 
@@ -29,4 +32,18 @@
     justify-content: space-around;
     flex-wrap: wrap;
     row-gap: 20px;
+  }
+
+  .group-navbar{
+    display: flex;
+    background-color: #18534fc0;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .group-navbar div{
+    color: white;
+    font-weight: bold;
+
   }

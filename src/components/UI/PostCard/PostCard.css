@@ -9,6 +9,27 @@
     flex-direction: column;
     justify-content: space-between;
   }
+  .header-card{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 5px 0 5px;
+  }
+  .published{
+    background-color: #4f766f;
+    color: white;
+  }
+
+  .unpublished{
+    border: solid 1px #4f766f;
+    color: #4f766f;
+  }
+  .tag{
+    padding: 10px;
+    border-radius: 20px;
+    font-weight: bold;
+  }
+
   
   .postCard p{
     font-size: 18px;
