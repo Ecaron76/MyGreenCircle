@@ -30,6 +30,7 @@ interface Post {
     title: string;
     content: string;
     isVisible: boolean;
+    picture?: string;
 
 };
 const MyPosts = ({ params }: SingleGroupePageProps) => {
@@ -121,6 +122,7 @@ const MyPosts = ({ params }: SingleGroupePageProps) => {
                                 author={'author'}
                                 nbComment={5}
                                 nbLike={5}
+                                picture={post.picture}
                                 isVisible={post.isVisible}
                             />
                         ))
