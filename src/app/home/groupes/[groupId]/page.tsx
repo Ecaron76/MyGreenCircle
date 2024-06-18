@@ -30,6 +30,7 @@ interface Post {
     postId: number;
     title: string;
     content: string;
+    picture?: string;
 
 };
 const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
@@ -146,6 +147,7 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
                                 author="Ecaron"
                                 nbComment={5}
                                 nbLike={5}
+                                picture={post.picture}
                                 group={true}
                             />
                         ))
