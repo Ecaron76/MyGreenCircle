@@ -13,13 +13,14 @@ export const POST = async (req: Request) => {
       }
   
       const body = await req.json();
-      const { groupName, groupDescription, groupLocation } = body;
+      const { groupName, groupDescription, groupLocation, groupImage } = body;
   
       const group = await prisma.group.create({
         data: {
           groupName,
           groupDescription,
           groupLocation,
+          groupImage,
         },
       });
   
