@@ -113,6 +113,7 @@ model Group {
   groupName        String
   groupDescription String
   groupLocation    String
+  groupImage       String?
   users            Join[]
   posts            Post[]
   events           Event[]

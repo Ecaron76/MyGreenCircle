@@ -15,6 +15,7 @@ interface Group {
     author: string;
     groupName: string;
     groupDescription: string;
+    groupImage?: string;
 }
 
 const GroupesPage = () => {
@@ -130,6 +131,7 @@ const GroupesPage = () => {
                                     title={myGroup.groupName}
                                     nbMember={myGroup.membersCount}
                                     description={myGroup.groupDescription}
+                                    image={myGroup.groupImage}
                                     myGroup
                                 />
 
@@ -155,6 +157,7 @@ const GroupesPage = () => {
                                         nbMember={newGroup.membersCount}
                                         description={newGroup.groupDescription}
                                         refreshGroups={refreshGroups}
+                                        image={newGroup.groupImage}
                                         group={true}
                                     />
                                 ))

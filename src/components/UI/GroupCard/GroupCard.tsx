@@ -8,13 +8,16 @@ type GroupCardProps = {
   title: string;
   description?: string
   nbMember: number;
+  image?: string
   myGroup?: boolean
   group?: boolean;
   groupId: number;
   refreshGroups?: () => void;
 };
 
-const GroupCard: React.FC<GroupCardProps> = ({ title, description, nbMember, myGroup, groupId, refreshGroups  }) => {
+const GroupCard: React.FC<GroupCardProps> = ({ title, description, nbMember, myGroup, groupId, refreshGroups, image  }) => {
+
+  const defaultImage = '/assets/images/groupe.png';
   const handleJoinGroup = async () => {
     try {
       const response = await fetch(`/api/groupe/join/${groupId}`, {
@@ -38,7 +41,7 @@ const GroupCard: React.FC<GroupCardProps> = ({ title, description, nbMember, myG
   return (
     <div className="groupeCard">
             <div className="groupeIllustration">
-              <Image alt="" src='/assets/images/groupe.png' width={300} height={200} className="groupeImg"/>
+              <Image alt="" src={image || defaultImage} width={300} height={200} className="groupeImg"/>
             </div>
             <h2 className='title-group'>{title}</h2>
             <div className='groupeDescription'>
