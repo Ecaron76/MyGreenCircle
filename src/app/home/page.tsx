@@ -16,6 +16,7 @@ interface Post {
   content: string;
   groupId?: number;
   groupName: string;
+  picture?: string;
 
 
 };
@@ -95,6 +96,7 @@ const HomePage = () => {
                       content={post.content}
                       author='MyGreenCircle'
                       nbComment={5}
+                      picture={post.picture}
                       nbLike={5}
                     />
                   ))
@@ -119,6 +121,7 @@ const HomePage = () => {
                       title={post.title}
                       content={post.content}
                       groupName={post.groupName}
+                      picture={post.picture}
                       group
                       author="Ecaron"
                       nbComment={5}
