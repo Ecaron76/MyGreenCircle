@@ -1,7 +1,7 @@
 .postCard{
     padding: 20px;
     display: flex;
-    width: 30%;
+    width: 500px;
     min-height: 350px;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* Ombre */
@@ -41,22 +41,42 @@
     flex-direction: column;
     height: 40%;
     gap: 10px;
+    margin-bottom: 20px;
   }
   
   
   .postTitle{
     font-size: 24px;
     color: #24355A;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: center;
   }
   
   .postButtons{
     display: flex;
     justify-content: space-between;
+
   }
+
+ .like-container{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
   
-  .postButtons div{
+  width: 35%;
+}
+.comment-container{
+  text-align: center;
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+  
+  .trending-btn{
     background-color: #4f766f;
-    width: 30%;
     padding: 7px;
     border-radius: 20px;
     text-align: center;
@@ -75,8 +95,7 @@
   }
 
   .postTrending{
-    display: flex;
-    justify-content: space-between;
+    width: 100%;
     font-weight: bold;
 
   }
