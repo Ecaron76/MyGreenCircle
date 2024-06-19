@@ -138,7 +138,7 @@ const HomePage = () => {
           </section>
 
           <div>
-            <h2>Events</h2>
+            <h2 className="title-section">Events</h2>
             <br></br>
             <div className="event-list">
             </div>

@@ -8,6 +8,7 @@ type HeaderProps = {
   };
 
 const Header: React.FC<HeaderProps> = ({  username  }) => {
+    
     return (
         <header>
             <div className='header-logo'>
