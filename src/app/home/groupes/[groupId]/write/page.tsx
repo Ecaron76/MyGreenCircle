@@ -60,7 +60,11 @@ const WritePostPage = ({ params }: WritePostPageProps) => {
 
         const imageUrl = await uploadImage();
 
-
+        if (!imageUrl) {
+            alert('Failed to upload image. Please try again.');
+            setIsLoading(false);
+            return;
+          }
         try {
             const response = await fetch('/api/post/item', {
                 method: 'POST',
