@@ -85,7 +85,7 @@ const CreateGrpModal: React.FC<CreateGrpModalProps> = ({ onClose, onSuccess }) =
       <div className="modal-content-register">
         <h3 className='modal-title'>Création de groupe</h3>
         <span className="close" onClick={onClose}>&times;</span>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='form-group'>
           <div className="form-group">
             <label htmlFor="groupName">Nom</label>
             <input 
