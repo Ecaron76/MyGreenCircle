@@ -18,6 +18,13 @@ interface Post {
     content: string;
 
 };
+
+interface GroupDetails {
+    groupId: number;
+    groupName: string;
+    groupDescription: string;
+    groupLocation: string;
+};
 const WritePostPage = ({ params }: WritePostPageProps) => {
     const { data: session } = useSession();
     const router = useRouter();
@@ -29,6 +36,7 @@ const WritePostPage = ({ params }: WritePostPageProps) => {
     const [error, setError] = useState('');
     const [file, setFile] = useState<File>()
     const [imageObjectUrl, setImageObjectUrl] = useState<string | null>(null)
+    const [groupDetails, setGroupDetails] = useState<GroupDetails>();
 
 
     const uploadImage = async () => {
@@ -60,7 +68,11 @@ const WritePostPage = ({ params }: WritePostPageProps) => {
 
         const imageUrl = await uploadImage();
 
-
+        if (!imageUrl) {
+            alert('Failed to upload image. Please try again.');
+            setIsLoading(false);
+            return;
+          }
         try {
             const response = await fetch('/api/post/item', {
                 method: 'POST',
@@ -83,15 +95,53 @@ const WritePostPage = ({ params }: WritePostPageProps) => {
         }
     };
 
+    const fetchGroupDetails = async () => {
+        if (!groupId) return;
+
+        setIsLoading(true);
+        try {
+            const response = await fetch(`/api/groupe/${groupId}`);
+            if (!response.ok) throw new Error('Failed to fetch group details');
+
+            const data = await response.json();
+            setGroupDetails(data);
+        } catch (error) {
+
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    useEffect(() => {
+        fetchGroupDetails()
+      }, [groupId]);
 
     if (session?.user) {
         return (
             <main>
                 <Header username={session.user.username} />
-
+                <div className="group-details-container">
+                    {isLoading ? (
+                        <div className="loading-circle">
+                        <svg className="spinner" viewBox="0 0 50 50">
+                          <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
+                        </svg>
+                      </div>
+                    ) : error ? (
+                        <p>Error: {error}</p>
+                    ) : groupDetails ? (
+                        <div>
+                            <h1 className="group-title">{groupDetails.groupName}</h1>
+                            <p>{groupDetails.groupDescription}</p>
+                            <p>{groupDetails.groupLocation}</p>
+                        </div>
+                        
+                    ) : (
+                        <p>No group details found</p>
+                    )}
+                </div>
                 <form onSubmit={createPost}>
                     <div>
-                        <label htmlFor="title">Title:</label>
+                        <label htmlFor="title">Titre:</label>
                         <input
                             type="text"
                             id="title"
@@ -101,7 +151,7 @@ const WritePostPage = ({ params }: WritePostPageProps) => {
                         />
                     </div>
                     <div>
-                        <label htmlFor="content">Content:</label>
+                        <label htmlFor="content">Contenu:</label>
                         <textarea
                             id="content"
                             value={content}
@@ -127,7 +177,7 @@ const WritePostPage = ({ params }: WritePostPageProps) => {
                         {imageObjectUrl && <img src={imageObjectUrl} alt="Post Preview" className="image-preview" />}
                     </div>
                     <button type="submit" disabled={isLoading}>
-                        {isLoading ? 'Creating...' : 'Create Post'}
+                        {isLoading ? 'Création' : 'Créer le post'}
                     </button>
                 </form>
 

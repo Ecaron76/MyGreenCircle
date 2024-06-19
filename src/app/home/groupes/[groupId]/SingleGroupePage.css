@@ -40,10 +40,70 @@
     padding: 20px;
     align-items: center;
     justify-content: center;
+    margin-bottom: 20px;
   }
 
   .group-navbar div{
     color: white;
     font-weight: bold;
 
+  }
+
+  .title-section {
+    font-size: 48px;
+    text-align: center;
+    color: #226D68;
+    margin: auto;
+    margin-bottom: 30px;
+    width: fit-content;
+    position: relative;
+    padding-bottom: 15px;
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(to right, #226D68, #34a853);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  .title-section::before,
+  .title-section::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 4px;
+    background-color: #34a853;
+    position: absolute;
+    bottom: 0;
+  }
+  
+  .title-section::before {
+    left: -60px;
+  }
+  
+  .title-section::after {
+    right: -60px;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .title-section {
+      font-size: 32px;
+    }
+  
+    .title-section::before,
+    .title-section::after {
+      width: 30px;
+    }
   }

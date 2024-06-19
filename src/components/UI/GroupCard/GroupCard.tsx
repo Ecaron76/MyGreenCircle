@@ -15,7 +15,7 @@ type GroupCardProps = {
   refreshGroups?: () => void;
 };
 
-const GroupCard: React.FC<GroupCardProps> = ({ title, description, nbMember, myGroup, groupId, refreshGroups, image  }) => {
+const GroupCard: React.FC<GroupCardProps> = ({ title, description, nbMember, myGroup, groupId, refreshGroups, image }) => {
 
   const defaultImage = '/assets/images/groupe.png';
   const handleJoinGroup = async () => {
@@ -40,25 +40,27 @@ const GroupCard: React.FC<GroupCardProps> = ({ title, description, nbMember, myG
   };
   return (
     <div className="groupeCard">
-            <div className="groupeIllustration">
-              <Image alt="" src={image || defaultImage} width={300} height={200} className="groupeImg"/>
+      <div className="groupeIllustration">
+        <Image alt="" src={image || defaultImage} width={300} height={200} className="groupeImg" />
+      </div>
+      <h2 className='title-group'>{title}</h2>
+      <div className='groupeDescription'>
+        {description}
+      </div>
+      <div className='CTA-group'>
+        <div className="nbMembres">
+          {nbMember} membres
+        </div>
+        {
+          myGroup ? <Link href={`/home/groupes/${groupId}`}><div className="groupeBtn">Consulter</div></Link>
+            :
+            <div className='groupeBtn-container'>
+              <div className="groupeBtn" onClick={handleJoinGroup}>Rejoindre</div>
             </div>
-            <h2 className='title-group'>{title}</h2>
-            <div className='groupeDescription'>
-                {description}
-            </div>
-            <div className="nbMembres">
-            {nbMember} membres
-            </div>
-            {
-              myGroup ? <Link  href={`/home/groupes/${groupId}`}><div className="groupeBtn">Consulter</div></Link>
-              : 
-              <div className='groupeBtn-container'>
-                <div className="groupeBtn" onClick={handleJoinGroup}>Rejoindre</div> 
-              </div>
-            }
-            
-          </div>
+        }
+      </div>
+
+    </div>
   )
 };
 export default GroupCard
