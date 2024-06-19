@@ -98,10 +98,12 @@
   display: flex;
   width: 100%;
   justify-content: center;
+  height: 30%;
 }
 
 .postImg {
   width: 100%;
+  height: 100%;
   border-radius: 10px;
 }
 
