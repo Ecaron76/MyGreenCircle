@@ -102,3 +102,17 @@ form{
   border-radius: 4px;
 }
 
+.modal-title{
+  font-size: 48px;
+    text-align: center;
+    color: #226D68;
+    margin-bottom: 30px;
+    
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(to right, #226D68, #34a853);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+}
