@@ -59,3 +59,14 @@
     margin-bottom: 20px;
 
 }
+
+
+@media (max-width: 1000px) {
+  .groupeCard{
+      width: 700px;
+  }
+  .groupeIllustration{
+    height: 50%;
+  }
+  
+}
