@@ -38,3 +38,24 @@ export async function deleteGroup(groupId: number): Promise<void> {
     throw error;
   }
 }
+
+export const fetchGroupPosts = async (groupId: number) => {
+  try {
+    const response = await fetch(`/api/post/${groupId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch group posts");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching group posts:", error);
+    throw error;
+  }
+};
