@@ -131,3 +131,15 @@
     width: 100%;
   }
 }
+
+.edit-icons {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.icon {
+  font-size: 30px;
+  cursor: pointer;
+  color: #4f766f;
+}

@@ -10,8 +10,9 @@ import MainButton from "@/components/UI/MainButton/MainButton";
 import Link from "next/link";
 
 import './MyPosts.css'
+import DeleteModal from "@/components/UI/DeleteModal/DeleteModal";
 
-type SingleGroupePageProps = {
+type MyPostsPageProps = {
     params: {
         groupId: number
     }
@@ -33,15 +34,18 @@ interface Post {
     picture?: string;
 
 };
-const MyPosts = ({ params }: SingleGroupePageProps) => {
+const MyPosts = ({ params }: MyPostsPageProps) => {
     const { data: session } = useSession();
-    const router = useRouter();
     const { groupId } = params;
     const [allMyPostsGroup, setAllMyPostsGroup] = useState<Post[]>([]);
     const [groupDetails, setGroupDetails] = useState<GroupDetails>();
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
+
+
+    const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+    const [postToDelete, setPostToDelete] = useState<number | null>(null);
 
     const fetchGroupDetails = async () => {
         if (!groupId) return;
@@ -76,6 +80,29 @@ const MyPosts = ({ params }: SingleGroupePageProps) => {
             setIsLoading(false);
         }
     };
+    const handleDeletePostClick = (postId:number) => {
+        setPostToDelete(postId);
+        setIsDeleteModalVisible(true);
+      };
+    
+      const closeDeleteModal = () => {
+        setIsDeleteModalVisible(false);
+        setPostToDelete(null);
+      };
+    
+      const handleDeletePost = async () => {
+        try {
+          const response = await fetch(`/api/post/item/${postToDelete}`, {
+            method: 'DELETE',
+          });
+          if (!response.ok) throw new Error('Failed to delete post');
+    
+          setAllMyPostsGroup((prevPosts) => prevPosts.filter((post) => post.postId !== postToDelete));
+          closeDeleteModal();
+        } catch (error) {
+          setError('');
+        }
+      };
 
     
 
@@ -132,6 +159,8 @@ const MyPosts = ({ params }: SingleGroupePageProps) => {
                                 nbLike={5}
                                 picture={post.picture}
                                 isVisible={post.isVisible}
+                                editable={true}
+                                onDelete={() => handleDeletePostClick(post.postId)}
                             />
                         ))
                     ) : (
@@ -141,7 +170,12 @@ const MyPosts = ({ params }: SingleGroupePageProps) => {
                 
                 
                
-
+                {isDeleteModalVisible && (
+          <DeleteModal
+            onClose={closeDeleteModal}
+            onSuccess={handleDeletePost}
+          />
+        )}
 
             </main>
         );
