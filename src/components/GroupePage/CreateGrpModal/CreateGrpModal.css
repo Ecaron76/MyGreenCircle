@@ -18,7 +18,7 @@
   padding: 20px;
   border-radius: 5px;
   position: relative;
-  width: 500px;
+  width: 700px;
   max-width: 90%; 
   height: 90%;
   text-align: center;
@@ -43,7 +43,7 @@
   font-size: 20px;
   cursor: pointer;
 }
-form{
+.grp-form{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -79,4 +79,39 @@ form{
 
 }
 
+.custom-file-upload {
+  display: inline-block;
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #ffffff;
+  border: 1px solid #226D68;
+  color: white;
+  border-radius: 4px;
+  font-weight: bold;
+}
 
+.custom-file-upload:hover {
+  background-color: #226D68;
+  color: white;
+}
+
+.image-preview {
+  margin-top: 10px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.modal-title{
+  font-size: 48px;
+    text-align: center;
+    color: #226D68;
+    margin-bottom: 30px;
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(to right, #226D68, #34a853);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+}

@@ -15,6 +15,7 @@ interface Group {
     author: string;
     groupName: string;
     groupDescription: string;
+    groupImage?: string;
 }
 
 const GroupesPage = () => {
@@ -119,7 +120,11 @@ const GroupesPage = () => {
                     <h2>Vos Groupes</h2>
                     <div className="groups-list">
                         {isLoading ? (
-                            <p>Loading...</p>
+                            <div className="loading-circle">
+                            <svg className="spinner" viewBox="0 0 50 50">
+                              <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
+                            </svg>
+                          </div>
                         ) : error ? (
                             <p>Error: {error}</p>
                         ) : (
@@ -130,6 +135,7 @@ const GroupesPage = () => {
                                     title={myGroup.groupName}
                                     nbMember={myGroup.membersCount}
                                     description={myGroup.groupDescription}
+                                    image={myGroup.groupImage}
                                     myGroup
                                 />
 
@@ -141,7 +147,11 @@ const GroupesPage = () => {
                     <h2>Découvrir</h2>
                     <div className="groups-list">
                         {isLoading ? (
-                            <p>Loading...</p>
+                            <div className="loading-circle">
+                            <svg className="spinner" viewBox="0 0 50 50">
+                              <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
+                            </svg>
+                          </div>
                         ) : error ? (
                             <p>Error: {error}</p>
                         ) : (
@@ -155,6 +165,7 @@ const GroupesPage = () => {
                                         nbMember={newGroup.membersCount}
                                         description={newGroup.groupDescription}
                                         refreshGroups={refreshGroups}
+                                        image={newGroup.groupImage}
                                         group={true}
                                     />
                                 ))

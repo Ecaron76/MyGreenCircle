@@ -16,6 +16,7 @@ interface Post {
   content: string;
   groupId?: number;
   groupName: string;
+  picture?: string;
 
 
 };
@@ -84,7 +85,11 @@ const HomePage = () => {
               <br />
               <div className="post-list">
                 {isLoading ? (
-                  <p>Loading...</p>
+                  <div className="loading-circle">
+                  <svg className="spinner" viewBox="0 0 50 50">
+                    <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
+                  </svg>
+                </div>
                 ) : error ? (
                   <p>Error: {error}</p>
                 ) : adminPosts.length > 0 ? (
@@ -95,6 +100,7 @@ const HomePage = () => {
                       content={post.content}
                       author='MyGreenCircle'
                       nbComment={5}
+                      picture={post.picture}
                       nbLike={5}
                     />
                   ))
@@ -108,7 +114,11 @@ const HomePage = () => {
               <br />
               <div className="post-list">
                 {isLoading ? (
-                  <p>Loading...</p>
+                  <div className="loading-circle">
+                  <svg className="spinner" viewBox="0 0 50 50">
+                    <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
+                  </svg>
+                </div>
                 ) : error ? (
                   <p>Error: {error}</p>
                 ) : groupPosts.length > 0 ? (
@@ -119,6 +129,7 @@ const HomePage = () => {
                       title={post.title}
                       content={post.content}
                       groupName={post.groupName}
+                      picture={post.picture}
                       group
                       author="Ecaron"
                       nbComment={5}
@@ -135,7 +146,7 @@ const HomePage = () => {
           </section>
 
           <div>
-            <h2>Events</h2>
+            <h2 className="title-section">Events</h2>
             <br></br>
             <div className="event-list">
             </div>

@@ -56,3 +56,45 @@ button:disabled {
 button:not(:disabled):hover {
     background-color: #00594c;
 }
+
+.group-details-container {
+    justify-content: center;
+      display: flex;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      
+    }
+    .group-details-container .group-title {
+      margin-bottom: 10px;
+      border-bottom: 0;
+    }
+    .group-details-container p {
+      margin: 5px 0;
+    }
+
+    .custom-file-upload {
+        text-align: center;
+        display: inline-block;
+        padding: 10px 20px;
+        cursor: pointer;
+        background-color: #ffffff;
+        border: 1px solid #226D68;
+        color: #226D68;
+        border-radius: 4px;
+        font-weight: bold;
+      }
+      
+      .custom-file-upload:hover {
+        background-color: #226D68;
+        color: white;
+      }
+      
+      .image-preview {
+        margin-top: 10px;
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+      }

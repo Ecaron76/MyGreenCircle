@@ -1,28 +1,140 @@
-.title-posts-section{
+.title-posts-section {
     font-size: 28px;
-    width: 25%;
-    padding: 17px;
+    width: fit-content;
+    padding: 10px 20px;
     border-radius: 20px;
     text-align: center;
+    color: white;
+    margin-bottom: 20px;
+  }
+/* Titre Principal */
+.title-section {
+  font-size: 48px;
+  text-align: center;
+  color: #226D68;
+  margin: auto;
+  margin-bottom: 30px;
+  width: fit-content;
+  position: relative;
+  padding-bottom: 15px;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: linear-gradient(to right, #226D68, #34a853);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeIn 1s ease-in-out;
 }
-.title-section{
-    font-size: 42px;
+
+.title-section::before,
+.title-section::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 4px;
+  background-color: #34a853;
+  position: absolute;
+  bottom: 0;
+}
+
+.title-section::before {
+  left: -60px;
+}
+
+.title-section::after {
+  right: -60px;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .title-section {
+    font-size: 32px;
+  }
+
+  .title-section::before,
+  .title-section::after {
+    width: 30px;
+  }
+}
+.title-section {
+    font-size: 48px;
     text-align: center;
-    padding-bottom: 15px;
-    border-bottom: solid 8px #226D68;
     color: #226D68;
     margin: auto;
     margin-bottom: 30px;
-    width: 70%;
-    
-}
+    width: fit-content;
+    position: relative;
+    padding-bottom: 15px;
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(to right, #226D68, #34a853);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  .title-section::before,
+  .title-section::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 4px;
+    background-color: #34a853;
+    position: absolute;
+    bottom: 0;
+  }
+  
+  .title-section::before {
+    left: -60px;
+  }
+  
+  .title-section::after {
+    right: -60px;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .title-section {
+      font-size: 32px;
+    }
+  
+    .title-section::before,
+    .title-section::after {
+      width: 30px;
+    }
+  }
+  
 .post-list{
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     flex-wrap: wrap;
     row-gap: 20px;
+    gap: 40px;
 }
-
+.posts-admins, .posts-groups {
+    margin-bottom: 30px;
+  }
 .group-list{
     display: flex;
     justify-content: space-around;
@@ -37,19 +149,74 @@
     padding: 50px;
 }
 
-.posts-admins h2{
-    background-color: #D6955B;  
-}
+.title-posts-section {
+    font-size: 24px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .posts-admins .title-posts-section {
+    background-color: #4CAF50; 
+  }
+  
+  .posts-groups .title-posts-section {
+    background-color: #8BC34A; 
+    color: #fff; 
+  }
 
-.posts-groups h2{
-    background-color: #FEEAA1;  
-}
-
-.posts-admins{
-    margin-bottom: 30px;
-}
-
-.posts-groups{
-    margin-bottom: 30px;
-}
-
+  @media (max-width: 768px) {
+    .title-posts-section {
+      font-size: 20px;
+      padding: 8px 16px;
+    }
+  
+    .post-list {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+  }
+  .loading-circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+  }
+  
+  .spinner {
+    animation: rotate 1s linear infinite;
+    transform-origin: center center;
+    width: 50px;
+    height: 50px;
+  }
+  
+  .path {
+    stroke: #18534f;
+    stroke-linecap: round;
+    animation: dash 3s ease-in-out infinite;
+  }
+  
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes dash {
+    0% {
+      stroke-dasharray: 1, 150;
+      stroke-dashoffset: 0;
+    }
+    50% {
+      stroke-dasharray: 90, 150;
+      stroke-dashoffset: -35;
+    }
+    100% {
+      stroke-dasharray: 90, 150;
+      stroke-dashoffset: -124;
+    }
+  }
