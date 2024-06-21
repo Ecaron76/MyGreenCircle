@@ -15,8 +15,13 @@ interface Post {
   title: string;
   content: string;
   groupId?: number;
-  groupName: string;
+  group: {
+    groupName: string;
+  };
   picture?: string;
+  user: {
+    username: string;
+  };
 
 
 };
@@ -27,7 +32,6 @@ const HomePage = () => {
 
   const [groupPosts, setGroupPosts] = useState<Post[]>([]);
   const [adminPosts, setAdminPosts] = useState<Post[]>([]);
-  const [groupAuthors, setGroupAuthors] = useState<string[]>([]);
 
 
   const [isLoading, setIsLoading] = useState(true);
@@ -46,9 +50,7 @@ const HomePage = () => {
       setGroupPosts(groupPosts);
       setAdminPosts(adminPosts);
 
-      const groupAuthorsPromises = groupPosts.map(post => fetchGroupDetails(post.groupId!).then(groupName => ({ ...post, groupName })));
-      const postsWithGroupNames = await Promise.all(groupAuthorsPromises);
-      setGroupPosts(postsWithGroupNames);
+      
     } catch (error) {
 
     } finally {
@@ -56,18 +58,7 @@ const HomePage = () => {
     }
   };
 
-  const fetchGroupDetails = async (groupId: number) => {
-    try {
-        const response = await fetch(`/api/groupe/${groupId}`);
-        if (!response.ok) throw new Error('Failed to fetch group details');
-
-        const groupDetails = await response.json();
-        return groupDetails.groupName;
-    } catch (error) {
-        console.error('Error fetching group details:', error);
-        return ''; 
-    }
-};
+  
 
   useEffect(() => {
     fetchAllPost()
@@ -122,16 +113,16 @@ const HomePage = () => {
                 ) : error ? (
                   <p>Error: {error}</p>
                 ) : groupPosts.length > 0 ? (
-                  groupPosts.map((post: Post, index: number) => {
+                  groupPosts.map((post: Post) => {
                     return (
                     <PostCard
                       key={post.postId}
                       title={post.title}
                       content={post.content}
-                      groupName={post.groupName}
+                      groupName={post.group.groupName}
                       picture={post.picture}
                       group
-                      author="Ecaron"
+                      author={post.user.username}
                       nbComment={5}
                       nbLike={5}
                     />

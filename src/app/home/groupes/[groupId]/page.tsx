@@ -31,6 +31,9 @@ interface Post {
     title: string;
     content: string;
     picture?: string;
+    user: {
+        username: string;
+      };
 
 };
 const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
@@ -158,7 +161,7 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
                                 key={post.postId}
                                 title={post.title}
                                 content={post.content}
-                                author="Ecaron"
+                                author={post.user.username}
                                 nbComment={5}
                                 nbLike={5}
                                 picture={post.picture}
