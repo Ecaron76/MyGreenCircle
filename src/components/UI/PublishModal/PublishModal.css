@@ -73,19 +73,19 @@
   }
   
   .btn-publish {
-    background-color: #4f766f;
+    background-color: #4f766f!important;
     color: white;
   }
   .btn-publish:hover {
-    background-color: #63aa9d;
+    background-color: #63aa9d!important;
    
   }
   
   .btn-unpublish {
-    background-color: #ab5555;
+    background-color: #ab5555!important;
     color: white;
   }
   .btn-unpublish:hover {
-    background-color: #c76262;
+    background-color: #c76262!important;
     
   }

@@ -8,6 +8,7 @@ type PublishModalProps = {
 };
 
 const PublishModal: React.FC<PublishModalProps> = ({ onClose, onSuccess, isPublishing }) => {
+  console.log(isPublishing)
   return (
     <div className="modal">
       <div className="modal-publish">
