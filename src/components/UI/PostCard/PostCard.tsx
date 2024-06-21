@@ -19,10 +19,11 @@ type PostCardProps = {
   picture?: string;
   editable?: boolean;
   onDelete?: () => void;
+  onPublish?: () => void;
   validation?: boolean
 };
 
-const PostCard: React.FC<PostCardProps> = ({ postId, groupId, title, content, author, nbComment, nbLike, isVisible, groupName, group, picture, editable, onDelete, validation }) => {
+const PostCard: React.FC<PostCardProps> = ({ postId, groupId, title, content, author, nbComment, nbLike, isVisible, groupName, group, picture, editable, onDelete,onPublish, validation }) => {
 
   const defaultImage = '/assets/images/groupe.png';
 
@@ -41,8 +42,8 @@ const PostCard: React.FC<PostCardProps> = ({ postId, groupId, title, content, au
           <div className="check-icons">
            
             {isVisible ? (
-                  <button className='unpublish-btn'><FiEyeOff className="icon-off" title="Dépublier le post" />Dépublier </button>
-            ): (  <button className='publish-btn'><FiCheckCircle className="icon-check" title="Autoriser la publication" /> Publier </button>)}
+                  <button className='unpublish-btn'><FiEyeOff className="icon-off" title="Dépublier le post" onClick={onPublish}/>Dépublier </button>
+            ): (  <button className='publish-btn'><FiCheckCircle className="icon-check" title="Autoriser la publication" onClick={onPublish}/> Publier </button>)}
           </div>
          )}
       <div className='header-card'>
