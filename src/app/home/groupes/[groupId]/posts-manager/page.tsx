@@ -8,11 +8,11 @@ import { redirect, useRouter } from "next/navigation";
 import PostCard from "@/components/UI/PostCard/PostCard";
 import MainButton from "@/components/UI/MainButton/MainButton";
 import Link from "next/link";
-
-import './MyPosts.css'
+import './PostsManager.css'
 import DeleteModal from "@/components/UI/DeleteModal/DeleteModal";
+import PublishModal from "@/components/UI/PublishModal/PublishModal";
 
-type MyPostsPageProps = {
+type PostsManagerPageProps = {
     params: {
         groupId: number
     }
@@ -35,7 +35,7 @@ interface Post {
     picture?: string;
 
 };
-const MyPosts = ({ params }: MyPostsPageProps) => {
+const PostsManager = ({ params }: PostsManagerPageProps) => {
     const { data: session } = useSession();
     const { groupId } = params;
     const [allMyPostsGroup, setAllMyPostsGroup] = useState<Post[]>([]);
@@ -45,8 +45,9 @@ const MyPosts = ({ params }: MyPostsPageProps) => {
     const [error, setError] = useState('');
 
 
-    const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-    const [postToDelete, setPostToDelete] = useState<number | null>(null);
+    const [isPublishModalVisible, setIsPublishModalVisible] = useState(false);
+    const [isPublishing, setIsPublishing] = useState<boolean | undefined>();
+    const [postToManage, setPostToManage] = useState<number | null>(null);
 
     const fetchGroupDetails = async () => {
         if (!groupId) return;
@@ -81,25 +82,31 @@ const MyPosts = ({ params }: MyPostsPageProps) => {
             setIsLoading(false);
         }
     };
-    const handleDeletePostClick = (postId:number) => {
-        setPostToDelete(postId);
-        setIsDeleteModalVisible(true);
+    const handlePublishPostClick = (postId:number, isVisible: boolean) => {
+        setPostToManage(postId);
+        setIsPublishing(isVisible);
+        setIsPublishModalVisible(true);
       };
     
-      const closeDeleteModal = () => {
-        setIsDeleteModalVisible(false);
-        setPostToDelete(null);
+      const closePublishPostModal = () => {
+        setIsPublishModalVisible(false);
+        setPostToManage(null);
       };
     
-      const handleDeletePost = async () => {
+      const handlePublishPost = async () => {
         try {
-          const response = await fetch(`/api/post/item/${postToDelete}`, {
-            method: 'DELETE',
+            console.log(!isPublishing)
+          const response = await fetch(`/api/post/item/${postToManage}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ isVisible: !isPublishing })
+             
           });
-          if (!response.ok) throw new Error('Failed to delete post');
-    
-          setAllMyPostsGroup((prevPosts) => prevPosts.filter((post) => post.postId !== postToDelete));
-          closeDeleteModal();
+          if (!response.ok) throw new Error('Failed to manage post');
+          fetchAllMyPostsGroup()
+          closePublishPostModal();
         } catch (error) {
           setError('');
         }
@@ -131,15 +138,13 @@ const MyPosts = ({ params }: MyPostsPageProps) => {
                             <h1 className="group-title">{groupDetails.groupName}</h1>
                             <p>{groupDetails.groupDescription}</p>
                             <p>{groupDetails.groupLocation}</p>
-                            <Link href={`/home/groupes/${groupId}/write`}><MainButton name="Ecrire un post"/></Link>
-
                         </div>
                         
                     ) : (
                         <p>No group details found</p>
                     )}
                 </div>
-                <h1 className="title-myposts">Toutes vos publications dans ce groupe</h1>
+                <h1 className="title-allPosts">Toutes les publications dans ce groupe</h1>
                 <div className="post-list">
                 {isLoading ? (
                         <div className="loading-circle">
@@ -162,8 +167,8 @@ const MyPosts = ({ params }: MyPostsPageProps) => {
                                 nbLike={5}
                                 picture={post.picture}
                                 isVisible={post.isVisible}
-                                editable={true}
-                                onDelete={() => handleDeletePostClick(post.postId)}
+                                validation
+                                onPublish={() => handlePublishPostClick(post.postId, post.isVisible)}
                             />
                         ))
                     ) : (
@@ -173,10 +178,11 @@ const MyPosts = ({ params }: MyPostsPageProps) => {
                 
                 
                
-                {isDeleteModalVisible && (
-          <DeleteModal
-            onClose={closeDeleteModal}
-            onSuccess={handleDeletePost}
+                {isPublishModalVisible && (
+          <PublishModal
+            onClose={closePublishPostModal}
+            onSuccess={handlePublishPost}
+            isPublishing={isPublishing}
           />
         )}
 
@@ -187,4 +193,4 @@ const MyPosts = ({ params }: MyPostsPageProps) => {
 
 
 
-export default MyPosts
+export default PostsManager
