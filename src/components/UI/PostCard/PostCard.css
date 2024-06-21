@@ -151,14 +151,19 @@
 }
 .icon-check{
   text-align: center;
-  font-size: 30px;
+  font-size: 25px;
   color: white;
 }
+
+.icon-off{
+  font-size: 25px;
+}
 .publish-btn{
+  font-weight: bold;
   border: none;
   cursor: pointer;
   border-radius: 20px;
-  padding: 10px;
+  padding: 15px;
   padding-left: 20px;
   padding-right: 20px;
   background-color: #4f766f;
@@ -173,10 +178,11 @@
 }
 
 .unpublish-btn{
+  font-weight: bold;
   border: none;
   cursor: pointer;
   border-radius: 20px;
-  padding: 10px;
+  padding: 15px;
   padding-left: 20px;
   padding-right: 20px;
   background-color: #ab5555;
