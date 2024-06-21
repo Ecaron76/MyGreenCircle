@@ -143,3 +143,49 @@
   cursor: pointer;
   color: #4f766f;
 }
+
+.check-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.icon-check{
+  text-align: center;
+  font-size: 30px;
+  color: white;
+}
+.publish-btn{
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #4f766f;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+}
+
+.publish-btn:hover{
+  background-color: #63aa9d;
+}
+
+.unpublish-btn{
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #ab5555;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+}
+
+.unpublish-btn:hover{
+  background-color: #c76262;
+}

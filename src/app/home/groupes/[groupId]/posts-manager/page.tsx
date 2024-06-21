@@ -8,8 +8,7 @@ import { redirect, useRouter } from "next/navigation";
 import PostCard from "@/components/UI/PostCard/PostCard";
 import MainButton from "@/components/UI/MainButton/MainButton";
 import Link from "next/link";
-
-import './MyPosts.css'
+import './PostsManager.css'
 import DeleteModal from "@/components/UI/DeleteModal/DeleteModal";
 
 type MyPostsPageProps = {
@@ -131,15 +130,13 @@ const MyPosts = ({ params }: MyPostsPageProps) => {
                             <h1 className="group-title">{groupDetails.groupName}</h1>
                             <p>{groupDetails.groupDescription}</p>
                             <p>{groupDetails.groupLocation}</p>
-                            <Link href={`/home/groupes/${groupId}/write`}><MainButton name="Ecrire un post"/></Link>
-
                         </div>
                         
                     ) : (
                         <p>No group details found</p>
                     )}
                 </div>
-                <h1 className="title-myposts">Toutes vos publications dans ce groupe</h1>
+                <h1 className="title-allPosts">Toutes les publications dans ce groupe</h1>
                 <div className="post-list">
                 {isLoading ? (
                         <div className="loading-circle">
@@ -162,8 +159,8 @@ const MyPosts = ({ params }: MyPostsPageProps) => {
                                 nbLike={5}
                                 picture={post.picture}
                                 isVisible={post.isVisible}
-                                editable={true}
                                 onDelete={() => handleDeletePostClick(post.postId)}
+                                validation
                             />
                         ))
                     ) : (

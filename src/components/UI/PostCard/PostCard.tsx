@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
-import { FiTrash2, FiEdit } from 'react-icons/fi';
+import { FiTrash2, FiEdit, FiCheckCircle, FiEyeOff } from 'react-icons/fi';
 import Image from 'next/image';
 import './PostCard.css'
 import AuthorBadge from '../AuthorBadge/AuthorBadge';
+import Link from 'next/link';
 
 type PostCardProps = {
+  postId?: number;
+  groupId?: number;
   title: string;
   content: string;
   isVisible?: boolean;
@@ -15,23 +18,33 @@ type PostCardProps = {
   group?: boolean;
   picture?: string;
   editable?: boolean;
-  onDelete: () => void;
+  onDelete?: () => void;
+  validation?: boolean
 };
 
-const PostCard: React.FC<PostCardProps> = ({ title, content, author, nbComment, nbLike, isVisible, groupName, group, picture, editable, onDelete }) => {
+const PostCard: React.FC<PostCardProps> = ({ postId, groupId, title, content, author, nbComment, nbLike, isVisible, groupName, group, picture, editable, onDelete, validation }) => {
 
   const defaultImage = '/assets/images/groupe.png';
 
-  
 
   return (
     <div className="postCard">
       {editable && (
           <div className="edit-icons">
-            <FiEdit className="icon" title="Éditer le post" />
+            <Link href={`/home/groupes/${groupId}/myposts/${postId}/update`}>
+              <FiEdit className="icon" title="Éditer le post" />
+            </Link>
             <FiTrash2 className="icon" title="Supprimer le post" onClick={onDelete}/>
           </div>
         )}
+        {validation && (
+          <div className="check-icons">
+           
+            {isVisible ? (
+                  <button className='unpublish-btn'><FiEyeOff className="icon-off" title="Dépublier le post" />Dépublier </button>
+            ): (  <button className='publish-btn'><FiCheckCircle className="icon-check" title="Autoriser la publication" /> Publier </button>)}
+          </div>
+         )}
       <div className='header-card'>
         <AuthorBadge author={author} groupName={groupName} group={group} />
         {isVisible !== undefined ? (
