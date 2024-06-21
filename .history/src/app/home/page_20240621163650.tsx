@@ -40,9 +40,7 @@ const HomePage = () => {
   const [adminPosts, setAdminPosts] = useState<Post[]>([]);
   const [events, setEvents] = useState<Event[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [errorPosts, setErrorPosts] = useState('');
-  const [errorEvents, setErrorEvents] = useState('');
-
+  const [error, setError] = useState('');
 
   const fetchAllPost = async () => {
     setIsLoading(true);
@@ -58,9 +56,9 @@ const HomePage = () => {
       setAdminPosts(adminPosts);
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setErrorPosts(error.message);
+        setError(error.message);
       } else {
-        setErrorPosts(String(error));
+        setError(String(error));
       }
     } finally {
       setIsLoading(false);
@@ -76,9 +74,9 @@ const HomePage = () => {
       setEvents(dataEvents);
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setErrorEvents(error.message);
+        setError(error.message);
       } else {
-        setErrorEvents(String(error));
+        setError(String(error));
       }
     } finally {
       setIsLoading(false);
@@ -172,8 +170,8 @@ const HomePage = () => {
                     <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
                   </svg>
                 </div>
-                ) : errorPosts ? (
-                  <p>Error: {errorPosts}</p>
+                ) : error ? (
+                  <p>Error: {error}</p>
                 ) : adminPosts.length > 0 ? (
                   adminPosts.map((post: Post) => (
                     <PostCard
@@ -201,8 +199,8 @@ const HomePage = () => {
                     <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
                   </svg>
                 </div>
-                ) : errorPosts ? (
-                  <p>Error: {errorPosts}</p>
+                ) : error ? (
+                  <p>Error: {error}</p>
                 ) : groupPosts.length > 0 ? (
                   groupPosts.map((post: Post, index: number) => {
                     return (
@@ -227,13 +225,18 @@ const HomePage = () => {
           </section>
 
           <div>
+<<<<<<< HEAD
             <h2 className="title-section">Events</h2>
+            <br></br>
+=======
+            <h2>Events</h2>
             <br />
+>>>>>>> 7c70a3235725ad3aba83f8036422b381fa20c064
             <div className="event-list">
               {isLoading ? (
                 <p>Loading...</p>
-              ) : errorEvents ? (
-                <p>Error: {errorEvents}</p>
+              ) : error ? (
+                <p>Error: {error}</p>
               ) : events.length > 0 ? (
                 events.map((event: Event) => (
                   <EventCard

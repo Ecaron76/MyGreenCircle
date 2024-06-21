@@ -38,12 +38,8 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
     const { data: session } = useSession();
     const router = useRouter();
     const { groupId } = params;
-
     const [groupDetails, setGroupDetails] = useState<GroupDetails>();
     const [allGroupPosts, setAllGroupPosts] = useState<Post[]>([]);
-    const role = session?.user.roles.find((r: UserRole) => r.groupId === Number(groupId)).role;
-
-    
     const [isAdmin, setIsAdmin] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
@@ -105,16 +101,13 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
     useEffect(() => {
         fetchGroupDetails();
         fetchAllGroupPost();
-      }, [groupId]);
-
-      
-      
-
+    }, [groupId]);
 
     if (session?.user) {
         return (
             <main>
                 <Header username={session.user.username} />
+                <Link href={`/home/groupes/${groupId}/write`}><MainButton name="Ecrire un post" /></Link>
                 {isAdmin && <MainButton name="Créer un évènement" onClick={() => setIsModalOpen(true)} />}
                 <div className="group-details-container">
                     {isLoading ? (

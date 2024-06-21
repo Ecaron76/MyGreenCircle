@@ -232,8 +232,8 @@ const HomePage = () => {
             <div className="event-list">
               {isLoading ? (
                 <p>Loading...</p>
-              ) : errorEvents ? (
-                <p>Error: {errorEvents}</p>
+              ) : error ? (
+                <p>Error: {error}</p>
               ) : events.length > 0 ? (
                 events.map((event: Event) => (
                   <EventCard

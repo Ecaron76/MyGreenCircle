@@ -3,7 +3,11 @@
 import Header from "@/components/UI/Header/Header";
 import PostCard from "@/components/UI/PostCard/PostCard";
 import './home.css'
+<<<<<<< HEAD
+
+=======
 import EventCard from "@/components/UI/EventCard/EventCard";
+>>>>>>> 7c70a3235725ad3aba83f8036422b381fa20c064
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
@@ -12,10 +16,13 @@ interface Post {
   title: string;
   content: string;
   groupId?: number;
+<<<<<<< HEAD
   groupName: string;
   picture?: string;
 
+=======
 }
+>>>>>>> 7c70a3235725ad3aba83f8036422b381fa20c064
 
 interface Event {
   eventId: number;
@@ -38,11 +45,15 @@ const HomePage = () => {
 
   const [groupPosts, setGroupPosts] = useState<Post[]>([]);
   const [adminPosts, setAdminPosts] = useState<Post[]>([]);
-  const [events, setEvents] = useState<Event[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [errorPosts, setErrorPosts] = useState('');
-  const [errorEvents, setErrorEvents] = useState('');
+<<<<<<< HEAD
+  const [groupAuthors, setGroupAuthors] = useState<string[]>([]);
 
+
+=======
+  const [events, setEvents] = useState<Event[]>([]);
+>>>>>>> 7c70a3235725ad3aba83f8036422b381fa20c064
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
 
   const fetchAllPost = async () => {
     setIsLoading(true);
@@ -56,17 +67,40 @@ const HomePage = () => {
 
       setGroupPosts(groupPosts);
       setAdminPosts(adminPosts);
+<<<<<<< HEAD
+
+      const groupAuthorsPromises = groupPosts.map(post => fetchGroupDetails(post.groupId!).then(groupName => ({ ...post, groupName })));
+      const postsWithGroupNames = await Promise.all(groupAuthorsPromises);
+      setGroupPosts(postsWithGroupNames);
+    } catch (error) {
+
+=======
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setErrorPosts(error.message);
+        setError(error.message);
       } else {
-        setErrorPosts(String(error));
+        setError(String(error));
       }
+>>>>>>> 7c70a3235725ad3aba83f8036422b381fa20c064
     } finally {
       setIsLoading(false);
     }
   };
 
+<<<<<<< HEAD
+  const fetchGroupDetails = async (groupId: number) => {
+    try {
+        const response = await fetch(`/api/groupe/${groupId}`);
+        if (!response.ok) throw new Error('Failed to fetch group details');
+
+        const groupDetails = await response.json();
+        return groupDetails.groupName;
+    } catch (error) {
+        console.error('Error fetching group details:', error);
+        return ''; 
+    }
+};
+=======
   const fetchUserEvents = async () => {
     setIsLoading(true);
     try {
@@ -76,9 +110,9 @@ const HomePage = () => {
       setEvents(dataEvents);
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setErrorEvents(error.message);
+        setError(error.message);
       } else {
-        setErrorEvents(String(error));
+        setError(String(error));
       }
     } finally {
       setIsLoading(false);
@@ -149,6 +183,7 @@ const HomePage = () => {
       console.error('Error deleting event:', error);
     }
   };
+>>>>>>> 7c70a3235725ad3aba83f8036422b381fa20c064
 
   useEffect(() => {
     fetchAllPost();
@@ -172,8 +207,8 @@ const HomePage = () => {
                     <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
                   </svg>
                 </div>
-                ) : errorPosts ? (
-                  <p>Error: {errorPosts}</p>
+                ) : error ? (
+                  <p>Error: {error}</p>
                 ) : adminPosts.length > 0 ? (
                   adminPosts.map((post: Post) => (
                     <PostCard
@@ -201,8 +236,8 @@ const HomePage = () => {
                     <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
                   </svg>
                 </div>
-                ) : errorPosts ? (
-                  <p>Error: {errorPosts}</p>
+                ) : error ? (
+                  <p>Error: {error}</p>
                 ) : groupPosts.length > 0 ? (
                   groupPosts.map((post: Post, index: number) => {
                     return (
@@ -227,13 +262,18 @@ const HomePage = () => {
           </section>
 
           <div>
+<<<<<<< HEAD
             <h2 className="title-section">Events</h2>
+            <br></br>
+=======
+            <h2>Events</h2>
             <br />
+>>>>>>> 7c70a3235725ad3aba83f8036422b381fa20c064
             <div className="event-list">
               {isLoading ? (
                 <p>Loading...</p>
-              ) : errorEvents ? (
-                <p>Error: {errorEvents}</p>
+              ) : error ? (
+                <p>Error: {error}</p>
               ) : events.length > 0 ? (
                 events.map((event: Event) => (
                   <EventCard

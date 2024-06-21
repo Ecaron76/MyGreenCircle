@@ -38,12 +38,8 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
     const { data: session } = useSession();
     const router = useRouter();
     const { groupId } = params;
-
     const [groupDetails, setGroupDetails] = useState<GroupDetails>();
     const [allGroupPosts, setAllGroupPosts] = useState<Post[]>([]);
-    const role = session?.user.roles.find((r: UserRole) => r.groupId === Number(groupId)).role;
-
-    
     const [isAdmin, setIsAdmin] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
@@ -105,11 +101,7 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
     useEffect(() => {
         fetchGroupDetails();
         fetchAllGroupPost();
-      }, [groupId]);
-
-      
-      
-
+    }, [groupId]);
 
     if (session?.user) {
         return (
@@ -130,7 +122,7 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
                             <h1 className="group-title">{groupDetails.groupName}</h1>
                             <p>{groupDetails.groupDescription}</p>
                             <p>{groupDetails.groupLocation}</p>
-                            { role !== 'admin' ? 
+                            { session.user.role !== 'admin' ? 
                             (
                                 <button className="leave-btn" onClick={handleLeaveGroup}>Quitter le groupe</button>
 
@@ -143,7 +135,7 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
                 </div>
                 <nav className="group-navbar">
                     <Link href={`/home/groupes/${groupId}/myposts`}><div>Mes posts</div></Link>
-                    { role == 'admin' ? 
+                    { session.user.role == 'admin' ? 
                             (
                                 <Link href={`/home/groupes/${groupId}/posts-manager`}><div>Gérer les posts</div></Link>
 

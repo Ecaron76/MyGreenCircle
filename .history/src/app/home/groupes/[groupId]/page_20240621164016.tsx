@@ -105,16 +105,13 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
     useEffect(() => {
         fetchGroupDetails();
         fetchAllGroupPost();
-      }, [groupId]);
-
-      
-      
-
+    }, [groupId]);
 
     if (session?.user) {
         return (
             <main>
                 <Header username={session.user.username} />
+                <Link href={`/home/groupes/${groupId}/write`}><MainButton name="Ecrire un post" /></Link>
                 {isAdmin && <MainButton name="Créer un évènement" onClick={() => setIsModalOpen(true)} />}
                 <div className="group-details-container">
                     {isLoading ? (

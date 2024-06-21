@@ -30,21 +30,28 @@ interface Post {
     postId: number;
     title: string;
     content: string;
+<<<<<<< HEAD
     picture?: string;
 
+=======
+>>>>>>> 7c70a3235725ad3aba83f8036422b381fa20c064
 };
 
 const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
     const { data: session } = useSession();
     const router = useRouter();
     const { groupId } = params;
+<<<<<<< HEAD
 
     const [groupDetails, setGroupDetails] = useState<GroupDetails>();
     const [allGroupPosts, setAllGroupPosts] = useState<Post[]>([]);
     const role = session?.user.roles.find((r: UserRole) => r.groupId === Number(groupId)).role;
 
-    
+=======
+    const [groupDetails, setGroupDetails] = useState<GroupDetails>();
+    const [allGroupPosts, setAllGroupPosts] = useState<Post[]>([]);
     const [isAdmin, setIsAdmin] = useState(false);
+>>>>>>> 7c70a3235725ad3aba83f8036422b381fa20c064
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -105,17 +112,25 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
     useEffect(() => {
         fetchGroupDetails();
         fetchAllGroupPost();
+<<<<<<< HEAD
       }, [groupId]);
 
       
       
 
+=======
+    }, [groupId]);
+>>>>>>> 7c70a3235725ad3aba83f8036422b381fa20c064
 
     if (session?.user) {
         return (
             <main>
                 <Header username={session.user.username} />
+<<<<<<< HEAD
+=======
+                <Link href={`/home/groupes/${groupId}/write`}><MainButton name="Ecrire un post" /></Link>
                 {isAdmin && <MainButton name="Créer un évènement" onClick={() => setIsModalOpen(true)} />}
+>>>>>>> 7c70a3235725ad3aba83f8036422b381fa20c064
                 <div className="group-details-container">
                     {isLoading ? (
                         <div className="loading-circle">
@@ -152,12 +167,17 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
                     </nav>    
                     <h2 className="title-section">Publications</h2>
                 <div className="post-list">
+<<<<<<< HEAD
                 {isLoading ? (
                         <div className="loading-circle">
                         <svg className="spinner" viewBox="0 0 50 50">
                           <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
                         </svg>
                       </div>
+=======
+                    {isLoading ? (
+                        <p>Loading...</p>
+>>>>>>> 7c70a3235725ad3aba83f8036422b381fa20c064
                     ) : error ? (
                         <p>Error: {error}</p>
                     ) : allGroupPosts.length > 0 ? (

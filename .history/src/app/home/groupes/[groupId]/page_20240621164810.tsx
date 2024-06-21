@@ -143,7 +143,7 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
                 </div>
                 <nav className="group-navbar">
                     <Link href={`/home/groupes/${groupId}/myposts`}><div>Mes posts</div></Link>
-                    { role == 'admin' ? 
+                    { session.user.role == 'admin' ? 
                             (
                                 <Link href={`/home/groupes/${groupId}/posts-manager`}><div>Gérer les posts</div></Link>
 
