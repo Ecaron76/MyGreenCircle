@@ -42,8 +42,8 @@ const PostCard: React.FC<PostCardProps> = ({ postId, groupId, title, content, au
           <div className="check-icons">
            
             {isVisible ? (
-                  <button className='unpublish-btn'><FiEyeOff className="icon-off" title="Dépublier le post" onClick={onPublish}/>Dépublier </button>
-            ): (  <button className='publish-btn'><FiCheckCircle className="icon-check" title="Autoriser la publication" onClick={onPublish}/> Publier </button>)}
+                  <button className='unpublish-btn' onClick={onPublish}><FiEyeOff className="icon-off" title="Dépublier le post" />Dépublier </button>
+            ): (  <button className='publish-btn' onClick={onPublish}><FiCheckCircle className="icon-check" title="Autoriser la publication" /> Publier </button>)}
           </div>
          )}
       <div className='header-card'>

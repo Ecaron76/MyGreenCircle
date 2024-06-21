@@ -82,9 +82,9 @@ const PostsManager = ({ params }: PostsManagerPageProps) => {
             setIsLoading(false);
         }
     };
-    const handlePublishPostClick = (postId:number) => {
+    const handlePublishPostClick = (postId:number, isVisible: boolean) => {
         setPostToManage(postId);
-        setIsPublishing(false);
+        setIsPublishing(isVisible);
         setIsPublishModalVisible(true);
       };
     
@@ -97,6 +97,7 @@ const PostsManager = ({ params }: PostsManagerPageProps) => {
         try {
           const response = await fetch(`/api/post/item/${postToManage}`, {
             method: 'PUT',
+             
           });
           if (!response.ok) throw new Error('Failed to manage post');
     
@@ -163,7 +164,7 @@ const PostsManager = ({ params }: PostsManagerPageProps) => {
                                 picture={post.picture}
                                 isVisible={post.isVisible}
                                 validation
-                                onPublish={() => handlePublishPostClick(post.postId)}
+                                onPublish={() => handlePublishPostClick(post.postId, post.isVisible)}
                             />
                         ))
                     ) : (
