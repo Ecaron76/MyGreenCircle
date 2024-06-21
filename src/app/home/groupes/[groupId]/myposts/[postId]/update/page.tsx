@@ -1,18 +1,23 @@
 'use client'
 import Header from "@/components/UI/Header/Header";
-import './write.css'
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-
+import './UpdatePostPage.css'
 import { useRouter } from "next/navigation";
 
-type WritePostPageProps = {
+type UpdatePostPageProps = {
     params: {
         groupId: number;
+        postId: number;
     };
 };
 
-
+interface Post {
+    postId: number;
+    title: string;
+    content: string;
+    picture?: string;
+};
 
 interface GroupDetails {
     groupId: number;
@@ -20,11 +25,11 @@ interface GroupDetails {
     groupDescription: string;
     groupLocation: string;
 };
-const WritePostPage = ({ params }: WritePostPageProps) => {
+const UpdatePostPage = ({ params }: UpdatePostPageProps) => {
     const { data: session } = useSession();
     const router = useRouter();
-    const { groupId } = params;
-
+    const { groupId, postId } = params;
+    const [postDetails, setPostDetails] = useState<Post>();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -57,36 +62,6 @@ const WritePostPage = ({ params }: WritePostPageProps) => {
         }
     }
 
-    const createPost = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsLoading(true);
-
-        try {
-            let imageUrl = null;
-            if (file) {
-                imageUrl = await uploadImage();
-            }
-            const response = await fetch('/api/post/item', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ title, content, groupId: Number(groupId), picture: imageUrl }),
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to create post');
-            }
-
-            const data = await response.json();
-            router.push(`/home/groupes/${groupId}`);
-        } catch (error) {
-            setError('Failed to create post');
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
     const fetchGroupDetails = async () => {
         if (!groupId) return;
 
@@ -103,9 +78,61 @@ const WritePostPage = ({ params }: WritePostPageProps) => {
             setIsLoading(false);
         }
     };
+
+    const fetchPostDetails = async () => {
+        if (!postId) return;
+
+        setIsLoading(true);
+        try {
+            const response = await fetch(`/api/post/item/${postId}`);
+            if (!response.ok) throw new Error('Failed to fetch post details');
+
+            const data = await response.json();
+            setPostDetails(data);
+            setTitle(data.title);
+            setContent(data.content);
+            setImageObjectUrl(data.picture || null);
+        } catch (error) {
+            setError('Failed to fetch post details');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const updatePost = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
+
+        try {
+            let imageUrl = postDetails?.picture || null;
+            if (file) {
+                imageUrl = await uploadImage();
+            }
+
+            const response = await fetch(`/api/post/item/${postId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ title, content, groupId: Number(groupId), picture: imageUrl }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to update post');
+            }
+
+            router.push(`/home/groupes/${groupId}`);
+        } catch (error) {
+            setError('Failed to update post');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     useEffect(() => {
         fetchGroupDetails()
-      }, [groupId]);
+        fetchPostDetails()
+      }, [groupId, postId]);
 
     if (session?.user) {
         return (
@@ -131,7 +158,7 @@ const WritePostPage = ({ params }: WritePostPageProps) => {
                         <p>No group details found</p>
                     )}
                 </div>
-                <form onSubmit={createPost}>
+                <form onSubmit={updatePost}>
                     <div>
                         <label htmlFor="title">Titre:</label>
                         <input
@@ -156,7 +183,7 @@ const WritePostPage = ({ params }: WritePostPageProps) => {
                             type="file"
                             id="picture"
                             onChange={(e) => {
-                                if (e.target.files) {
+                                if (e.target.files && e.target.files[0]) {
                                     setFile(e.target.files[0]);
                                     setImageObjectUrl(URL.createObjectURL(e.target.files[0]));
                                 }
@@ -169,9 +196,11 @@ const WritePostPage = ({ params }: WritePostPageProps) => {
                         {imageObjectUrl && <img src={imageObjectUrl} alt="Post Preview" className="image-preview" />}
                     </div>
                     <button type="submit" disabled={isLoading}>
-                        {isLoading ? 'Création' : 'Créer le post'}
+                        {isLoading ? 'Mise à jour...' : 'Mettre à jour le post'}
                     </button>
                 </form>
+                {error && <p className="error-message">{error}</p>}
+                
 
 
             </main>
@@ -181,4 +210,4 @@ const WritePostPage = ({ params }: WritePostPageProps) => {
 
 
 
-export default WritePostPage
+export default UpdatePostPage
