@@ -46,7 +46,7 @@ const PostsManager = ({ params }: PostsManagerPageProps) => {
 
 
     const [isPublishModalVisible, setIsPublishModalVisible] = useState(false);
-    const [isPublishing, setIsPublishing] = useState<boolean>();
+    const [isPublishing, setIsPublishing] = useState<boolean | undefined>();
     const [postToManage, setPostToManage] = useState<number | null>(null);
 
     const fetchGroupDetails = async () => {
@@ -95,13 +95,17 @@ const PostsManager = ({ params }: PostsManagerPageProps) => {
     
       const handlePublishPost = async () => {
         try {
+            console.log(!isPublishing)
           const response = await fetch(`/api/post/item/${postToManage}`, {
             method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ isVisible: !isPublishing })
              
           });
           if (!response.ok) throw new Error('Failed to manage post');
-    
-          setAllMyPostsGroup((prevPosts) => prevPosts.filter((post) => post.postId !== postToManage));
+          fetchAllMyPostsGroup()
           closePublishPostModal();
         } catch (error) {
           setError('');
@@ -178,7 +182,7 @@ const PostsManager = ({ params }: PostsManagerPageProps) => {
           <PublishModal
             onClose={closePublishPostModal}
             onSuccess={handlePublishPost}
-            isPublishing
+            isPublishing={isPublishing}
           />
         )}
 
