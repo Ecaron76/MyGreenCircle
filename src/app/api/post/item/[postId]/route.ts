@@ -247,6 +247,7 @@ export async function PUT(req: Request, { params }: { params: { postId: string }
         const { postId } = params;
         const body = await req.json();
         const { isVisible } = body;
+        console.log(isVisible)
 
         const post = await prisma.post.findUnique({
             where: { postId: Number(postId) },

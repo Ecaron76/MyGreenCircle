@@ -48,7 +48,6 @@
   }
   
   .btn-confirm {
-    background-color: #9a2a2a;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -56,13 +55,10 @@
     cursor: pointer;
     transition: background-color 0.3s;
   }
-  
-  .btn-confirm:hover {
-    background-color: #9a2a2ad5;
-  }
+
   
   .btn-cancel {
-    background-color: #ccc;
+    background-color: #ccc!important;
     color: #333;
     padding: 10px 20px;
     border: none;
@@ -72,7 +68,24 @@
   }
   
   .btn-cancel:hover {
-    background-color: #aaa;
+    background-color: #aaa!important;
     color: rgb(0, 0, 0);
   }
   
+  .btn-publish {
+    background-color: #4f766f;
+    color: white;
+  }
+  .btn-publish:hover {
+    background-color: #63aa9d;
+   
+  }
+  
+  .btn-unpublish {
+    background-color: #ab5555;
+    color: white;
+  }
+  .btn-unpublish:hover {
+    background-color: #c76262;
+    
+  }
