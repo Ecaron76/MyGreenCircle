@@ -272,6 +272,7 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
             const response = await fetch(`/api/post/${groupId}`);
             if (!response.ok) throw new Error('Failed to fetch group posts');
             const dataPosts: Post[] = await response.json();
+            console.log(dataPosts)
             setAllGroupPosts(dataPosts);
         } catch (error: unknown) {
             if (error instanceof Error) {

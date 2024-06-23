@@ -32,14 +32,22 @@ export const GET = async (req: Request, { params }: { params: { groupId: number 
                     isVisible: true
                 },
                 include: {
+                    likes: true,
+                    comments: true,
                     user: {
                       select: {
                         username: true
                       }
                     },
+                    
                   }
             });
-            return NextResponse.json(posts, { status: 200 });
+            const postsGrp = [...posts].map(post => ({
+                ...post,
+                likesCount: post.likes.length,
+                commentsCount: post.comments.length,
+              }));
+            return NextResponse.json(postsGrp, { status: 200 });
 
         } else {
             return NextResponse.json({ message: 'The user is not a member of the group' }, { status: 403 });

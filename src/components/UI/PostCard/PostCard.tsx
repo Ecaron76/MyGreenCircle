@@ -45,25 +45,25 @@ const PostCard: React.FC<PostCardProps> = ({
   const [likes, setLikes] = useState(nbLike);
   const [liked, setLiked] = useState(false);
 
-  useEffect(() => {
-    const fetchPostLikes = async () => {
-      try {
-        const response = await fetch(`/api/posts/${postId}`);
-        const data = await response.json();
+  // useEffect(() => {
+  //   const fetchPostLikes = async () => {
+  //     try {
+  //       const response = await fetch(`/api/post/${postId}`);
+  //       const data = await response.json();
 
-        if (response.ok) {
-          setLikes(data.likesCount);
-          setLiked(data.userHasLiked);
-        } else {
-          console.error('Failed to fetch post likes');
-        }
-      } catch (error) {
-        console.error('Error fetching post likes:', error);
-      }
-    };
+  //       if (response.ok) {
+  //         setLikes(data.likesCount);
+  //         setLiked(data.userHasLiked);
+  //       } else {
+  //         console.error('Failed to fetch post likes');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching post likes:', error);
+  //     }
+  //   };
 
-    fetchPostLikes();
-  }, [postId]);
+  //   fetchPostLikes();
+  // }, [postId]);
 
   const handleLike = async () => {
     try {

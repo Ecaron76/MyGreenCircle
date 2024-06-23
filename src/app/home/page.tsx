@@ -328,6 +328,7 @@ const HomePage = () => {
   const [errorPosts, setErrorPosts] = useState('');
   const [errorEvents, setErrorEvents] = useState('');
 
+
   const fetchAllPost = async () => {
     setIsLoading(true);
     try {
@@ -337,6 +338,7 @@ const HomePage = () => {
       const dataPosts: Post[] = await response.json();
       const groupPosts = dataPosts.filter(post => post.groupId !== null);
       const adminPosts = dataPosts.filter(post => post.groupId === null);
+      console.log(groupPosts)
 
       setGroupPosts(groupPosts);
       setAdminPosts(adminPosts);
@@ -460,6 +462,7 @@ const HomePage = () => {
                   <p>Error: {errorPosts}</p>
                 ) : adminPosts.length > 0 ? (
                   adminPosts.map((post: Post) => (
+                    
                     <PostCard
                       key={post.postId}
                       postId={post.postId}
