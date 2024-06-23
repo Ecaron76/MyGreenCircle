@@ -172,6 +172,7 @@ const PostsManager = ({ params }: PostsManagerPageProps) => {
                                 isVisible={post.isVisible}
                                 validation
                                 onPublish={() => handlePublishPostClick(post.postId, post.isVisible)}
+                                
                             />
                         ))
                     ) : (

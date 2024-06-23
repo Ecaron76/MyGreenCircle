@@ -21,7 +21,6 @@ type PostCardProps = {
   onDelete?: () => void;
   onPublish?: () => void;
   validation?: boolean;
-  userId: string;
 };
 
 const PostCard: React.FC<PostCardProps> = ({
@@ -40,7 +39,6 @@ const PostCard: React.FC<PostCardProps> = ({
   onDelete,
   onPublish,
   validation,
-  userId,
 }) => {
   const [likes, setLikes] = useState(nbLike);
   const [liked, setLiked] = useState(false);
@@ -72,7 +70,7 @@ const PostCard: React.FC<PostCardProps> = ({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userId, postId }),
+        body: JSON.stringify({ postId }),
       });
 
       if (response.ok) {

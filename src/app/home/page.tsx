@@ -192,7 +192,6 @@ const HomePage = () => {
                       nbComment={post.commentsCount}
                       picture={post.picture}
                       nbLike={post.likesCount}
-                      userId={session.user.id}
                     />
                   ))
                 ) : (
@@ -226,7 +225,6 @@ const HomePage = () => {
                         author={post.user.username}
                         nbComment={post.commentsCount}
                         nbLike={post.likesCount}
-                        userId={session.user.id}
                       />
                     );
                   })
