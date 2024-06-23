@@ -1,18 +1,18 @@
-'use client'
-import Header from "@/components/UI/Header/Header";
+'use client';
 
+import Header from "@/components/UI/Header/Header";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-
-import './SingleGroupePage.css'
-import { redirect, useRouter } from "next/navigation";
+import './SingleGroupePage.css';
+import { useRouter } from "next/navigation";
 import PostCard from "@/components/UI/PostCard/PostCard";
 import MainButton from "@/components/UI/MainButton/MainButton";
 import Link from "next/link";
+import CreateEventModal from "@/components/GroupePage/CreateEventModal/CreateEventModal";
 
 type SingleGroupePageProps = {
     params: {
-        groupId: number
+        groupId: number;
     }
 }
 interface UserRole {
@@ -36,6 +36,7 @@ interface Post {
       };
 
 };
+
 const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
     const { data: session } = useSession();
     const router = useRouter();
@@ -45,22 +46,28 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
     const [allGroupPosts, setAllGroupPosts] = useState<Post[]>([]);
     const role = session?.user.roles.find((r: UserRole) => r.groupId === Number(groupId)).role;
 
+    
+    const [isAdmin, setIsAdmin] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     
     const fetchGroupDetails = async () => {
         if (!groupId) return;
-
         setIsLoading(true);
         try {
             const response = await fetch(`/api/groupe/${groupId}`);
             if (!response.ok) throw new Error('Failed to fetch group details');
-
             const data = await response.json();
-            setGroupDetails(data);
-        } catch (error) {
-
+            setGroupDetails(data.group);
+            setIsAdmin(data.isAdmin);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setError(error.message);
+            } else {
+                setError(String(error));
+            }
         } finally {
             setIsLoading(false);
         }
@@ -68,16 +75,18 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
 
     const fetchAllGroupPost = async () => {
         if (!groupId) return;
-
         setIsLoading(true);
         try {
             const response = await fetch(`/api/post/${groupId}`);
-            if (!response.ok) throw new Error('Failed to fetch group details');
-
+            if (!response.ok) throw new Error('Failed to fetch group posts');
             const dataPosts = await response.json();
             setAllGroupPosts(dataPosts);
-        } catch (error) {
-
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setError(error.message);
+            } else {
+                setError(String(error));
+            }
         } finally {
             setIsLoading(false);
         }
@@ -88,11 +97,9 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
             const response = await fetch(`/api/groupe/join/${groupId}`, {
                 method: 'DELETE',
             });
-
             if (!response.ok) throw new Error('Failed to leave group');
-
             alert('You have left the group successfully');
-            router.push('/home/groupes');        
+            router.push('/home/groupes');
         } catch (error) {
             console.error('Error leaving group:', error);
         }
@@ -111,6 +118,7 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
         return (
             <main>
                 <Header username={session.user.username} />
+                {isAdmin && <MainButton name="Créer un évènement" onClick={() => setIsModalOpen(true)} />}
                 <div className="group-details-container">
                     {isLoading ? (
                         <div className="loading-circle">
@@ -172,13 +180,12 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
                         <p>No Posts found</p>
                     )}
                 </div>
-
-
+                {isModalOpen && <CreateEventModal groupId={groupId} onClose={() => setIsModalOpen(false)} onSuccess={() => { setIsModalOpen(false); fetchAllGroupPost(); }} />}
             </main>
         );
     }
-}
 
+    return null;
+};
 
-
-export default SingleGroupePage
+export default SingleGroupePage;
