@@ -33,6 +33,9 @@ interface Post {
     content: string;
     isVisible: boolean;
     picture?: string;
+    user: {
+        username: string;
+      };
 
 };
 const PostsManager = ({ params }: PostsManagerPageProps) => {
@@ -66,12 +69,12 @@ const PostsManager = ({ params }: PostsManagerPageProps) => {
         }
     };
 
-    const fetchAllMyPostsGroup = async () => {
+    const fetchAllPostsGroup = async () => {
         if (!groupId) return;
 
         setIsLoading(true);
         try {
-            const response = await fetch(`/api/post/${groupId}/me`);
+            const response = await fetch(`/api/post/${groupId}/all`);
             if (!response.ok) throw new Error('Failed to fetch group details');
 
             const dataPosts = await response.json();
@@ -105,7 +108,7 @@ const PostsManager = ({ params }: PostsManagerPageProps) => {
              
           });
           if (!response.ok) throw new Error('Failed to manage post');
-          fetchAllMyPostsGroup()
+          fetchAllPostsGroup()
           closePublishPostModal();
         } catch (error) {
           setError('');
@@ -116,7 +119,7 @@ const PostsManager = ({ params }: PostsManagerPageProps) => {
 
     useEffect(() => {
         fetchGroupDetails()
-        fetchAllMyPostsGroup()
+        fetchAllPostsGroup()
       }, [groupId]);
 
 
@@ -162,7 +165,7 @@ const PostsManager = ({ params }: PostsManagerPageProps) => {
                                 groupId={post.groupId}
                                 title={post.title}
                                 content={post.content}
-                                author={'author'}
+                                author={post.user.username}
                                 nbComment={5}
                                 nbLike={5}
                                 picture={post.picture}

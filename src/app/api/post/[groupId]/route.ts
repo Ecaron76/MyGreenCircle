@@ -30,7 +30,14 @@ export const GET = async (req: Request, { params }: { params: { groupId: number 
                 where: {
                     groupId: Number(groupId),
                     isVisible: true
-                }
+                },
+                include: {
+                    user: {
+                      select: {
+                        username: true
+                      }
+                    },
+                  }
             });
             return NextResponse.json(posts, { status: 200 });
 

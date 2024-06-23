@@ -12,8 +12,13 @@ interface Post {
   title: string;
   content: string;
   groupId?: number;
-  groupName: string;
+  group: {
+    groupName: string;
+  };
   picture?: string;
+  user: {
+    username: string;
+  };
 
 }
 
@@ -39,6 +44,8 @@ const HomePage = () => {
   const [groupPosts, setGroupPosts] = useState<Post[]>([]);
   const [adminPosts, setAdminPosts] = useState<Post[]>([]);
   const [events, setEvents] = useState<Event[]>([]);
+
+
   const [isLoading, setIsLoading] = useState(true);
   const [errorPosts, setErrorPosts] = useState('');
   const [errorEvents, setErrorEvents] = useState('');
@@ -204,16 +211,16 @@ const HomePage = () => {
                 ) : errorPosts ? (
                   <p>Error: {errorPosts}</p>
                 ) : groupPosts.length > 0 ? (
-                  groupPosts.map((post: Post, index: number) => {
+                  groupPosts.map((post: Post) => {
                     return (
                     <PostCard
                       key={post.postId}
                       title={post.title}
                       content={post.content}
-                      groupName={post.groupName}
+                      groupName={post.group.groupName}
                       picture={post.picture}
                       group
-                      author="Ecaron"
+                      author={post.user.username}
                       nbComment={5}
                       nbLike={5}
                     />

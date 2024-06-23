@@ -16,20 +16,20 @@ export const GET = async (req: Request, { params }: { params: { groupId: number 
         const { groupId } = params;
 
 
-        const userMemberGroup = await prisma.join.findFirst({
+        const userAdminGroup = await prisma.join.findFirst({
             where: {
                 userId: session.user.id,
                 groupId: Number(groupId),
-                isAccepted: true
+                isAccepted: true,
+                role: 'admin'
             }
         });
 
 
-        if (userMemberGroup) {
+        if (userAdminGroup) {
             const posts = await prisma.post.findMany({
                 where: {
                     groupId: Number(groupId),
-                    userId: session.user.id
                 },
                 include: {
                     user: {
@@ -42,7 +42,7 @@ export const GET = async (req: Request, { params }: { params: { groupId: number 
             return NextResponse.json(posts, { status: 200 });
 
         } else {
-            return NextResponse.json({ message: 'The user is not a member of the group' }, { status: 403 });
+            return NextResponse.json({ message: 'The user is not authorized' }, { status: 403 });
         }
 
 

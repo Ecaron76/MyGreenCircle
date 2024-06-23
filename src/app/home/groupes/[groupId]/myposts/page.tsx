@@ -33,6 +33,9 @@ interface Post {
     content: string;
     isVisible: boolean;
     picture?: string;
+    user: {
+        username: string;
+      };
 
 };
 const MyPosts = ({ params }: MyPostsPageProps) => {
@@ -157,7 +160,7 @@ const MyPosts = ({ params }: MyPostsPageProps) => {
                                 groupId={post.groupId}
                                 title={post.title}
                                 content={post.content}
-                                author={'author'}
+                                author={post.user.username}
                                 nbComment={5}
                                 nbLike={5}
                                 picture={post.picture}

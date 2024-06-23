@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import Header from '../../../components/UI/Header/Header';
 import EventCard from '@/components/UI/EventCard/EventCard';
 import { EventWithCreator } from '@/types/event';
-import Header from '@/components/UI/Header/Header';
-import { useSession } from 'next-auth/react';
 
 const fetchUserEvents = async () => {
   try {
