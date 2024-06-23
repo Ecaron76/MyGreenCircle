@@ -45,29 +45,29 @@ const PostCard: React.FC<PostCardProps> = ({
   const [likes, setLikes] = useState(nbLike);
   const [liked, setLiked] = useState(false);
 
-  // useEffect(() => {
-  //   const fetchPostLikes = async () => {
-  //     try {
-  //       const response = await fetch(`/api/post/${postId}`);
-  //       const data = await response.json();
+  useEffect(() => {
+    const fetchPostLikes = async () => {
+      try {
+        const response = await fetch(`/api/posts/${postId}`);
+        const data = await response.json();
 
-  //       if (response.ok) {
-  //         setLikes(data.likesCount);
-  //         setLiked(data.userHasLiked);
-  //       } else {
-  //         console.error('Failed to fetch post likes');
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching post likes:', error);
-  //     }
-  //   };
+        if (response.ok) {
+          setLikes(data.likesCount);
+          setLiked(data.userHasLiked);
+        } else {
+          console.error('Failed to fetch post likes');
+        }
+      } catch (error) {
+        console.error('Error fetching post likes:', error);
+      }
+    };
 
-  //   fetchPostLikes();
-  // }, [postId]);
+    fetchPostLikes();
+  }, [postId]);
 
   const handleLike = async () => {
     try {
-      const response = await fetch('/api/posts/like', {
+      const response = await fetch('/api/likes', {
         method: liked ? 'DELETE' : 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -80,6 +80,8 @@ const PostCard: React.FC<PostCardProps> = ({
         setLikes(liked ? likes - 1 : likes + 1);
       } else {
         console.error('Failed to update like');
+        const data = await response.json();
+        console.error(data.message);
       }
     } catch (error) {
       console.error('Error updating like:', error);
@@ -134,14 +136,15 @@ const PostCard: React.FC<PostCardProps> = ({
       <div className="postButtons">
         <div className="like-container">
           <div className="postTrending">{likes} j&apos;aime</div>
-          <div className="trending-btn" onClick={handleLike}>
+          <button className="trending-btn" onClick={handleLike}>
             <Image
-              alt=""
+              alt="Like"
               src={liked ? '/assets/images/iconBtn/liked.png' : '/assets/images/iconBtn/like.png'}
               width={35}
               height={25}
+              className="like-icon"
             />
-          </div>
+          </button>
         </div>
         <div className="comment-container">
           <div className="postTrending">{nbComment} commentaires</div>
@@ -155,3 +158,5 @@ const PostCard: React.FC<PostCardProps> = ({
 };
 
 export default PostCard;
+
+

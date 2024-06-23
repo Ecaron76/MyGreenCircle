@@ -75,6 +75,9 @@
   padding: 7px;
   border-radius: 20px;
   text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
 }
 
 .author {
@@ -149,16 +152,18 @@
   justify-content: center;
   align-items: center;
 }
-.icon-check{
+
+.icon-check {
   text-align: center;
   font-size: 25px;
   color: white;
 }
 
-.icon-off{
+.icon-off {
   font-size: 25px;
 }
-.publish-btn{
+
+.publish-btn {
   font-weight: bold;
   border: none;
   cursor: pointer;
@@ -173,11 +178,11 @@
   color: white;
 }
 
-.publish-btn:hover{
+.publish-btn:hover {
   background-color: #63aa9d;
 }
 
-.unpublish-btn{
+.unpublish-btn {
   font-weight: bold;
   border: none;
   cursor: pointer;
@@ -192,6 +197,6 @@
   color: white;
 }
 
-.unpublish-btn:hover{
+.unpublish-btn:hover {
   background-color: #c76262!important;
 }
