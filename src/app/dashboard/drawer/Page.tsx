@@ -7,12 +7,14 @@ import {
   ListItemIcon,
   ListItemText,
   Box,
+  Button,
 } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupIcon from "@mui/icons-material/Group";
 import EventIcon from "@mui/icons-material/Event";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { signOut } from "next-auth/react";
 interface DrawerComponentProps {
   onContentChange: (content: string) => void;
 }
@@ -145,10 +147,19 @@ const DrawerComponent: React.FC<DrawerComponentProps> = ({
         <ListItemIcon sx={{ minWidth: 40, color: "#A65959" }}>
           <LogoutIcon />
         </ListItemIcon>
-        <ListItemText
-          primary="Logout"
-          primaryTypographyProps={{ fontSize: "0.875rem" }}
-        />
+        <Button
+          onClick={() => signOut()}
+          sx={{
+            fontSize: "0.875rem",
+            color: "#A65959",
+            textTransform: "none",
+            display: "flex",
+            alignItems: "center",
+            whiteSpace: "nowrap",
+          }}
+        >
+          Se déconnecter
+        </Button>
       </ListItem>
     </Drawer>
   );
