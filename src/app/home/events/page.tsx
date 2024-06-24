@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import Header from '../../../components/UI/Header/Header';
 import EventCard from '@/components/UI/EventCard/EventCard';
 import { EventWithCreator } from '@/types/event';
+import '../events/events.css';
 
 const fetchUserEvents = async () => {
   try {
@@ -130,12 +131,12 @@ const EventPage = () => {
   return (
     <>
       <Header username={session.user.username} />
-      <div>
-        <h1>Events Page</h1>
+      <div className="content-page">
+        <h2 className="title-section">Evènements</h2>
         {events.length === 0 ? (
           <p>No events found.</p>
         ) : (
-          <ul>
+          <ul className="event-list">
             {events.map(event => (
               <li key={event.eventId}>
                 <EventCard
