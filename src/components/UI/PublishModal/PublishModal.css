@@ -1,0 +1,91 @@
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-publish {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .modal-content {
+    text-align: center;
+  }
+  
+  .modal-content h2 {
+    margin-top: 0;
+    color: #24355A;
+  }
+  
+  .modal-content p {
+    color: #24355A;
+  }
+  
+  .modal-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .btn-confirm {
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  
+  .btn-cancel {
+    background-color: #ccc!important;
+    color: #333;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-cancel:hover {
+    background-color: #aaa!important;
+    color: rgb(0, 0, 0);
+  }
+  
+  .btn-publish {
+    background-color: #4f766f!important;
+    color: white;
+  }
+  .btn-publish:hover {
+    background-color: #63aa9d!important;
+   
+  }
+  
+  .btn-unpublish {
+    background-color: #ab5555!important;
+    color: white;
+  }
+  .btn-unpublish:hover {
+    background-color: #c76262!important;
+    
+  }

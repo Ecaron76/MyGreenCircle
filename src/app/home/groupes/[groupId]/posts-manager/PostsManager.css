@@ -1,0 +1,31 @@
+.group-details-container {
+    justify-content: center;
+      display: flex;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      margin-bottom: 20px;
+      
+    }
+    .group-details-container .group-title {
+      margin-bottom: 10px;
+      border-bottom: 0;
+    }
+    .group-details-container p {
+      margin: 5px 0;
+    }
+
+    .post-list {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        row-gap: 20px;
+    }
+
+    .title-allPosts{
+        text-align: center;
+        margin-bottom: 20px;
+        
+    }

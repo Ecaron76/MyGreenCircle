@@ -69,3 +69,17 @@ a{
     color: white;
     text-decoration: none;
 }
+
+.signout-btn{
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    background-color: #9b4848; 
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.signout-btn:hover{
+    background-color:#c56161;
+}

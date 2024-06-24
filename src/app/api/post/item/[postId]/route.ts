@@ -171,23 +171,57 @@ export async function PATCH(req: Request, { params }: { params: { postId: string
             return NextResponse.json({ message: 'User is not authorized to modify this post' }, { status: 403 });
         }
 
-        let isVisible = post.isVisible;
 
         if (post.groupId) {
-            isVisible = false;
+            const groupAdmin = await prisma.join.findFirst({
+                where: {
+                    userId: session.user.id,
+                    groupId: post.groupId,
+                    role: 'admin',
+                },
+            });
+            if (!groupAdmin) {
+                const isVisible = false
+                const updatedPost = await prisma.post.update({
+                    where: { postId: Number(postId) },
+                    data: {
+                        title,
+                        content,
+                        picture,
+                        isVisible: isVisible
+                    }
+                });
+                return NextResponse.json({ updatedPost }, { status: 200 });
+            } else{
+                const updatedPost = await prisma.post.update({
+                    where: { postId: Number(postId) },
+                    data: {
+                        title,
+                        content,
+                        picture,
+                        isVisible: post.isVisible
+                    }
+                });
+                return NextResponse.json({ updatedPost }, { status: 200 });
+            }
+        } else{
+            if (session.user.admin) {
+                const updatedPost = await prisma.post.update({
+                    where: { postId: Number(postId) },
+                    data: {
+                        title,
+                        content,
+                        picture,
+                        isVisible: post.isVisible
+                    }
+                });
+                return NextResponse.json({ updatedPost }, { status: 200 });
+            }         
         }
 
-        const updatedPost = await prisma.post.update({
-            where: { postId: Number(postId) },
-            data: {
-                title,
-                content,
-                picture,
-                isVisible
-            }
-        });
+        
 
-        return NextResponse.json({ updatedPost }, { status: 200 });
+        
     } catch (error) {
         console.error(error);
         return NextResponse.json(
@@ -213,6 +247,7 @@ export async function PUT(req: Request, { params }: { params: { postId: string }
         const { postId } = params;
         const body = await req.json();
         const { isVisible } = body;
+        console.log(isVisible)
 
         const post = await prisma.post.findUnique({
             where: { postId: Number(postId) },
