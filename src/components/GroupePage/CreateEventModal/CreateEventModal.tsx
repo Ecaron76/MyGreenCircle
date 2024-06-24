@@ -165,7 +165,7 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ groupId, onClose, o
             />
           </div>
           <div className="form-group">
-            <label htmlFor="limitSubscriptionDate">Date limite d'inscription</label>
+            <label htmlFor="limitSubscriptionDate">Date limite d&apos;inscription</label>
             <input 
               type="date" 
               id="limitSubscriptionDate" 
