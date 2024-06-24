@@ -4,16 +4,18 @@ import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DataGridComponent from "../components/dataGrid/Page";
 import ModalDelete from "../components/modalDelete/Page";
-import rowsData from "./events.json";
 import AddButton from "../components/AddButton/Page";
 import { Event } from "../types/types";
 import AddFormEvent from "../components/AddFormEvent/Page";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { getAllEvents } from "../services/event.service";
 
 function AdminEvent({ type }: any) {
-  const [rows, setRows] = useState<any>(rowsData);
+  const [rows, setRows] = useState<Event[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
+
   const [showForm, setShowForm] = useState(
     () => localStorage.getItem("showForm") === "true"
   );
@@ -110,6 +112,19 @@ function AdminEvent({ type }: any) {
     },
   ];
 
+  useEffect(() => {
+    setLoading(true);
+    getAllEvents()
+      .then((data) => {
+        setRows(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch groups:", error);
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <Box sx={{ height: 400, width: "100%" }}>
       {showForm ? (
@@ -138,6 +153,8 @@ function AdminEvent({ type }: any) {
             rows={rows}
             columns={columns}
             identifier="évenement"
+            getRowId={(row) => row.eventId}
+            loading={loading}
           />
         </>
       )}
