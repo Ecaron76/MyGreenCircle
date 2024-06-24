@@ -113,7 +113,7 @@ const MyPosts = ({ params }: MyPostsPageProps) => {
     useEffect(() => {
         fetchGroupDetails()
         fetchAllMyPostsGroup()
-      }, [groupId]);
+  }, [groupId]);
 
 
     if (session?.user) {
