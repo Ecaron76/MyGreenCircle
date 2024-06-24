@@ -38,3 +38,25 @@ export async function deleteUser(userId: number): Promise<void> {
     throw error;
   }
 }
+
+export const getOneUser = async (userId: string) => {
+  try {
+    const response = await fetch(`${BASE_URL}/user/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching user details:", error);
+    throw error;
+  }
+};

@@ -13,6 +13,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { calculateDetailTitle } from "../../function/detailTitle";
 import CloseIcon from "@mui/icons-material/Close";
 import { fetchGroupPosts } from "../../services/groupe.service";
+import { getEventParticipants } from "../../services/event.service";
+import { getOneUser } from "../../services/user.service";
 
 interface RowDetailsModalProps {
   open: boolean;
@@ -61,6 +63,7 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
 }) => {
   const [localData, setLocalData] = useState(selectedRow || {});
   const [groupPosts, setGroupPosts] = useState([]);
+  const [eventParticipate, setEventParticipate] = useState([]);
 
   useEffect(() => {
     setLocalData(selectedRow || {});
@@ -72,6 +75,24 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
         .catch((error: any) =>
           console.error("Error fetching group posts:", error)
         );
+    }
+    if (identifier === "évenement" && selectedRow && selectedRow.eventId) {
+      getEventParticipants()
+        .then(async (events) => {
+          const event = events.find(
+            (event: any) => event.eventId === selectedRow.eventId
+          );
+          if (event) {
+            const participantsDetails: any = await Promise.all(
+              event.participants.map(async (participant: any) => {
+                const userDetails = await getOneUser(participant.userId);
+                return userDetails;
+              })
+            );
+            setEventParticipate(participantsDetails);
+          }
+        })
+        .catch((error) => console.error("Error fetching events:", error));
     }
   }, [selectedRow, identifier]);
 
@@ -124,10 +145,11 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
   if (!localData) return null;
 
   const isGroup = identifier === "Groupe";
+  const isEvent = identifier === "évenement";
 
   return (
     <Modal open={open} onClose={onClose}>
-      <Paper sx={modalStyle(isGroup)}>
+      <Paper sx={modalStyle(isGroup || isEvent)}>
         <IconButton
           onClick={onClose}
           sx={{ position: "absolute", right: 8, top: 8, color: "#226D68" }}
@@ -148,7 +170,7 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
         </Typography>
         <Divider sx={{ mb: 2 }} />
         <Grid container spacing={2} sx={{ padding: 0 }}>
-          <Grid item xs={12} md={isGroup ? 4 : 12}>
+          <Grid item xs={12} md={isGroup || isEvent ? 4 : 12}>
             {Object.keys(localData)
               .filter((key) => !Array.isArray(localData[key]))
               .map((key) => (
@@ -193,6 +215,23 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
                 {groupPosts.length > 0
                   ? renderValue(groupPosts, "groupPosts")
                   : "Aucun post associé à ce groupe"}
+              </Grid>
+            </>
+          )}
+
+          {isEvent && (
+            <>
+              <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
+              <Grid item xs={12} md={6}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{ fontWeight: "bold", color: "#226D68", mb: 1 }}
+                >
+                  Liste des participants de l'événement:
+                </Typography>
+                {eventParticipate?.length > 0
+                  ? renderValue(eventParticipate, "eventParticpates")
+                  : "Aucun particpant pour cet événement"}
               </Grid>
             </>
           )}
