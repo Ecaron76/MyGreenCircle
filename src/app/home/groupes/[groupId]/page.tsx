@@ -118,7 +118,6 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
         return (
             <main>
                 <Header username={session.user.username} />
-                {isAdmin && <MainButton name="Créer un évènement" onClick={() => setIsModalOpen(true)} />}
                 <div className="group-details-container">
                     {isLoading ? (
                         <div className="loading-circle">
@@ -152,7 +151,8 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
 
                             ) : null
                             }
-                    </nav>    
+                    {isAdmin && <Link href='' onClick={() => setIsModalOpen(true)}><div>Créer un évènement</div></Link>}    
+                    </nav>
                     <h2 className="title-section">Publications</h2>
                 <div className="post-list">
                 {isLoading ? (
