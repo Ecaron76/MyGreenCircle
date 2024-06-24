@@ -236,7 +236,7 @@ const HomePage = () => {
           </section>
 
           <div>
-            <h2 className="title-section">Events</h2>
+            <h2 className="title-section">Evènements</h2>
             <br />
             <div className="event-list">
               {isLoading ? (

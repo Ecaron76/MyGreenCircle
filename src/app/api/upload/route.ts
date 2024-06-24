@@ -11,6 +11,17 @@ export const POST = async (req: Request) => {
             return NextResponse.json({ message: "No file provided!" }, { status: 400 });
         }
 
+        const allowedMimeTypes = ["image/jpeg", "image/png", "image/jpg"];
+        if (!allowedMimeTypes.includes(file.type)) {
+            return NextResponse.json({ message: "Invalid file type!" }, { status: 400 });
+        }
+
+        const allowedExtensions = [".jpeg", ".png", ".jpg"];
+        const extension = path.extname(file.name).toLowerCase();
+        if (!allowedExtensions.includes(extension)) {
+            return NextResponse.json({ message: "Invalid file extension!" }, { status: 400 });
+        }
+
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
         const timestamp = new Date().getTime();
@@ -24,7 +35,7 @@ export const POST = async (req: Request) => {
     } catch (error) {
         console.error(error);
         return NextResponse.json(
-            { message: "Something went wrong",},
+            { message: "Something went wrong" },
             { status: 500 }
         );
     }

@@ -1,10 +1,11 @@
 'use client'
+
+import { useEffect, useState } from "react";
 import Header from "@/components/UI/Header/Header";
 import './write.css'
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-
 import { useRouter } from "next/navigation";
+
 
 type WritePostPageProps = {
     params: {
@@ -12,14 +13,13 @@ type WritePostPageProps = {
     };
 };
 
-
-
 interface GroupDetails {
     groupId: number;
     groupName: string;
     groupDescription: string;
     groupLocation: string;
 };
+
 const WritePostPage = ({ params }: WritePostPageProps) => {
     const { data: session } = useSession();
     const router = useRouter();
@@ -31,8 +31,8 @@ const WritePostPage = ({ params }: WritePostPageProps) => {
     const [error, setError] = useState('');
     const [file, setFile] = useState<File>()
     const [imageObjectUrl, setImageObjectUrl] = useState<string | null>(null)
+    const [imageUploadError, setImageUploadError] = useState<string>('');
     const [groupDetails, setGroupDetails] = useState<GroupDetails>();
-
 
     const uploadImage = async () => {
         if (!file) return null;
@@ -53,6 +53,7 @@ const WritePostPage = ({ params }: WritePostPageProps) => {
             return data.url;
         } catch (error) {
             console.error('Error in uploading image', error);
+            setImageUploadError('Failed to upload image, wrong format. Please provide a jpeg, jpg or png file.');
             return null;
         }
     }
@@ -65,6 +66,9 @@ const WritePostPage = ({ params }: WritePostPageProps) => {
             let imageUrl = null;
             if (file) {
                 imageUrl = await uploadImage();
+                if (!imageUrl) {
+                    throw new Error('Image upload failed');
+                }
             }
             const response = await fetch('/api/post/item', {
                 method: 'POST',
@@ -96,16 +100,17 @@ const WritePostPage = ({ params }: WritePostPageProps) => {
             if (!response.ok) throw new Error('Failed to fetch group details');
 
             const data = await response.json();
-            setGroupDetails(data);
+            setGroupDetails(data.group);
         } catch (error) {
-
+            setError('Failed to fetch group details');
         } finally {
             setIsLoading(false);
         }
     };
+
     useEffect(() => {
         fetchGroupDetails()
-      }, [groupId]);
+    }, [groupId]);
 
     if (session?.user) {
         return (
@@ -114,10 +119,10 @@ const WritePostPage = ({ params }: WritePostPageProps) => {
                 <div className="group-details-container">
                     {isLoading ? (
                         <div className="loading-circle">
-                        <svg className="spinner" viewBox="0 0 50 50">
-                          <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
-                        </svg>
-                      </div>
+                            <svg className="spinner" viewBox="0 0 50 50">
+                                <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
+                            </svg>
+                        </div>
                     ) : error ? (
                         <p>Error: {error}</p>
                     ) : groupDetails ? (
@@ -126,7 +131,6 @@ const WritePostPage = ({ params }: WritePostPageProps) => {
                             <p>{groupDetails.groupDescription}</p>
                             <p>{groupDetails.groupLocation}</p>
                         </div>
-                        
                     ) : (
                         <p>No group details found</p>
                     )}
@@ -159,6 +163,7 @@ const WritePostPage = ({ params }: WritePostPageProps) => {
                                 if (e.target.files) {
                                     setFile(e.target.files[0]);
                                     setImageObjectUrl(URL.createObjectURL(e.target.files[0]));
+                                    setImageUploadError(''); // Clear previous error
                                 }
                             }}
                             style={{ display: 'none' }}
@@ -167,18 +172,17 @@ const WritePostPage = ({ params }: WritePostPageProps) => {
                             Choisir une image
                         </label>
                         {imageObjectUrl && <img src={imageObjectUrl} alt="Post Preview" className="image-preview" />}
+                        {imageUploadError && <p className="error-message">{imageUploadError}</p>}
                     </div>
                     <button type="submit" disabled={isLoading}>
                         {isLoading ? 'Création' : 'Créer le post'}
                     </button>
                 </form>
-
-
             </main>
         );
+    } else {
+        return <p>Please sign in to create a post.</p>
     }
 }
 
-
-
-export default WritePostPage
+export default WritePostPage;

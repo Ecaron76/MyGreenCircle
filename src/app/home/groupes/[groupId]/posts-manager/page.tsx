@@ -61,7 +61,7 @@ const PostsManager = ({ params }: PostsManagerPageProps) => {
             if (!response.ok) throw new Error('Failed to fetch group details');
 
             const data = await response.json();
-            setGroupDetails(data);
+            setGroupDetails(data.group);
         } catch (error) {
 
         } finally {

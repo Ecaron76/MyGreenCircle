@@ -65,7 +65,7 @@ const EventCard: React.FC<EventCardProps> = ({
           </>
         )}
         {isCreator && (
-          <MainButton name='Supprimer' onClick={onDelete} />
+          <MainButton name="Supprimer l'évènement" onClick={onDelete} />
         )}
         <div className="horraire">{hourly}</div>
       </div>
