@@ -60,8 +60,8 @@ const MyPosts = ({ params }: MyPostsPageProps) => {
             if (!response.ok) throw new Error('Failed to fetch group details');
 
             const data = await response.json();
-            setGroupDetails(data);
-        } catch (error) {
+            setGroupDetails(data.group);
+          } catch (error) {
 
         } finally {
             setIsLoading(false);
