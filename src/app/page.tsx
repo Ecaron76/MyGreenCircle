@@ -7,7 +7,7 @@ import ServiceCard from "@/components/UI/ServiceCard/ServiceCard";
 import { useRouter } from "next/navigation";
 
 export default function LandingPage() {
-
+  
   const router = useRouter();
   
   return (

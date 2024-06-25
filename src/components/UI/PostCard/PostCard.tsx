@@ -4,6 +4,7 @@ import Image from 'next/image';
 import './PostCard.css';
 import AuthorBadge from '../AuthorBadge/AuthorBadge';
 import Link from 'next/link';
+import CommentModal from '../CommentModal/CommentModal';
 
 type PostCardProps = {
   postId?: number;
@@ -21,6 +22,7 @@ type PostCardProps = {
   onDelete?: () => void;
   onPublish?: () => void;
   validation?: boolean;
+  onCommentClick: (postId: number) => void;
 };
 
 const PostCard: React.FC<PostCardProps> = ({
@@ -39,6 +41,7 @@ const PostCard: React.FC<PostCardProps> = ({
   onDelete,
   onPublish,
   validation,
+  onCommentClick  
 }) => {
   const [likes, setLikes] = useState(nbLike);
   const [liked, setLiked] = useState(false);
@@ -146,11 +149,12 @@ const PostCard: React.FC<PostCardProps> = ({
         </div>
         <div className="comment-container">
           <div className="postTrending">{nbComment} commentaires</div>
-          <div className="trending-btn">
-            <Image alt="" src="/assets/images/iconBtn/comment.png" width={30} height={25} />
+          <div className="trending-btn" onClick={() => onCommentClick(Number(postId))}>
+            <Image alt="Commentaires" src="/assets/images/iconBtn/comment.png" width={30} height={25} />
           </div>
         </div>
       </div>
+      
     </div>
   );
 };

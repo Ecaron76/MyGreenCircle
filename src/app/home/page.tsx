@@ -1,11 +1,12 @@
-'use client';
-
+"use client"
 import Header from "@/components/UI/Header/Header";
 import PostCard from "@/components/UI/PostCard/PostCard";
-import './home.css'
+import './home.css';
 import EventCard from "@/components/UI/EventCard/EventCard";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import CommentModal from "@/components/UI/CommentModal/CommentModal";
+
 
 interface Post {
   postId: number;
@@ -47,7 +48,8 @@ const HomePage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [errorPosts, setErrorPosts] = useState('');
   const [errorEvents, setErrorEvents] = useState('');
-
+  const [isCommentModalOpen, setIsCommentModalOpen] = useState<boolean>(false);
+  const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
 
   const fetchAllPost = async () => {
     setIsLoading(true);
@@ -58,7 +60,7 @@ const HomePage = () => {
       const dataPosts: Post[] = await response.json();
       const groupPosts = dataPosts.filter(post => post.groupId !== null);
       const adminPosts = dataPosts.filter(post => post.groupId === null);
-      console.log(groupPosts)
+      console.log(groupPosts);
 
       setGroupPosts(groupPosts);
       setAdminPosts(adminPosts);
@@ -156,6 +158,11 @@ const HomePage = () => {
     }
   };
 
+  const handleCommentClick = (postId: number) => {
+    setSelectedPostId(postId);
+    setIsCommentModalOpen(true);
+  };
+
   useEffect(() => {
     fetchAllPost();
     fetchUserEvents();
@@ -182,7 +189,6 @@ const HomePage = () => {
                   <p>Error: {errorPosts}</p>
                 ) : adminPosts.length > 0 ? (
                   adminPosts.map((post: Post) => (
-                    
                     <PostCard
                       key={post.postId}
                       postId={post.postId}
@@ -192,6 +198,7 @@ const HomePage = () => {
                       nbComment={post.commentsCount}
                       picture={post.picture}
                       nbLike={post.likesCount}
+                      onCommentClick={handleCommentClick}
                     />
                   ))
                 ) : (
@@ -225,6 +232,7 @@ const HomePage = () => {
                         author={post.user.username}
                         nbComment={post.commentsCount}
                         nbLike={post.likesCount}
+                        onCommentClick={handleCommentClick}
                       />
                     );
                   })
@@ -266,6 +274,10 @@ const HomePage = () => {
             </div>
           </div>
         </div>
+
+        {isCommentModalOpen && selectedPostId !== null && (
+          <CommentModal postId={selectedPostId} onClose={() => setIsCommentModalOpen(false)} />
+        )}
       </main>
     );
   } else {
