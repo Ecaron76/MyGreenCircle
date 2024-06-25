@@ -12,6 +12,7 @@ import AdminEvent from "./adminEvent/Page";
 import { getAllGroups } from "./services/groupe.service";
 import { getAllUsers } from "./services/user.service";
 import { getAllPosts } from "./services/post.service";
+import { getAllEvents } from "./services/event.service";
 
 interface CardData {
   type: "user" | "group" | "event" | "post";
@@ -24,6 +25,7 @@ const Dashboard: React.FC = () => {
   const [userCount, setUserCount] = useState("");
   const [userAdminCount, setUserAdminCount] = useState("");
   const [postCount, setPostCount] = useState("");
+  const [eventCount, setEvenetCount] = useState("");
 
   useEffect(() => {
     const fetchDatas = async () => {
@@ -39,6 +41,9 @@ const Dashboard: React.FC = () => {
 
         const posts = await getAllPosts();
         setPostCount(posts.length.toString());
+
+        const events = await getAllEvents();
+        setEvenetCount(events.length.toString());
       } catch (error) {
         console.error("Error fetching:", error);
       }
@@ -49,7 +54,7 @@ const Dashboard: React.FC = () => {
   const cards: CardData[] = [
     { type: "user", title: "Utilisateurs", value: userCount },
     { type: "group", title: "Groupes", value: groupCount },
-    { type: "event", title: "Événements", value: "25,000" },
+    { type: "event", title: "Événements", value: eventCount },
     { type: "post", title: "Posts", value: postCount },
     { type: "user", title: "Utilisateurs Admin", value: userAdminCount },
   ];

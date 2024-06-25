@@ -10,8 +10,8 @@ import {
   IconButton,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { calculateDetailTitle } from "../../function/detailTitle";
 import CloseIcon from "@mui/icons-material/Close";
+import { calculateDetailTitle } from "../../function/detailTitle";
 import { fetchGroupPosts } from "../../services/groupe.service";
 import { getEventParticipants } from "../../services/event.service";
 import { getOneUser } from "../../services/user.service";
@@ -39,6 +39,7 @@ const keyLabels: KeyLabels = {
   location: "Localisation",
   content: "Contenu",
   title: "Titre",
+  picture: "Image",
 };
 
 const modalStyle = (hasGroup: boolean) => ({
@@ -122,7 +123,15 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
                 <span style={{ fontWeight: "bold" }}>
                   {keyLabels[key] || key}:
                 </span>{" "}
-                {String(item[key])}
+                {key === "picture" ? (
+                  <img
+                    src={String(item[key])}
+                    alt="Post"
+                    style={{ width: "100%", maxWidth: "200px" }}
+                  />
+                ) : (
+                  String(item[key])
+                )}
               </Typography>
             ))}
             <IconButton
@@ -195,9 +204,17 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
                       key.charAt(0).toUpperCase() + key.slice(1)}{" "}
                     :
                   </Typography>
-                  <Typography variant="body2" sx={{ ml: 1 }}>
-                    {String(localData[key])}
-                  </Typography>
+                  {key === "picture" ? (
+                    <img
+                      src={String(localData[key])}
+                      alt="Post"
+                      style={{ width: "100%", maxWidth: "200px" }}
+                    />
+                  ) : (
+                    <Typography variant="body2" sx={{ ml: 1 }}>
+                      {String(localData[key])}
+                    </Typography>
+                  )}
                 </Grid>
               ))}
           </Grid>
@@ -231,7 +248,7 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
                 </Typography>
                 {eventParticipate?.length > 0
                   ? renderValue(eventParticipate, "eventParticpates")
-                  : "Aucun particpant pour cet événement"}
+                  : "Aucun participant pour cet événement"}
               </Grid>
             </>
           )}
