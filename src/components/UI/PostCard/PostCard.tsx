@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FiTrash2, FiEdit, FiCheckCircle, FiEyeOff } from 'react-icons/fi';
+import { FiTrash2, FiEdit, FiCheckCircle, FiEyeOff,FiMessageSquare,FiThumbsUp  } from 'react-icons/fi';
 import Image from 'next/image';
 import './PostCard.css';
 import AuthorBadge from '../AuthorBadge/AuthorBadge';
@@ -138,20 +138,15 @@ const PostCard: React.FC<PostCardProps> = ({
         <div className="like-container">
           <div className="postTrending">{likes} j&apos;aime</div>
           <button className="trending-btn" onClick={handleLike}>
-            <Image
-              alt="Like"
-              src={liked ? '/assets/images/iconBtn/liked.png' : '/assets/images/iconBtn/like.png'}
-              width={35}
-              height={25}
-              className="like-icon"
-            />
+            <FiThumbsUp className="like-icon" title="J'aime" />
+
           </button>
         </div>
         <div className="comment-container">
           <div className="postTrending">{nbComment} commentaires</div>
-          <div className="trending-btn" onClick={() => onCommentClick(Number(postId))}>
-            <Image alt="Commentaires" src="/assets/images/iconBtn/comment.png" width={30} height={25} />
-          </div>
+          <button className="trending-btn" onClick={() => onCommentClick(Number(postId))}>
+            <FiMessageSquare className="comment-icon" title="Commentaires" />
+          </button>
         </div>
       </div>
       

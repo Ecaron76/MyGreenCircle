@@ -71,13 +71,20 @@
 }
 
 .trending-btn {
-  background-color: #4f766f;
+  background-color: #18534f;
   padding: 7px;
   border-radius: 20px;
   text-align: center;
   cursor: pointer;
   display: flex;
   justify-content: center;
+  border:none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); 
+
+}
+
+.trending-btn:hover {
+  background-color: #1e8b82;
 }
 
 .author {
@@ -199,4 +206,15 @@
 
 .unpublish-btn:hover {
   background-color: #c76262!important;
+}
+
+.comment-icon{
+  color: white;
+  font-size: 30px;
+
+}
+.like-icon{
+  color: white;
+  font-size: 30px;
+
 }

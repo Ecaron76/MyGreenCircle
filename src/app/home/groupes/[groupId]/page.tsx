@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import PostCard from "@/components/UI/PostCard/PostCard";
 import Link from "next/link";
 import CreateEventModal from "@/components/GroupePage/CreateEventModal/CreateEventModal";
+import CommentModal from "@/components/UI/CommentModal/CommentModal";
 
 type SingleGroupePageProps = {
   params: {
@@ -52,6 +53,9 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [isCommentModalOpen, setIsCommentModalOpen] = useState<boolean>(false);
+  const [selectedPostComments, setSelectedPostComments] = useState<number | null>(null);
 
   const role = session?.user.roles?.find((r: UserRole) => r.groupId === Number(groupId))?.role;
 
@@ -105,6 +109,15 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
     } catch (error) {
       console.error('Error leaving group:', error);
     }
+  };
+
+  const handleCommentClick = (postId: number) => {
+    setSelectedPostComments(postId);
+    setIsCommentModalOpen(true);
+  };
+  const getPostTitle = (postId: number): string => {
+    const post = allGroupPosts.find(post => post.postId === postId) || allGroupPosts.find(post => post.postId === postId);
+    return post ? post.title : '';
   };
 
   useEffect(() => {
@@ -161,15 +174,17 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
         ) : allGroupPosts.length > 0 ? (
           allGroupPosts.map((post: Post) => (
             <PostCard
-              key={post.postId}
-              title={post.title}
-              content={post.content}
-              author={post.user.username}
-              nbComment={5}
-              nbLike={5}
-              picture={post.picture}
-              group={true}
-            />
+                key={post.postId}
+                postId={post.postId}
+                title={post.title}
+                content={post.content}
+                picture={post.picture}
+                group
+                author={post.user.username}
+                nbComment={post.commentsCount}
+                nbLike={post.likesCount}
+                onCommentClick={handleCommentClick}
+                />
           ))
         ) : (
           <p>No Posts found</p>
@@ -185,6 +200,10 @@ const SingleGroupePage = ({ params }: SingleGroupePageProps) => {
           }}
         />
       )}
+      {isCommentModalOpen && selectedPostComments !== null && (
+            <CommentModal postId={selectedPostComments} onClose={() => setIsCommentModalOpen(false)} postTitle={getPostTitle(selectedPostComments)}/>
+
+        )}
     </main>
   );
 };

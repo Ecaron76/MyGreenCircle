@@ -49,7 +49,7 @@ const HomePage = () => {
   const [errorPosts, setErrorPosts] = useState('');
   const [errorEvents, setErrorEvents] = useState('');
   const [isCommentModalOpen, setIsCommentModalOpen] = useState<boolean>(false);
-  const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
+  const [selectedPostComments, setSelectedPostComments] = useState<number | null>(null);
 
   const fetchAllPost = async () => {
     setIsLoading(true);
@@ -159,8 +159,12 @@ const HomePage = () => {
   };
 
   const handleCommentClick = (postId: number) => {
-    setSelectedPostId(postId);
+    setSelectedPostComments(postId);
     setIsCommentModalOpen(true);
+  };
+  const getPostTitle = (postId: number): string => {
+    const post = groupPosts.find(post => post.postId === postId) || adminPosts.find(post => post.postId === postId);
+    return post ? post.title : '';
   };
 
   useEffect(() => {
@@ -248,7 +252,11 @@ const HomePage = () => {
             <br />
             <div className="event-list">
               {isLoading ? (
-                <p>Loading...</p>
+                <div className="loading-circle">
+                <svg className="spinner" viewBox="0 0 50 50">
+                  <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
+                </svg>
+              </div>
               ) : errorEvents ? (
                 <p>Error: {errorEvents}</p>
               ) : events.length > 0 ? (
@@ -275,8 +283,9 @@ const HomePage = () => {
           </div>
         </div>
 
-        {isCommentModalOpen && selectedPostId !== null && (
-          <CommentModal postId={selectedPostId} onClose={() => setIsCommentModalOpen(false)} />
+        {isCommentModalOpen && selectedPostComments !== null && (
+          <CommentModal postId={selectedPostComments} onClose={() => setIsCommentModalOpen(false)} postTitle={getPostTitle(selectedPostComments)} // Remplacez getPostTitle avec votre logique pour obtenir le titre du post
+          />
         )}
       </main>
     );
