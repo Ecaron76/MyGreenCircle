@@ -9,6 +9,8 @@ declare module "next-auth" {
   interface User {
     username: string;
     roles: UserRole[];
+    admin: boolean
+    roles: UserRole[];
   }
 
   interface Session {
@@ -18,6 +20,7 @@ declare module "next-auth" {
     }
 
     token: {
+      user: User;
       username: string;
     }
   }

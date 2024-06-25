@@ -7,12 +7,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import CloudUploadIcon from "@mui/icons-material/Download";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useDropzone } from "react-dropzone";
 import AlertComponent from "../Alert/Page";
+import { createPost } from "../../services/post.service";
 
 function AddFormPost({ typeForm, onFormClose }: any) {
-  const { getRootProps, getInputProps } = useDropzone();
+  const { getRootProps, getInputProps, acceptedFiles } = useDropzone();
   const {
     control,
     handleSubmit,
@@ -20,13 +21,44 @@ function AddFormPost({ typeForm, onFormClose }: any) {
   } = useForm();
 
   const [showAlert, setShowAlert] = useState(false);
+  const [imageUploadError, setImageUploadError] = useState<string>("");
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    setShowAlert(true);
-    setTimeout(() => {
-      onFormClose();
-    }, 1000);
+  const onSubmit = async (data: any) => {
+    try {
+      let imageUrl = null;
+      if (acceptedFiles.length > 0) {
+        const file = acceptedFiles[0];
+        const imageData = new FormData();
+        imageData.append("file", file);
+
+        const response = await fetch("/api/upload", {
+          method: "POST",
+          body: imageData,
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to upload image");
+        }
+
+        const result = await response.json();
+        imageUrl = result.url;
+      }
+
+      const postData = {
+        title: data.title,
+        content: data.content,
+        picture: imageUrl,
+      };
+
+      const newPost = await createPost(postData);
+      setShowAlert(true);
+      setTimeout(() => {
+        onFormClose();
+      }, 1000);
+    } catch (error) {
+      console.error("Erreur lors de la création du post: ", error);
+      setImageUploadError("Failed to upload image. Please try again.");
+    }
   };
 
   const customStyles = {
@@ -73,10 +105,10 @@ function AddFormPost({ typeForm, onFormClose }: any) {
             <AlertComponent title={`${typeForm} créé avec succès`} />
           )}
           <Typography variant="h6" fontSize={20} color="#18534F" gutterBottom>
-            Ajout d'un nouveau {typeForm.slice(0, -1)}
+            Ajout d`&lsquo;`un nouveau {typeForm.slice(0, -1)}
           </Typography>
           <Controller
-            name="titre"
+            name="title"
             control={control}
             rules={{ required: "Le titre est requis" }}
             render={({ field, fieldState }) => (
@@ -93,7 +125,7 @@ function AddFormPost({ typeForm, onFormClose }: any) {
             )}
           />
           <Controller
-            name="contenu"
+            name="content"
             control={control}
             rules={{ required: "Le contenu est requis" }}
             render={({ field, fieldState }) => (
@@ -153,7 +185,15 @@ function AddFormPost({ typeForm, onFormClose }: any) {
           >
             <input {...getInputProps()} />
             <CloudUploadIcon style={{ fontSize: 48, color: "#bdbdbd" }} />
+            {acceptedFiles.length > 0 && (
+              <Typography variant="body2" sx={{ mt: 1 }}>
+                {acceptedFiles[0].name}
+              </Typography>
+            )}
           </div>
+          {imageUploadError && (
+            <p className="error-message">{imageUploadError}</p>
+          )}
           <Button
             type="submit"
             variant="contained"

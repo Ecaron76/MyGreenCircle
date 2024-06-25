@@ -1,32 +1,41 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DataGridComponent from "../components/dataGrid/Page";
 import ModalDelete from "../components/modalDelete/Page";
-import rowsData from "./posts.json";
-import { Post } from "../types/types";
 import AddButton from "../components/AddButton/Page";
 import CommentIcon from "@mui/icons-material/Comment";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AddFormPost from "../components/AddFormPost/Page";
+import { getAllPosts } from "../services/post.service";
+import { Post } from "../types/types";
 
 function AdminPost({ type }: any) {
-  const [showForm, setShowForm] = useState(
-    () => localStorage.getItem("showForm") === "true"
-  );
+  const [showForm, setShowForm] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("showForm") === "true";
+    }
+    return false;
+  });
 
   useEffect(() => {
-    localStorage.setItem("showForm", showForm.toString());
+    if (typeof window !== "undefined") {
+      localStorage.setItem("showForm", showForm.toString());
+    }
   }, [showForm]);
 
-  const [rows, setRows] = useState<any>(rowsData);
+  const [rows, setRows] = useState<Post[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const handleBack = () => {
     setShowForm(false);
-    localStorage.setItem("showForm", "false");
+    if (typeof window !== "undefined") {
+      localStorage.setItem("showForm", "false");
+    }
   };
 
   const handleClickOpen = (id: number) => {
@@ -45,30 +54,46 @@ function AdminPost({ type }: any) {
 
   const toggleForm = () => {
     setShowForm(!showForm);
-    localStorage.setItem("showForm", (!showForm).toString());
+    if (typeof window !== "undefined") {
+      localStorage.setItem("showForm", (!showForm).toString());
+    }
   };
 
   const handleFormClose = () => {
     setShowForm(false);
-    localStorage.setItem("showForm", "false");
+    if (typeof window !== "undefined") {
+      localStorage.setItem("showForm", "false");
+    }
   };
+
   const columns: GridColDef<Post>[] = [
     {
-      field: "postTitle",
+      field: "picture",
+      headerName: "Image",
+      width: 150,
+      renderCell: (params) =>
+        params.value ? (
+          <img src={params.value} alt="Post Image" style={{ width: "100%" }} />
+        ) : (
+          "No Image"
+        ),
+    },
+    {
+      field: "title",
       headerName: "Titre",
       width: 200,
       editable: true,
     },
     {
-      field: "postContent",
+      field: "content",
       headerName: "Contenu",
-      width: 300,
+      width: 200,
       editable: false,
     },
     {
       field: "createdAt",
       headerName: "Créé le",
-      width: 180,
+      width: 150,
       editable: false,
     },
     {
@@ -77,6 +102,7 @@ function AdminPost({ type }: any) {
       width: 150,
       editable: false,
     },
+
     {
       field: "comments",
       headerName: "Commentaires",
@@ -87,9 +113,10 @@ function AdminPost({ type }: any) {
       field: "actions",
       type: "actions",
       headerName: "Actions",
-      width: 100,
+      width: 90,
       getActions: ({ row }) => [
         <GridActionsCellItem
+          key={row.id}
           icon={<DeleteIcon />}
           label="Supprimer"
           onClick={() => handleClickOpen(row.id)}
@@ -97,6 +124,19 @@ function AdminPost({ type }: any) {
       ],
     },
   ];
+
+  useEffect(() => {
+    setLoading(true);
+    getAllPosts()
+      .then((data) => {
+        setRows(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch posts:", error);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <Box sx={{ height: 400, width: "100%" }}>
@@ -122,7 +162,13 @@ function AdminPost({ type }: any) {
             </Typography>
             <AddButton onClick={toggleForm} title="Ajout d'un Post" />
           </Box>
-          <DataGridComponent rows={rows} columns={columns} identifier="Post" />
+          <DataGridComponent
+            rows={rows}
+            columns={columns}
+            identifier="Post"
+            getRowId={(row) => row.postId}
+            loading={loading}
+          />
         </>
       )}
       <ModalDelete
@@ -130,7 +176,7 @@ function AdminPost({ type }: any) {
         onClose={handleClose}
         onConfirm={() => handleDelete(deleteId!)}
         title="Confirmez la suppression"
-        message="Êtes-vous sûr de vouloir supprimer cet utilisateur ?"
+        message="Êtes-vous sûr de vouloir supprimer ce post ?"
       />
     </Box>
   );
