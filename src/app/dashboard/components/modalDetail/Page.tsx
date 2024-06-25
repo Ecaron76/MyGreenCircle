@@ -23,6 +23,7 @@ interface RowDetailsModalProps {
   selectedRow: any;
   identifier: string;
 }
+
 interface KeyLabel {
   label: string;
   isHidden?: boolean;
@@ -227,7 +228,16 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
                       style={{ width: "100%", maxWidth: "200px" }}
                     />
                   ) : (
-                    <Typography variant="body2" sx={{ wordBreak: "break-all" }}>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        ml: 1,
+                        mt: 0.5,
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
                       {String(localData[key])}
                     </Typography>
                   )}
