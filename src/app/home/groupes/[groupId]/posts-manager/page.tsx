@@ -11,6 +11,7 @@ import Link from "next/link";
 import './PostsManager.css'
 import DeleteModal from "@/components/UI/DeleteModal/DeleteModal";
 import PublishModal from "@/components/UI/PublishModal/PublishModal";
+import CommentModal from "@/components/UI/CommentModal/CommentModal";
 
 type PostsManagerPageProps = {
     params: {
@@ -31,6 +32,8 @@ interface Post {
     groupId: number;
     title: string;
     content: string;
+    likesCount: number;
+    commentsCount: number;
     isVisible: boolean;
     picture?: string;
     user: {
@@ -51,6 +54,9 @@ const PostsManager = ({ params }: PostsManagerPageProps) => {
     const [isPublishModalVisible, setIsPublishModalVisible] = useState(false);
     const [isPublishing, setIsPublishing] = useState<boolean | undefined>();
     const [postToManage, setPostToManage] = useState<number | null>(null);
+
+    const [isCommentModalOpen, setIsCommentModalOpen] = useState<boolean>(false);
+    const [selectedPostComments, setSelectedPostComments] = useState<number | null>(null);
 
     const fetchGroupDetails = async () => {
         if (!groupId) return;
@@ -115,7 +121,14 @@ const PostsManager = ({ params }: PostsManagerPageProps) => {
         }
       };
 
-    
+      const handleCommentClick = (postId: number) => {
+        setSelectedPostComments(postId);
+        setIsCommentModalOpen(true);
+      };
+      const getPostTitle = (postId: number): string => {
+        const post = allMyPostsGroup.find(post => post.postId === postId) || allMyPostsGroup.find(post => post.postId === postId);
+        return post ? post.title : '';
+      };
 
     useEffect(() => {
         fetchGroupDetails()
@@ -166,12 +179,13 @@ const PostsManager = ({ params }: PostsManagerPageProps) => {
                                 title={post.title}
                                 content={post.content}
                                 author={post.user.username}
-                                nbComment={5}
-                                nbLike={5}
+                                nbComment={post.commentsCount}
+                                nbLike={post.likesCount}
                                 picture={post.picture}
                                 isVisible={post.isVisible}
                                 validation
                                 onPublish={() => handlePublishPostClick(post.postId, post.isVisible)}
+                                onCommentClick={handleCommentClick}
                             />
                         ))
                     ) : (
@@ -187,6 +201,10 @@ const PostsManager = ({ params }: PostsManagerPageProps) => {
             onSuccess={handlePublishPost}
             isPublishing={isPublishing}
           />
+        )}
+        {isCommentModalOpen && selectedPostComments !== null && (
+            <CommentModal postId={selectedPostComments} onClose={() => setIsCommentModalOpen(false)} postTitle={getPostTitle(selectedPostComments)}/>
+
         )}
 
             </main>
