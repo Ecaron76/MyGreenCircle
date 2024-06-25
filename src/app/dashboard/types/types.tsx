@@ -17,10 +17,17 @@ export interface AddButtonProps {
 
 export interface User {
   id: number;
-  firstName: string;
-  lastName: string;
+  username: string;
   email: string;
-  role: string;
+  createdAt: string;
+  address: string;
+  CP: string;
+  ville: string;
+  latitude: string;
+  longitude: string;
+  password: string;
+  image: Blob;
+  admin: Boolean;
 }
 
 export interface Comment {
@@ -32,15 +39,15 @@ export interface Comment {
 
 export interface Post {
   id: number;
-  postTitle: string;
-  postContent: string;
+  title: string;
+  content: string;
   createdAt: Date;
   userId: number;
   comments: Comment[];
 }
 
 export interface Group {
-  id: number;
+  groupId: number;
   groupName: string;
   groupDescription: string;
   groupLocation: string;

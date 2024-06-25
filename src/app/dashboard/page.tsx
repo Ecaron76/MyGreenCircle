@@ -9,6 +9,10 @@ import AdminUser from "./adminUser/Page";
 import AdminPost from "./adminPost/Page";
 import AdminGroupe from "./adminGroupe/Page";
 import AdminEvent from "./adminEvent/Page";
+import { getAllGroups } from "./services/groupe.service";
+import { getAllUsers } from "./services/user.service";
+import { getAllPosts } from "./services/post.service";
+import { getAllEvents } from "./services/event.service";
 
 interface CardData {
   type: "user" | "group" | "event" | "post";
@@ -17,13 +21,43 @@ interface CardData {
 }
 
 const Dashboard: React.FC = () => {
+  const [groupCount, setGroupCount] = useState("");
+  const [userCount, setUserCount] = useState("");
+  const [userAdminCount, setUserAdminCount] = useState("");
+  const [postCount, setPostCount] = useState("");
+  const [eventCount, setEvenetCount] = useState("");
+
+  useEffect(() => {
+    const fetchDatas = async () => {
+      try {
+        const users = await getAllUsers();
+        setUserCount(users.length.toString());
+
+        const adminUsers = users.filter((user) => user.admin === true);
+        setUserAdminCount(adminUsers.length.toString());
+
+        const groups = await getAllGroups();
+        setGroupCount(groups.length.toString());
+
+        const posts = await getAllPosts();
+        setPostCount(posts.length.toString());
+
+        const events = await getAllEvents();
+        setEvenetCount(events.length.toString());
+      } catch (error) {
+        console.error("Error fetching:", error);
+      }
+    };
+
+    fetchDatas();
+  }, []);
+
   const cards: CardData[] = [
-    { type: "user", title: "Utilisateurs", value: "40,000" },
-    { type: "group", title: "Groupes", value: "30,000" },
-    { type: "event", title: "Événements", value: "25,000" },
-    { type: "post", title: "Posts", value: "15,000" },
-    { type: "user", title: "Nouveaux Utilisateurs", value: "40,000" },
-    { type: "user", title: "Utilisateurs Actifs", value: "40,000" },
+    { type: "user", title: "Utilisateurs", value: userCount },
+    { type: "group", title: "Groupes", value: groupCount },
+    { type: "event", title: "Événements", value: eventCount },
+    { type: "post", title: "Posts", value: postCount },
+    { type: "user", title: "Utilisateurs Admin", value: userAdminCount },
   ];
 
   const groupedCards = cards.reduce((acc: any, card) => {
@@ -32,11 +66,17 @@ const Dashboard: React.FC = () => {
   }, {});
 
   const [activeContent, setActiveContent] = useState<string>(() => {
-    return localStorage.getItem("activeContent") || "";
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("activeContent") || "Dashboard";
+    } else {
+      return "Dashboard";
+    }
   });
 
   useEffect(() => {
-    localStorage.setItem("activeContent", activeContent);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("activeContent", activeContent);
+    }
   }, [activeContent]);
 
   const renderContent = () => {
@@ -50,7 +90,7 @@ const Dashboard: React.FC = () => {
       case "Groupes":
         return (
           <Grid sx={{ mt: 4, p: 1 }}>
-            <AdminGroupe type={activeContent}></AdminGroupe>
+            <AdminGroupe></AdminGroupe>
           </Grid>
         );
       case "Événements":
@@ -66,7 +106,6 @@ const Dashboard: React.FC = () => {
           </Grid>
         );
       case "Dashboard":
-
       default:
         return (
           <Grid container spacing={3} sx={{ p: 2, mt: 8 }}>
