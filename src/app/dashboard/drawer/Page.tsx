@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Drawer,
   List,
@@ -15,6 +15,7 @@ import EventIcon from "@mui/icons-material/Event";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { signOut } from "next-auth/react";
+
 interface DrawerComponentProps {
   onContentChange: (content: string) => void;
 }
@@ -32,11 +33,22 @@ const DrawerComponent: React.FC<DrawerComponentProps> = ({
   };
 
   const [selected, setSelected] = useState<number | null>(() => {
-    const savedContent = localStorage.getItem("activeContent");
-    return savedContent ? contentIndexMap[savedContent] : null;
+    if (typeof window !== "undefined") {
+      const savedContent = localStorage.getItem("activeContent");
+      return savedContent ? contentIndexMap[savedContent] : null;
+    }
+    return null;
   });
-  console.log(localStorage.getItem("activeContent"));
-  console.log(selected);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        "activeContent",
+        Object.keys(contentIndexMap)[selected ?? 0]
+      );
+    }
+  }, [selected]);
+
   const handleListItemClick = (index: number, content: string): void => {
     setSelected(index);
     onContentChange(content);

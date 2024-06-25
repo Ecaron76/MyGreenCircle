@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
@@ -12,12 +13,17 @@ import { getAllPosts } from "../services/post.service";
 import { Post } from "../types/types";
 
 function AdminPost({ type }: any) {
-  const [showForm, setShowForm] = useState(
-    () => localStorage.getItem("showForm") === "true"
-  );
+  const [showForm, setShowForm] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("showForm") === "true";
+    }
+    return false;
+  });
 
   useEffect(() => {
-    localStorage.setItem("showForm", showForm.toString());
+    if (typeof window !== "undefined") {
+      localStorage.setItem("showForm", showForm.toString());
+    }
   }, [showForm]);
 
   const [rows, setRows] = useState<Post[]>([]);
@@ -27,7 +33,9 @@ function AdminPost({ type }: any) {
 
   const handleBack = () => {
     setShowForm(false);
-    localStorage.setItem("showForm", "false");
+    if (typeof window !== "undefined") {
+      localStorage.setItem("showForm", "false");
+    }
   };
 
   const handleClickOpen = (id: number) => {
@@ -46,12 +54,16 @@ function AdminPost({ type }: any) {
 
   const toggleForm = () => {
     setShowForm(!showForm);
-    localStorage.setItem("showForm", (!showForm).toString());
+    if (typeof window !== "undefined") {
+      localStorage.setItem("showForm", (!showForm).toString());
+    }
   };
 
   const handleFormClose = () => {
     setShowForm(false);
-    localStorage.setItem("showForm", "false");
+    if (typeof window !== "undefined") {
+      localStorage.setItem("showForm", "false");
+    }
   };
 
   const columns: GridColDef<Post>[] = [

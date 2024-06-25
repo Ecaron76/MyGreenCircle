@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
@@ -16,22 +17,31 @@ function AdminEvent({ type }: any) {
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const [showForm, setShowForm] = useState(
-    () => localStorage.getItem("showForm") === "true"
-  );
+  const [showForm, setShowForm] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("showForm") === "true";
+    }
+    return false;
+  });
 
   useEffect(() => {
-    localStorage.setItem("showForm", showForm.toString());
+    if (typeof window !== "undefined") {
+      localStorage.setItem("showForm", showForm.toString());
+    }
   }, [showForm]);
 
   const handleClickOpen = (id: number) => {
     setDeleteId(id);
     setOpen(true);
   };
+
   const handleBack = () => {
     setShowForm(false);
-    localStorage.setItem("showForm", "false");
+    if (typeof window !== "undefined") {
+      localStorage.setItem("showForm", "false");
+    }
   };
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -40,14 +50,19 @@ function AdminEvent({ type }: any) {
     setRows(rows.filter((row: any) => row.id !== id));
     handleClose();
   };
+
   const toggleForm = () => {
     setShowForm(!showForm);
-    localStorage.setItem("showForm", (!showForm).toString());
+    if (typeof window !== "undefined") {
+      localStorage.setItem("showForm", (!showForm).toString());
+    }
   };
 
   const handleFormClose = () => {
     setShowForm(false);
-    localStorage.setItem("showForm", "false");
+    if (typeof window !== "undefined") {
+      localStorage.setItem("showForm", "false");
+    }
   };
 
   const columns: GridColDef<Event>[] = [

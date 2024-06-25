@@ -51,6 +51,7 @@ const Dashboard: React.FC = () => {
 
     fetchDatas();
   }, []);
+
   const cards: CardData[] = [
     { type: "user", title: "Utilisateurs", value: userCount },
     { type: "group", title: "Groupes", value: groupCount },
@@ -65,11 +66,17 @@ const Dashboard: React.FC = () => {
   }, {});
 
   const [activeContent, setActiveContent] = useState<string>(() => {
-    return localStorage.getItem("activeContent") || "";
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("activeContent") || "Dashboard";
+    } else {
+      return "Dashboard";
+    }
   });
 
   useEffect(() => {
-    localStorage.setItem("activeContent", activeContent);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("activeContent", activeContent);
+    }
   }, [activeContent]);
 
   const renderContent = () => {
@@ -99,7 +106,6 @@ const Dashboard: React.FC = () => {
           </Grid>
         );
       case "Dashboard":
-
       default:
         return (
           <Grid container spacing={3} sx={{ p: 2, mt: 8 }}>
