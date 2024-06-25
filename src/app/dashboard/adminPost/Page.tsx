@@ -4,13 +4,12 @@ import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DataGridComponent from "../components/dataGrid/Page";
 import ModalDelete from "../components/modalDelete/Page";
-import rowsData from "./posts.json";
-import { Post } from "../types/types";
 import AddButton from "../components/AddButton/Page";
 import CommentIcon from "@mui/icons-material/Comment";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AddFormPost from "../components/AddFormPost/Page";
 import { getAllPosts } from "../services/post.service";
+import { Post } from "../types/types";
 
 function AdminPost({ type }: any) {
   const [showForm, setShowForm] = useState(
@@ -54,7 +53,19 @@ function AdminPost({ type }: any) {
     setShowForm(false);
     localStorage.setItem("showForm", "false");
   };
+
   const columns: GridColDef<Post>[] = [
+    {
+      field: "picture",
+      headerName: "Image",
+      width: 150,
+      renderCell: (params) =>
+        params.value ? (
+          <img src={params.value} alt="Post Image" style={{ width: "100%" }} />
+        ) : (
+          "No Image"
+        ),
+    },
     {
       field: "title",
       headerName: "Titre",
@@ -64,13 +75,13 @@ function AdminPost({ type }: any) {
     {
       field: "content",
       headerName: "Contenu",
-      width: 300,
+      width: 200,
       editable: false,
     },
     {
       field: "createdAt",
       headerName: "Créé le",
-      width: 180,
+      width: 150,
       editable: false,
     },
     {
@@ -79,6 +90,7 @@ function AdminPost({ type }: any) {
       width: 150,
       editable: false,
     },
+
     {
       field: "comments",
       headerName: "Commentaires",
@@ -89,7 +101,7 @@ function AdminPost({ type }: any) {
       field: "actions",
       type: "actions",
       headerName: "Actions",
-      width: 100,
+      width: 90,
       getActions: ({ row }) => [
         <GridActionsCellItem
           icon={<DeleteIcon />}
@@ -108,7 +120,7 @@ function AdminPost({ type }: any) {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Failed to fetch groups:", error);
+        console.error("Failed to fetch posts:", error);
         setLoading(false);
       });
   }, []);
@@ -151,7 +163,7 @@ function AdminPost({ type }: any) {
         onClose={handleClose}
         onConfirm={() => handleDelete(deleteId!)}
         title="Confirmez la suppression"
-        message="Êtes-vous sûr de vouloir supprimer cet utilisateur ?"
+        message="Êtes-vous sûr de vouloir supprimer ce post ?"
       />
     </Box>
   );
