@@ -73,7 +73,7 @@ function AddFormPost({ typeForm, onFormClose }: any) {
             <AlertComponent title={`${typeForm} créé avec succès`} />
           )}
           <Typography variant="h6" fontSize={20} color="#18534F" gutterBottom>
-            Ajout d'un nouveau {typeForm.slice(0, -1)}
+            Ajout d`&lsquo;`un nouveau {typeForm.slice(0, -1)}
           </Typography>
           <Controller
             name="titre"
