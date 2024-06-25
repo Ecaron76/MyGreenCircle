@@ -1,35 +1,47 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DataGridComponent from "../components/dataGrid/Page";
 import ModalDelete from "../components/modalDelete/Page";
-import rowsData from "./events.json";
 import AddButton from "../components/AddButton/Page";
 import { Event } from "../types/types";
 import AddFormEvent from "../components/AddFormEvent/Page";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { getAllEvents } from "../services/event.service";
 
 function AdminEvent({ type }: any) {
-  const [rows, setRows] = useState<any>(rowsData);
+  const [rows, setRows] = useState<Event[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
-  const [showForm, setShowForm] = useState(
-    () => localStorage.getItem("showForm") === "true"
-  );
+  const [loading, setLoading] = useState(true);
+
+  const [showForm, setShowForm] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("showForm") === "true";
+    }
+    return false;
+  });
 
   useEffect(() => {
-    localStorage.setItem("showForm", showForm.toString());
+    if (typeof window !== "undefined") {
+      localStorage.setItem("showForm", showForm.toString());
+    }
   }, [showForm]);
 
   const handleClickOpen = (id: number) => {
     setDeleteId(id);
     setOpen(true);
   };
+
   const handleBack = () => {
     setShowForm(false);
-    localStorage.setItem("showForm", "false");
+    if (typeof window !== "undefined") {
+      localStorage.setItem("showForm", "false");
+    }
   };
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -38,14 +50,19 @@ function AdminEvent({ type }: any) {
     setRows(rows.filter((row: any) => row.id !== id));
     handleClose();
   };
+
   const toggleForm = () => {
     setShowForm(!showForm);
-    localStorage.setItem("showForm", (!showForm).toString());
+    if (typeof window !== "undefined") {
+      localStorage.setItem("showForm", (!showForm).toString());
+    }
   };
 
   const handleFormClose = () => {
     setShowForm(false);
-    localStorage.setItem("showForm", "false");
+    if (typeof window !== "undefined") {
+      localStorage.setItem("showForm", "false");
+    }
   };
 
   const columns: GridColDef<Event>[] = [
@@ -102,6 +119,7 @@ function AdminEvent({ type }: any) {
       width: 100,
       getActions: ({ row }) => [
         <GridActionsCellItem
+          key={row.id}
           icon={<DeleteIcon />}
           label="Supprimer"
           onClick={() => handleClickOpen(row.id)}
@@ -109,6 +127,19 @@ function AdminEvent({ type }: any) {
       ],
     },
   ];
+
+  useEffect(() => {
+    setLoading(true);
+    getAllEvents()
+      .then((data) => {
+        setRows(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch groups:", error);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <Box sx={{ height: 400, width: "100%" }}>
@@ -138,6 +169,8 @@ function AdminEvent({ type }: any) {
             rows={rows}
             columns={columns}
             identifier="évenement"
+            getRowId={(row) => row.eventId}
+            loading={loading}
           />
         </>
       )}

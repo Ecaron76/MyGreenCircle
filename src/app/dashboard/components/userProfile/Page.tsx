@@ -1,7 +1,11 @@
 import React from "react";
 import { Box, Avatar, Typography } from "@mui/material";
+import { useSession } from "next-auth/react";
 
 const UserProfile = () => {
+  const { data: session } = useSession();
+
+  console.log(session);
   return (
     <Box
       sx={{
@@ -11,11 +15,15 @@ const UserProfile = () => {
         mr: 4,
       }}
     >
-      <Avatar sx={{ bgcolor: "secondary.main", mr: 1 }}>H</Avatar>
+      <Avatar sx={{ bgcolor: "secondary.main", mr: 1 }}>
+        {session?.user.username.charAt(0).toLocaleUpperCase()}
+      </Avatar>
       <Box>
-        <Typography sx={{ color: "#000000" }}>Hanane Mouder</Typography>
+        <Typography sx={{ color: "#000000" }}>
+          {session?.user.username}
+        </Typography>
         <Typography sx={{ color: "gray", fontSize: "0.75rem" }}>
-          Admin
+          {session?.user.roles[0].role}
         </Typography>
       </Box>
     </Box>

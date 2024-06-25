@@ -29,9 +29,12 @@ const DashboardContent: React.FC<DataCardProps> = ({ type, title, value }) => {
   const { background, text } = colorMap[type] || colorMap.user;
 
   return (
-    <Card sx={{ height: "20%", backgroundImage: background, pt: 1, mb: 3 }}>
+    <Card sx={{ height: 70, backgroundImage: background, pt: 1, mb: 3 }}>
       <CardContent sx={{ color: text, textAlign: "left", pl: 2 }}>
-        <Typography variant="h5" sx={{ fontWeight: 600, fontSize: "24px" }}>
+        <Typography
+          variant="h5"
+          sx={{ fontWeight: 700, fontSize: "24px", mt: -1 }}
+        >
           {value}
         </Typography>
         <Typography
