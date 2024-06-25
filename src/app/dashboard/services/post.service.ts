@@ -59,3 +59,25 @@ export const PostVisibility = async (
     throw error;
   }
 };
+
+export const getCommentsByPostId = async (postId: number) => {
+  try {
+    const response = await fetch(`/api/comments/${postId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data.comments;
+  } catch (error) {
+    console.error("Failed to fetch comments:", error);
+    throw error;
+  }
+};

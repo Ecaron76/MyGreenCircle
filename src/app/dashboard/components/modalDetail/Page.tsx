@@ -15,6 +15,7 @@ import { calculateDetailTitle } from "../../function/detailTitle";
 import { fetchGroupPosts } from "../../services/groupe.service";
 import { getEventParticipants } from "../../services/event.service";
 import { getOneUser } from "../../services/user.service";
+import { getCommentsByPostId } from "../../services/post.service";
 
 interface RowDetailsModalProps {
   open: boolean;
@@ -22,24 +23,29 @@ interface RowDetailsModalProps {
   selectedRow: any;
   identifier: string;
 }
+interface KeyLabel {
+  label: string;
+  isHidden?: boolean;
+}
 
 interface KeyLabels {
-  [key: string]: string;
+  [key: string]: KeyLabel;
 }
 
 const keyLabels: KeyLabels = {
-  userId: "User ID",
-  postId: "Post ID",
-  comments: "Liste des Commentaires",
-  createdAt: "Date de Création",
-  PostTitle: "Titre du Poste",
-  description: "Description",
-  startDate: "Date de Début",
-  endDate: "Date de Fin",
-  location: "Localisation",
-  content: "Contenu",
-  title: "Titre",
-  picture: "Image",
+  userId: { label: "User ID", isHidden: false },
+  postId: { label: "identifiant du Post", isHidden: false },
+  commentId: { label: "identifiant du commentaire", isHidden: true },
+  comments: { label: "Liste des Commentaires", isHidden: false },
+  createdAt: { label: "Date de Création", isHidden: false },
+  PostTitle: { label: "Titre du Poste", isHidden: false },
+  description: { label: "Description", isHidden: false },
+  startDate: { label: "Date de Début", isHidden: false },
+  endDate: { label: "Date de Fin", isHidden: false },
+  location: { label: "Localisation", isHidden: false },
+  content: { label: "Contenu", isHidden: false },
+  title: { label: "Titre", isHidden: false },
+  picture: { label: "Image", isHidden: false },
 };
 
 const modalStyle = (hasGroup: boolean) => ({
@@ -65,6 +71,7 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
   const [localData, setLocalData] = useState(selectedRow || {});
   const [groupPosts, setGroupPosts] = useState([]);
   const [eventParticipate, setEventParticipate] = useState([]);
+  const [comments, setComments] = useState<Comment[]>([]);
 
   useEffect(() => {
     setLocalData(selectedRow || {});
@@ -95,6 +102,11 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
         })
         .catch((error) => console.error("Error fetching events:", error));
     }
+    if (identifier === "Post" && selectedRow && selectedRow.postId) {
+      getCommentsByPostId(selectedRow.postId)
+        .then((fetchedComments) => setComments(fetchedComments))
+        .catch((error) => console.error("Error fetching comments:", error));
+    }
   }, [selectedRow, identifier]);
 
   const handleDelete = (arrayKey: string, index: number) => {
@@ -118,22 +130,24 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
               paddingRight: 8,
             }}
           >
-            {Object.keys(item).map((key) => (
-              <Typography variant="body2" key={key}>
-                <span style={{ fontWeight: "bold" }}>
-                  {keyLabels[key] || key}:
-                </span>{" "}
-                {key === "picture" ? (
-                  <img
-                    src={String(item[key])}
-                    alt="Post"
-                    style={{ width: "100%", maxWidth: "200px" }}
-                  />
-                ) : (
-                  String(item[key])
-                )}
-              </Typography>
-            ))}
+            {Object.keys(item)
+              .filter((key) => !keyLabels[key]?.isHidden)
+              .map((key) => (
+                <Typography variant="body2" key={key}>
+                  <span style={{ fontWeight: "bold" }}>
+                    {keyLabels[key]?.label || key}:
+                  </span>{" "}
+                  {key === "picture" ? (
+                    <img
+                      src={String(item[key])}
+                      alt="Post"
+                      style={{ width: "100%", maxWidth: "200px" }}
+                    />
+                  ) : (
+                    String(item[key])
+                  )}
+                </Typography>
+              ))}
             <IconButton
               onClick={() => handleDelete(arrayKey, index)}
               sx={{
@@ -155,10 +169,11 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
 
   const isGroup = identifier === "Groupe";
   const isEvent = identifier === "évenement";
+  const isPost = identifier === "Post";
 
   return (
     <Modal open={open} onClose={onClose}>
-      <Paper sx={modalStyle(isGroup || isEvent)}>
+      <Paper sx={modalStyle(isGroup || isEvent || isPost)}>
         <IconButton
           onClick={onClose}
           sx={{ position: "absolute", right: 8, top: 8, color: "#226D68" }}
@@ -179,7 +194,7 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
         </Typography>
         <Divider sx={{ mb: 2 }} />
         <Grid container spacing={2} sx={{ padding: 0 }}>
-          <Grid item xs={12} md={isGroup || isEvent ? 4 : 12}>
+          <Grid item xs={12} md={isGroup || isEvent || isPost ? 4 : 12}>
             {Object.keys(localData)
               .filter((key) => !Array.isArray(localData[key]))
               .map((key) => (
@@ -189,18 +204,19 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
                   key={key}
                   sx={{
                     display: "flex",
-                    flexDirection: "column",
+                    flexDirection: "row",
                     justifyContent: "flex-start",
                     borderBottom: 1,
                     borderColor: "divider",
                     py: 1,
+                    whiteSpace: "nowrap",
                   }}
                 >
                   <Typography
                     variant="subtitle1"
                     sx={{ fontWeight: "bold", color: "#226D68" }}
                   >
-                    {keyLabels[key] ||
+                    {keyLabels[key]?.label ||
                       key.charAt(0).toUpperCase() + key.slice(1)}{" "}
                     :
                   </Typography>
@@ -211,7 +227,7 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
                       style={{ width: "100%", maxWidth: "200px" }}
                     />
                   ) : (
-                    <Typography variant="body2" sx={{ ml: 1 }}>
+                    <Typography variant="body2" sx={{ wordBreak: "break-all" }}>
                       {String(localData[key])}
                     </Typography>
                   )}
@@ -249,6 +265,23 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
                 {eventParticipate?.length > 0
                   ? renderValue(eventParticipate, "eventParticpates")
                   : "Aucun participant pour cet événement"}
+              </Grid>
+            </>
+          )}
+
+          {isPost && (
+            <>
+              <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
+              <Grid item xs={12} md={6}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{ fontWeight: "bold", color: "#226D68", mb: 1 }}
+                >
+                  Commentaires associés au post:
+                </Typography>
+                {comments.length > 0
+                  ? renderValue(comments, "comments")
+                  : "Aucun commentaire pour ce post"}
               </Grid>
             </>
           )}
