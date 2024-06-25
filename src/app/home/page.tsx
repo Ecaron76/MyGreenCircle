@@ -1,11 +1,12 @@
-'use client';
-
+"use client"
 import Header from "@/components/UI/Header/Header";
 import PostCard from "@/components/UI/PostCard/PostCard";
-import './home.css'
+import './home.css';
 import EventCard from "@/components/UI/EventCard/EventCard";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import CommentModal from "@/components/UI/CommentModal/CommentModal";
+
 
 interface Post {
   postId: number;
@@ -19,7 +20,8 @@ interface Post {
   user: {
     username: string;
   };
-
+  likesCount: number;
+  commentsCount: number;
 }
 
 interface Event {
@@ -37,29 +39,28 @@ interface Event {
   }[];
 }
 
-
 const HomePage = () => {
   const { data: session } = useSession();
 
   const [groupPosts, setGroupPosts] = useState<Post[]>([]);
   const [adminPosts, setAdminPosts] = useState<Post[]>([]);
   const [events, setEvents] = useState<Event[]>([]);
-
-
   const [isLoading, setIsLoading] = useState(true);
   const [errorPosts, setErrorPosts] = useState('');
   const [errorEvents, setErrorEvents] = useState('');
-
+  const [isCommentModalOpen, setIsCommentModalOpen] = useState<boolean>(false);
+  const [selectedPostComments, setSelectedPostComments] = useState<number | null>(null);
 
   const fetchAllPost = async () => {
     setIsLoading(true);
     try {
       const response = await fetch(`/api/post/`);
-      if (!response.ok) throw new Error('Failed to fetch group details');
+      if (!response.ok) throw new Error('Failed to fetch posts');
 
       const dataPosts: Post[] = await response.json();
       const groupPosts = dataPosts.filter(post => post.groupId !== null);
       const adminPosts = dataPosts.filter(post => post.groupId === null);
+      console.log(groupPosts);
 
       setGroupPosts(groupPosts);
       setAdminPosts(adminPosts);
@@ -157,6 +158,15 @@ const HomePage = () => {
     }
   };
 
+  const handleCommentClick = (postId: number) => {
+    setSelectedPostComments(postId);
+    setIsCommentModalOpen(true);
+  };
+  const getPostTitle = (postId: number): string => {
+    const post = groupPosts.find(post => post.postId === postId) || adminPosts.find(post => post.postId === postId);
+    return post ? post.title : '';
+  };
+
   useEffect(() => {
     fetchAllPost();
     fetchUserEvents();
@@ -175,22 +185,24 @@ const HomePage = () => {
               <div className="post-list">
                 {isLoading ? (
                   <div className="loading-circle">
-                  <svg className="spinner" viewBox="0 0 50 50">
-                    <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
-                  </svg>
-                </div>
+                    <svg className="spinner" viewBox="0 0 50 50">
+                      <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
+                    </svg>
+                  </div>
                 ) : errorPosts ? (
                   <p>Error: {errorPosts}</p>
                 ) : adminPosts.length > 0 ? (
                   adminPosts.map((post: Post) => (
                     <PostCard
                       key={post.postId}
+                      postId={post.postId}
                       title={post.title}
                       content={post.content}
                       author='MyGreenCircle'
-                      nbComment={5}
+                      nbComment={post.commentsCount}
                       picture={post.picture}
-                      nbLike={5}
+                      nbLike={post.likesCount}
+                      onCommentClick={handleCommentClick}
                     />
                   ))
                 ) : (
@@ -204,28 +216,30 @@ const HomePage = () => {
               <div className="post-list">
                 {isLoading ? (
                   <div className="loading-circle">
-                  <svg className="spinner" viewBox="0 0 50 50">
-                    <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
-                  </svg>
-                </div>
+                    <svg className="spinner" viewBox="0 0 50 50">
+                      <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
+                    </svg>
+                  </div>
                 ) : errorPosts ? (
                   <p>Error: {errorPosts}</p>
                 ) : groupPosts.length > 0 ? (
                   groupPosts.map((post: Post) => {
                     return (
-                    <PostCard
-                      key={post.postId}
-                      title={post.title}
-                      content={post.content}
-                      groupName={post.group.groupName}
-                      picture={post.picture}
-                      group
-                      author={post.user.username}
-                      nbComment={5}
-                      nbLike={5}
-                    />
-                    )}
-                  )
+                      <PostCard
+                        key={post.postId}
+                        postId={post.postId}
+                        title={post.title}
+                        content={post.content}
+                        groupName={post.group.groupName}
+                        picture={post.picture}
+                        group
+                        author={post.user.username}
+                        nbComment={post.commentsCount}
+                        nbLike={post.likesCount}
+                        onCommentClick={handleCommentClick}
+                      />
+                    );
+                  })
                 ) : (
                   <p>No Posts found</p>
                 )}
@@ -238,7 +252,11 @@ const HomePage = () => {
             <br />
             <div className="event-list">
               {isLoading ? (
-                <p>Loading...</p>
+                <div className="loading-circle">
+                <svg className="spinner" viewBox="0 0 50 50">
+                  <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
+                </svg>
+              </div>
               ) : errorEvents ? (
                 <p>Error: {errorEvents}</p>
               ) : events.length > 0 ? (
@@ -264,6 +282,11 @@ const HomePage = () => {
             </div>
           </div>
         </div>
+
+        {isCommentModalOpen && selectedPostComments !== null && (
+          <CommentModal postId={selectedPostComments} onClose={() => setIsCommentModalOpen(false)} postTitle={getPostTitle(selectedPostComments)} // Remplacez getPostTitle avec votre logique pour obtenir le titre du post
+          />
+        )}
       </main>
     );
   } else {

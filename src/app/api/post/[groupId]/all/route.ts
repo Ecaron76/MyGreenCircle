@@ -1,4 +1,5 @@
 import { getAuthSession } from "@/lib/auth";
+import { truncateSync } from "fs";
 import { NextResponse } from "next/server";
 
 
@@ -37,9 +38,17 @@ export const GET = async (req: Request, { params }: { params: { groupId: number 
                         username: true
                       }
                     },
+                    likes: true,
+                    comments: true
                   }
+
             });
-            return NextResponse.json(posts, { status: 200 });
+            const allPostsGroup = [...posts].map(post => ({
+                ...post,
+                likesCount: post.likes.length,
+                commentsCount: post.comments.length,
+              }));
+            return NextResponse.json(allPostsGroup, { status: 200 });
 
         } else {
             return NextResponse.json({ message: 'The user is not authorized' }, { status: 403 });
