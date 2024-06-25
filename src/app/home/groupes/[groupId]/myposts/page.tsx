@@ -11,6 +11,7 @@ import Link from "next/link";
 
 import './MyPosts.css'
 import DeleteModal from "@/components/UI/DeleteModal/DeleteModal";
+import CommentModal from "@/components/UI/CommentModal/CommentModal";
 
 type MyPostsPageProps = {
     params: {
@@ -33,6 +34,8 @@ interface Post {
     content: string;
     isVisible: boolean;
     picture?: string;
+    commentsCount: number;
+    likesCount: number;
     user: {
         username: string;
       };
@@ -50,6 +53,9 @@ const MyPosts = ({ params }: MyPostsPageProps) => {
 
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
     const [postToDelete, setPostToDelete] = useState<number | null>(null);
+
+    const [isCommentModalOpen, setIsCommentModalOpen] = useState<boolean>(false);
+    const [selectedPostComments, setSelectedPostComments] = useState<number | null>(null);
 
     const fetchGroupDetails = async () => {
         if (!groupId) return;
@@ -108,7 +114,14 @@ const MyPosts = ({ params }: MyPostsPageProps) => {
         }
       };
 
-    
+      const handleCommentClick = (postId: number) => {
+        setSelectedPostComments(postId);
+        setIsCommentModalOpen(true);
+      };
+      const getPostTitle = (postId: number): string => {
+        const post = allMyPostsGroup.find(post => post.postId === postId) || allMyPostsGroup.find(post => post.postId === postId);
+        return post ? post.title : '';
+      };
 
     useEffect(() => {
         fetchGroupDetails()
@@ -161,12 +174,14 @@ const MyPosts = ({ params }: MyPostsPageProps) => {
                                 title={post.title}
                                 content={post.content}
                                 author={post.user.username}
-                                nbComment={5}
-                                nbLike={5}
+                                nbComment={post.commentsCount}
+                                nbLike={post.likesCount}
                                 picture={post.picture}
                                 isVisible={post.isVisible}
                                 editable={true}
                                 onDelete={() => handleDeletePostClick(post.postId)}
+                                onCommentClick={handleCommentClick}
+
                             />
                         ))
                     ) : (
@@ -181,6 +196,9 @@ const MyPosts = ({ params }: MyPostsPageProps) => {
             onClose={closeDeleteModal}
             onSuccess={handleDeletePost}
           />
+        )}
+        {isCommentModalOpen && selectedPostComments !== null && (
+          <CommentModal postId={selectedPostComments} onClose={() => setIsCommentModalOpen(false)} postTitle={getPostTitle(selectedPostComments)} />
         )}
 
             </main>
