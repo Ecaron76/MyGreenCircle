@@ -8,10 +8,14 @@ import {
 } from "@mui/x-data-grid";
 import DetailsModal from "../modalDetail/Page";
 
+interface Row {
+  [key: string]: string;
+}
+
 interface DataGridComponentProps {
-  rows: any;
+  rows: any[];
   columns: GridColDef[];
-  getRowId: GridRowIdGetter<any>;
+  getRowId: GridRowIdGetter<Row>;
   loading: boolean;
   identifier: string;
 }
@@ -24,9 +28,9 @@ const DataGridComponent: React.FC<DataGridComponentProps> = ({
   identifier,
 }) => {
   const [open, setOpen] = useState<boolean>(false);
-  const [selectedRow, setSelectedRow] = useState<any | null>(null);
+  const [selectedRow, setSelectedRow] = useState<Row | null>(null);
 
-  const handleOpen = (row: any) => {
+  const handleOpen = (row: Row) => {
     setSelectedRow(row);
     setOpen(true);
   };

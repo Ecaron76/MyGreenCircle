@@ -24,7 +24,7 @@ const drawerWidth = 200;
 const DrawerComponent: React.FC<DrawerComponentProps> = ({
   onContentChange,
 }) => {
-  const contentIndexMap: any = {
+  const contentIndexMap: Record<string, number> = {
     Dashboard: 0,
     Utilisateurs: 1,
     Posts: 2,

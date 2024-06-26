@@ -12,11 +12,12 @@ export interface DataCardProps {
 export interface AddButtonProps {
   disabled?: boolean;
   title?: string;
-  onClick: any;
+  onClick: () => void;
 }
 
 export interface User {
-  id: number;
+  id: string;
+  userId: string;
   username: string;
   email: string;
   createdAt: string;
@@ -38,12 +39,13 @@ export interface Comment {
 }
 
 export interface Post {
-  id: number;
+  postId?: number;
   title: string;
   content: string;
-  createdAt: Date;
-  userId: number;
-  comments: Comment[];
+  createdAt?: Date;
+  userId?: number;
+  comments?: Comment[];
+  picture?: string | null;
 }
 
 export interface Group {
@@ -64,7 +66,7 @@ export interface Participate {
 }
 
 export interface Event {
-  id: number;
+  eventId: number;
   title: string;
   location: string;
   description: string;

@@ -5,7 +5,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import DataGridComponent from "../components/dataGrid/Page";
 import ModalDelete from "../components/modalDelete/Page";
 import { Group } from "../types/types";
-// import CommentIcon from "@mui/icons-material/Comment";
 import { deleteGroup, getAllGroups } from "../services/groupe.service";
 
 function AdminGroupe() {

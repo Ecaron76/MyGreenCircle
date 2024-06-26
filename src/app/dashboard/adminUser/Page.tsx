@@ -10,10 +10,10 @@ import { deleteUser, getAllUsers } from "../services/user.service";
 function AdminUser() {
   const [rows, setRows] = useState<User[]>([]);
   const [open, setOpen] = useState<boolean>(false);
-  const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const handleClickOpen = (id: number) => {
+  const handleClickOpen = (id: string) => {
     setDeleteId(id);
     setOpen(true);
   };
@@ -22,7 +22,7 @@ function AdminUser() {
     setOpen(false);
   };
 
-  const handleDelete = async (userId: number) => {
+  const handleDelete = async (userId: string) => {
     try {
       await deleteUser(userId);
       console.log("User deleted successfully");

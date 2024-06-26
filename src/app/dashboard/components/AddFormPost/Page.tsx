@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import {
   Button,
   Card,
@@ -11,21 +11,32 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useDropzone } from "react-dropzone";
 import AlertComponent from "../Alert/Page";
 import { createPost } from "../../services/post.service";
+import { Post } from "../../types/types";
 
-function AddFormPost({ typeForm, onFormClose }: any) {
+interface AddFormProps {
+  typeForm: string;
+  onFormClose: () => void;
+}
+
+interface FormInputs {
+  title: string;
+  content: string;
+}
+
+function AddFormPost({ typeForm, onFormClose }: AddFormProps) {
   const { getRootProps, getInputProps, acceptedFiles } = useDropzone();
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormInputs>();
 
   const [showAlert, setShowAlert] = useState(false);
   const [imageUploadError, setImageUploadError] = useState<string>("");
 
-  const onSubmit = async (data: any) => {
+  const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     try {
-      let imageUrl = null;
+      let imageUrl: string | null = null;
       if (acceptedFiles.length > 0) {
         const file = acceptedFiles[0];
         const imageData = new FormData();
@@ -44,13 +55,13 @@ function AddFormPost({ typeForm, onFormClose }: any) {
         imageUrl = result.url;
       }
 
-      const postData = {
+      const postData: Post = {
         title: data.title,
         content: data.content,
         picture: imageUrl,
       };
 
-      const newPost = await createPost(postData);
+      await createPost(postData);
       setShowAlert(true);
       setTimeout(() => {
         onFormClose();

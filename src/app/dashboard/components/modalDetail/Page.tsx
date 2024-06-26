@@ -16,6 +16,7 @@ import { fetchGroupPosts } from "../../services/groupe.service";
 import { getEventParticipants } from "../../services/event.service";
 import { getOneUser } from "../../services/user.service";
 import { getCommentsByPostId } from "../../services/post.service";
+import { Event, User } from "../../types/types";
 
 interface RowDetailsModalProps {
   open: boolean;
@@ -80,20 +81,18 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
 
     if (identifier === "Groupe" && selectedRow && selectedRow.groupId) {
       fetchGroupPosts(selectedRow.groupId)
-        .then((posts: any) => setGroupPosts(posts))
-        .catch((error: any) =>
-          console.error("Error fetching group posts:", error)
-        );
+        .then((posts) => setGroupPosts(posts))
+        .catch((error) => console.error("Error fetching group posts:", error));
     }
     if (identifier === "évenement" && selectedRow && selectedRow.eventId) {
       getEventParticipants()
         .then(async (events) => {
           const event = events.find(
-            (event: any) => event.eventId === selectedRow.eventId
+            (event: Event) => event.eventId === selectedRow.eventId
           );
           if (event) {
             const participantsDetails: any = await Promise.all(
-              event.participants.map(async (participant: any) => {
+              event.participants.map(async (participant: User) => {
                 const userDetails = await getOneUser(participant.userId);
                 return userDetails;
               })
@@ -116,9 +115,9 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
     setLocalData({ ...localData, [arrayKey]: updatedArray });
   };
 
-  const renderValue = (value: any, arrayKey: string) => (
+  const renderValue = (value: any[], arrayKey: string) => (
     <List dense>
-      {value.map((item: any, index: number) => (
+      {value.map((item, index) => (
         <React.Fragment key={index}>
           {index > 0 && <Divider sx={{ my: 2 }} />}{" "}
           <ListItem

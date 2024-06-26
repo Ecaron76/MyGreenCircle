@@ -13,6 +13,7 @@ import { getAllGroups } from "./services/groupe.service";
 import { getAllUsers } from "./services/user.service";
 import { getAllPosts } from "./services/post.service";
 import { getAllEvents } from "./services/event.service";
+import { User } from "./types/types";
 
 interface CardData {
   type: "user" | "group" | "event" | "post";
@@ -21,11 +22,11 @@ interface CardData {
 }
 
 const Dashboard: React.FC = () => {
-  const [groupCount, setGroupCount] = useState("");
-  const [userCount, setUserCount] = useState("");
-  const [userAdminCount, setUserAdminCount] = useState("");
-  const [postCount, setPostCount] = useState("");
-  const [eventCount, setEvenetCount] = useState("");
+  const [groupCount, setGroupCount] = useState<string>("");
+  const [userCount, setUserCount] = useState<string>("");
+  const [userAdminCount, setUserAdminCount] = useState<string>("");
+  const [postCount, setPostCount] = useState<string>("");
+  const [eventCount, setEventCount] = useState<string>("");
 
   useEffect(() => {
     const fetchDatas = async () => {
@@ -33,7 +34,7 @@ const Dashboard: React.FC = () => {
         const users = await getAllUsers();
         setUserCount(users.length.toString());
 
-        const adminUsers = users.filter((user) => user.admin === true);
+        const adminUsers = users.filter((user: User) => user.admin === true);
         setUserAdminCount(adminUsers.length.toString());
 
         const groups = await getAllGroups();
@@ -43,7 +44,7 @@ const Dashboard: React.FC = () => {
         setPostCount(posts.length.toString());
 
         const events = await getAllEvents();
-        setEvenetCount(events.length.toString());
+        setEventCount(events.length.toString());
       } catch (error) {
         console.error("Error fetching:", error);
       }
@@ -60,7 +61,7 @@ const Dashboard: React.FC = () => {
     { type: "user", title: "Utilisateurs Admin", value: userAdminCount },
   ];
 
-  const groupedCards = cards.reduce((acc: any, card) => {
+  const groupedCards = cards.reduce<Record<string, CardData[]>>((acc, card) => {
     (acc[card.type] = acc[card.type] || []).push(card);
     return acc;
   }, {});
@@ -84,25 +85,25 @@ const Dashboard: React.FC = () => {
       case "Utilisateurs":
         return (
           <Grid sx={{ mt: 4, p: 1 }}>
-            <AdminUser></AdminUser>
+            <AdminUser />
           </Grid>
         );
       case "Groupes":
         return (
           <Grid sx={{ mt: 4, p: 1 }}>
-            <AdminGroupe></AdminGroupe>
+            <AdminGroupe />
           </Grid>
         );
       case "Événements":
         return (
           <Grid sx={{ mt: 4, p: 1 }}>
-            <AdminEvent type={activeContent}></AdminEvent>
+            <AdminEvent type={activeContent} />
           </Grid>
         );
       case "Posts":
         return (
           <Grid sx={{ mt: 4, p: 1 }}>
-            <AdminPost type={activeContent}></AdminPost>
+            <AdminPost type={activeContent} />
           </Grid>
         );
       case "Dashboard":
@@ -111,9 +112,9 @@ const Dashboard: React.FC = () => {
           <Grid container spacing={3} sx={{ p: 2, mt: 8 }}>
             {Object.keys(groupedCards).map((type) => (
               <Grid item xs={12} sm={6} md={3} lg={3} key={type}>
-                {groupedCards[type].map((card: any, index: any) => (
+                {groupedCards[type].map((card, index) => (
                   <DashboardContent
-                    key={card.key}
+                    key={index}
                     type={card.type}
                     title={card.title}
                     value={card.value}

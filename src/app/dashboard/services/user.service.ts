@@ -16,7 +16,7 @@ export const getAllUsers = async (): Promise<User[]> => {
   }
 };
 
-export async function deleteUser(userId: number): Promise<void> {
+export async function deleteUser(userId: string): Promise<void> {
   try {
     const response = await fetch(`${BASE_URL}/user/${userId}`, {
       method: "DELETE",

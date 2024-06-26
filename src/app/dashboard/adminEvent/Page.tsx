@@ -11,7 +11,11 @@ import AddFormEvent from "../components/AddFormEvent/Page";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { getAllEvents } from "../services/event.service";
 
-function AdminEvent({ type }: any) {
+interface adminEventProps {
+  type: string;
+}
+
+function AdminEvent({ type }: adminEventProps) {
   const [rows, setRows] = useState<Event[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
@@ -47,7 +51,6 @@ function AdminEvent({ type }: any) {
   };
 
   const handleDelete = (id: number) => {
-    setRows(rows.filter((row: any) => row.id !== id));
     handleClose();
   };
 
@@ -121,7 +124,7 @@ function AdminEvent({ type }: any) {
         <GridActionsCellItem
           icon={<DeleteIcon />}
           label="Supprimer"
-          onClick={() => handleClickOpen(row.id)}
+          onClick={() => handleClickOpen(row.eventId)}
         />,
       ],
     },

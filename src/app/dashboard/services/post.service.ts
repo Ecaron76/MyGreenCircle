@@ -16,7 +16,7 @@ export const getAllPosts = async (): Promise<Post[]> => {
   }
 };
 
-export const createPost = async (postData: any): Promise<Post> => {
+export const createPost = async (postData: Post): Promise<Post> => {
   try {
     const response = await fetch(`${BASE_URL}/post/item`, {
       method: "POST",

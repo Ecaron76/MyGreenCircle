@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import {
   Button,
   Card,
@@ -7,24 +7,45 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useDropzone } from "react-dropzone";
 import AlertComponent from "../Alert/Page";
 
-function AddFormEvent({ typeForm, onFormClose }: any) {
+interface AddFormProps {
+  typeForm: string;
+  onFormClose: () => void;
+}
+
+interface FormInputs {
+  title: string;
+  description: string;
+  location: string;
+}
+
+function AddFormEvent({ typeForm, onFormClose }: AddFormProps) {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormInputs>();
 
   const [showAlert, setShowAlert] = useState(false);
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    setShowAlert(true);
-    setTimeout(() => {
-      onFormClose();
-    }, 1000);
+  const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    try {
+      const eventData = {
+        title: data.title,
+        description: data.description,
+        location: data.location,
+      };
+
+      //TODO
+      // await createEvent(eventData);
+      setShowAlert(true);
+      setTimeout(() => {
+        onFormClose();
+      }, 1000);
+    } catch (error) {
+      console.error("Erreur lors de la création de l'événement: ", error);
+    }
   };
 
   const customStyles = {
@@ -124,44 +145,6 @@ function AddFormEvent({ typeForm, onFormClose }: any) {
               />
             )}
           />
-          {/* <Controller
-            name="startDate"
-            control={control}
-            rules={{ required: "La date de début est requise" }}
-            render={({ field }) => (
-              <DateTimePicker
-                label="Date de début"
-                {...field}
-                renderInput={(params: any) => (
-                  <TextField
-                    {...params}
-                    fullWidth
-                    margin="normal"
-                    sx={{ ...customStyles }}
-                  />
-                )}
-              />
-            )}
-          />
-          <Controller
-            name="endDate"
-            control={control}
-            rules={{ required: "La date de fin est requise" }}
-            render={({ field }) => (
-              <DateTimePicker
-                label="Date de fin"
-                {...field}
-                renderInput={(params: any) => (
-                  <TextField
-                    {...params}
-                    fullWidth
-                    margin="normal"
-                    sx={{ ...customStyles }}
-                  />
-                )}
-              />
-            )}
-          /> */}
           <Button
             type="submit"
             variant="contained"

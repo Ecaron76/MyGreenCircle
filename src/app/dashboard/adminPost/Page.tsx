@@ -11,8 +11,11 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AddFormPost from "../components/AddFormPost/Page";
 import { getAllPosts } from "../services/post.service";
 import { Post } from "../types/types";
+interface adminPostProps {
+  type: string;
+}
 
-function AdminPost({ type }: any) {
+function AdminPost({ type }: adminPostProps) {
   const [showForm, setShowForm] = useState(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("showForm") === "true";
@@ -48,7 +51,6 @@ function AdminPost({ type }: any) {
   };
 
   const handleDelete = (id: number) => {
-    setRows(rows.filter((row: any) => row.id !== id));
     handleClose();
   };
 
@@ -118,7 +120,7 @@ function AdminPost({ type }: any) {
         <GridActionsCellItem
           icon={<DeleteIcon />}
           label="Supprimer"
-          onClick={() => handleClickOpen(row.id)}
+          onClick={() => handleClickOpen(row.postId as number)}
         />,
       ],
     },
