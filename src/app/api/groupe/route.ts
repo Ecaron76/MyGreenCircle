@@ -20,6 +20,7 @@ export const POST = async (req: Request) => {
         groupName,
         groupDescription,
         groupLocation,
+        groupImage
       },
     });
 
