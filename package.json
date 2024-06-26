@@ -24,6 +24,7 @@
     "date-fns": "^3.6.0",
     "next": "14.2.3",
     "next-auth": "^4.24.7",
+    "next-pwa": "^5.6.0",
     "react": "^18",
     "react-dom": "^18",
     "react-dropzone": "^14.2.3",

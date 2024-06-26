@@ -13,9 +13,9 @@ export async function GET(req: Request) {
         { status: 403 }
       );
     }
-    // if (!session.user.admin) {
-    //   return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
-    // }
+    if (!session.user.admin) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
+    }
     const users = await prisma.user.findMany();
     return NextResponse.json(users, { status: 200 });
   } catch (error) {
