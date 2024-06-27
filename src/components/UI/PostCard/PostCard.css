@@ -2,7 +2,7 @@
   padding: 20px;
   display: flex;
   width: 100%; 
-  max-width: 650px;
+  max-width: 500px;
   min-height: 550px;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); 
@@ -117,7 +117,7 @@
   border-radius: 10px;
 }
 
-/* Media queries pour les petits écrans */
+
 @media (max-width: 768px) {
   .postCard {
     padding: 15px;
