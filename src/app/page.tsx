@@ -5,10 +5,10 @@ import Image from "next/image";
 import './globals.css'
 import ServiceCard from "@/components/UI/ServiceCard/ServiceCard";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function LandingPage() {
-  
-  const router = useRouter();
+
   
   return (
     <main>
@@ -52,14 +52,14 @@ export default function LandingPage() {
           <div className="presentationSection">
             <h2 className="serviceTitle">Interagissez et inspirez via des posts !</h2>
             <p> Vous pouvez partager vos idées, susciter l&apos;engagement et créer une communauté active.</p>
-            <div><MainButton name='Je partage' onClick={() => router.push('/authentification')} /></div>
+            <Link href='/home'><MainButton name='Je partage' /></Link>
           </div>
         </section>
         <section className="sectionServiceEvent">
           <div className="presentationSection">
             <h2 className="serviceTitle">Dynamisons nos actions écologiques par des événements !</h2>
             <p> Vous pouvez organiser ou participer à des actions collectives pour le bien de l&apos;environment.</p>
-            <div><MainButton name="J'agis" onClick={() => router.push('/authentification')} /></div>
+            <Link href='/home'><MainButton name="J'agis"  /></Link>
           </div>
           <div className="eventCard">
             <div className="eventCard-header">
@@ -108,7 +108,7 @@ export default function LandingPage() {
           <div className="presentationSection">
             <h2 className="serviceTitle">Rejoignez une communauté de citoyens engagés !</h2>
             <p> Rejoignez un groupe  pour collaborer, échange et agir ensemble pour l&apos;environnement !</p>
-            <div><MainButton name='Je rejoins' onClick={() => router.push('/authentification')} /></div>
+            <Link href='/home'><MainButton name='Je rejoins' /></Link>
           </div>
         </section>
     </main>
