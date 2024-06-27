@@ -1,3 +1,5 @@
+import { Key } from "react";
+
 export interface ColorConfig {
   background: string;
   text: string;
@@ -49,6 +51,7 @@ export interface Post {
 }
 
 export interface Group {
+  id: Key | null | undefined;
   groupId: number;
   groupName: string;
   groupDescription: string;

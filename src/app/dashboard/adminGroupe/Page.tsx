@@ -65,6 +65,7 @@ function AdminGroupe() {
       width: 100,
       getActions: ({ row }) => [
         <GridActionsCellItem
+          key={row.id}
           icon={<DeleteIcon />}
           label="Supprimer"
           onClick={() => handleClickOpen(row.groupId)}

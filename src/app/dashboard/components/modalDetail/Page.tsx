@@ -270,7 +270,7 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
                   variant="subtitle1"
                   sx={{ fontWeight: "bold", color: "#226D68", mb: 1 }}
                 >
-                  Liste des participants de l'événement:
+                  Liste des participants de l`&apos;`événement:
                 </Typography>
                 {eventParticipate?.length > 0
                   ? renderValue(eventParticipate, "eventParticpates")

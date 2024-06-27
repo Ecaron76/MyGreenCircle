@@ -72,6 +72,7 @@ function AdminUser() {
       width: 100,
       getActions: ({ row }) => [
         <GridActionsCellItem
+          key={row.id}
           icon={<DeleteIcon />}
           label="Delete"
           onClick={() => handleClickOpen(row.id)}

@@ -118,6 +118,7 @@ function AdminPost({ type }: adminPostProps) {
       width: 90,
       getActions: ({ row }) => [
         <GridActionsCellItem
+          key={row.id}
           icon={<DeleteIcon />}
           label="Supprimer"
           onClick={() => handleClickOpen(row.postId as number)}
