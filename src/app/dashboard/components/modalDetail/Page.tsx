@@ -39,6 +39,7 @@ const keyLabels: KeyLabels = {
   userId: { label: "User ID", isHidden: false },
   postId: { label: "identifiant du Post", isHidden: false },
   commentId: { label: "identifiant du commentaire", isHidden: true },
+  groupId: { label: "identifiant du groupe", isHidden: false },
   comments: { label: "Liste des Commentaires", isHidden: false },
   createdAt: { label: "Date de Création", isHidden: false },
   PostTitle: { label: "Titre du Poste", isHidden: false },
@@ -172,6 +173,18 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
   const isEvent = identifier === "évenement";
   const isPost = identifier === "Post";
 
+  const PictureFilter = (keys: string[]) => {
+    return keys.sort((a, b) => {
+      if (a === "picture" || a === "image") return -1;
+      if (b === "picture" || b === "image") return 1;
+      return 0;
+    });
+  };
+  const dataFiltred = PictureFilter(
+    Object.keys(localData).filter(
+      (key) => !Array.isArray(localData[key]) && !keyLabels[key]?.isHidden
+    )
+  );
   return (
     <Modal open={open} onClose={onClose}>
       <Paper sx={modalStyle(isGroup || isEvent || isPost)}>
@@ -196,53 +209,51 @@ const DetailsModal: React.FC<RowDetailsModalProps> = ({
         <Divider sx={{ mb: 2 }} />
         <Grid container spacing={2} sx={{ padding: 0 }}>
           <Grid item xs={12} md={isGroup || isEvent || isPost ? 4 : 12}>
-            {Object.keys(localData)
-              .filter((key) => !Array.isArray(localData[key]))
-              .map((key) => (
-                <Grid
-                  item
-                  xs={12}
-                  key={key}
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    borderBottom: 1,
-                    borderColor: "divider",
-                    py: 1,
-                    whiteSpace: "nowrap",
-                  }}
+            {dataFiltred.map((key) => (
+              <Grid
+                item
+                xs={12}
+                key={key}
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  borderBottom: 1,
+                  borderColor: "divider",
+                  py: key.includes("picture") || key.includes("image") ? 6 : 1,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <Typography
+                  variant="subtitle1"
+                  sx={{ fontWeight: "bold", color: "#226D68" }}
                 >
+                  {keyLabels[key]?.label ||
+                    key.charAt(0).toUpperCase() + key.slice(1)}{" "}
+                  :
+                </Typography>
+                {key === "picture" ? (
+                  <img
+                    src={String(localData[key])}
+                    alt="Post"
+                    style={{ width: "100%", maxWidth: "200px" }}
+                  />
+                ) : (
                   <Typography
-                    variant="subtitle1"
-                    sx={{ fontWeight: "bold", color: "#226D68" }}
+                    variant="body2"
+                    sx={{
+                      ml: 1,
+                      mt: 0.5,
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
                   >
-                    {keyLabels[key]?.label ||
-                      key.charAt(0).toUpperCase() + key.slice(1)}{" "}
-                    :
+                    {String(localData[key])}
                   </Typography>
-                  {key === "picture" ? (
-                    <img
-                      src={String(localData[key])}
-                      alt="Post"
-                      style={{ width: "100%", maxWidth: "200px" }}
-                    />
-                  ) : (
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        ml: 1,
-                        mt: 0.5,
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      {String(localData[key])}
-                    </Typography>
-                  )}
-                </Grid>
-              ))}
+                )}
+              </Grid>
+            ))}
           </Grid>
 
           {isGroup && (
