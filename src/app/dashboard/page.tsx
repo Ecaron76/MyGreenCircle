@@ -14,6 +14,7 @@ import { getAllUsers } from "./services/user.service";
 import { getAllPosts } from "./services/post.service";
 import { getAllEvents } from "./services/event.service";
 import { User } from "./types/types";
+import LoadingScreen from "./components/LoadingPage/Page";
 
 interface CardData {
   type: "user" | "group" | "event" | "post";
@@ -48,6 +49,8 @@ const Dashboard: React.FC = () => {
         setEventCount(events.length.toString());
       } catch (error) {
         console.error("Error fetching:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -81,7 +84,6 @@ const Dashboard: React.FC = () => {
       if (savedContent) {
         setActiveContent(savedContent);
       }
-      setLoading(false);
     }
   }, []);
 
@@ -139,7 +141,7 @@ const Dashboard: React.FC = () => {
   };
 
   if (loading) {
-    return "Chargement ...";
+    return <LoadingScreen />;
   }
 
   return (

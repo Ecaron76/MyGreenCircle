@@ -56,7 +56,6 @@ const DataGridComponent: React.FC<DataGridComponentProps> = ({
         localeText={{ noRowsLabel: "Aucun résultat disponible" }}
         loading={loading}
         pageSizeOptions={[5, 10, 15]}
-        checkboxSelection
         disableRowSelectionOnClick
         onRowClick={(params: GridRowParams) => handleOpen(params.row)}
       />
