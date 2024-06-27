@@ -10,10 +10,11 @@ type GroupCardProps = {
   image?: string;
   myGroup?: boolean;
   groupId: number;
+  group?: boolean;
   refreshGroups?: () => void;
 };
 
-const GroupCard: React.FC<GroupCardProps> = ({ title, description, nbMember, myGroup, groupId, refreshGroups, image }) => {
+const GroupCard: React.FC<GroupCardProps> = ({ title, description, nbMember, myGroup, groupId, refreshGroups, image, group }) => {
   const defaultImage = '/assets/images/groupe.png';
 
   const handleJoinGroup = async () => {
