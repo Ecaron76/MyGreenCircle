@@ -33,11 +33,8 @@ const DrawerComponent: React.FC<DrawerComponentProps> = ({
   };
 
   const [selected, setSelected] = useState<number | null>(() => {
-    if (typeof window !== "undefined") {
-      const savedContent = localStorage.getItem("activeContent");
-      return savedContent ? contentIndexMap[savedContent] : null;
-    }
-    return null;
+    const savedContent = localStorage.getItem("activeContent");
+    return savedContent ? contentIndexMap[savedContent] : null;
   });
 
   useEffect(() => {

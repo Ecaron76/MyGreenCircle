@@ -27,6 +27,7 @@ const Dashboard: React.FC = () => {
   const [userAdminCount, setUserAdminCount] = useState<string>("");
   const [postCount, setPostCount] = useState<string>("");
   const [eventCount, setEventCount] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchDatas = async () => {
@@ -73,6 +74,16 @@ const Dashboard: React.FC = () => {
       return "Dashboard";
     }
   });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedContent = localStorage.getItem("activeContent");
+      if (savedContent) {
+        setActiveContent(savedContent);
+      }
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -126,6 +137,10 @@ const Dashboard: React.FC = () => {
         );
     }
   };
+
+  if (loading) {
+    return "Chargement ...";
+  }
 
   return (
     <Box

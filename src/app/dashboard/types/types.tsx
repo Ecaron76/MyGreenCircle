@@ -41,6 +41,7 @@ export interface Comment {
 }
 
 export interface Post {
+  id: Key | null | undefined;
   postId?: number;
   title: string;
   content: string;
@@ -69,6 +70,7 @@ export interface Participate {
 }
 
 export interface Event {
+  id: Key | null | undefined;
   eventId: number;
   title: string;
   location: string;
