@@ -102,7 +102,7 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ groupId, onClose, o
       <div className="modal-content">
         <span className="close" onClick={onClose}>&times;</span>
         <form onSubmit={handleSubmit}>
-          <h2>Create Event</h2>
+          <h2>Evènement</h2>
           {error && <p style={{ color: 'red' }}>{error}</p>}
           {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
           <div className="form-group">
