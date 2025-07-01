@@ -21,7 +21,7 @@ export default function HomePage() {
       <section className="sectionService">
         <h2 className="titleSectionService">Tout ce que nous vous proposons chez My GreenCircle</h2>
         <div className="serviceCardList">
-          <ServiceCard title="Groupes" content="Rejoignez un groupe  pour collaborer, échange et agir ensemble pour l&apos;environnement !" image={'/assets/images/iconServiceCard/service-groupe.png'}/>
+          <ServiceCard title="Groupes" content="Rejoignez un groupe  pour collaborer, échanger et agir ensemble pour l&apos;environnement !" image={'/assets/images/iconServiceCard/service-groupe.png'}/>
           <ServiceCard title="Evénements" content="Organise et participe à des événements écologiques" image={'/assets/images/iconServiceCard/service-event.png'}/>
           <ServiceCard title="Posts" content="Exprimez-vous, partagez vos expériences et mobilisez la communauté pour l'écologie !" image={'/assets/images/iconServiceCard/service-post.png'} />
         </div>
@@ -72,7 +72,7 @@ export default function HomePage() {
             <div className="eventLocation"><Image alt="" src='/assets/images/location.png' width={18} height={18}/>Rouen, 76000</div>
             <div className="eventButtons">
               <div className="participBtn"> <Image alt="" src='/assets/images/iconBtn/star.png' width={30} height={30}/> Participer </div>
-              <div className="horraire">10h00</div>
+              <div className="horaire">10h00</div>
           </div>
           </div>
           
@@ -100,7 +100,7 @@ export default function HomePage() {
           </div>
           <div className="presentationSection">
             <h2 className="serviceTitle">Rejoignez une communauté de citoyens engagés !</h2>
-            <p> Rejoignez un groupe  pour collaborer, échange et agir ensemble pour l&apos;environnement !</p>
+            <p> Rejoignez un groupe  pour collaborer, échanger et agir ensemble pour l&apos;environnement !</p>
             <div><MainButton name='Je rejoins'/></div>
           </div>
         </section>

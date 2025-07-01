@@ -13,7 +13,7 @@ export async function POST(req: Request) {
             where: { email: email }
         });
         if (existingUserByEmail) {
-            return NextResponse.json({ user: null, message: "Cette adresse mail est déjà utilisé"}, {status: 409})
+            return NextResponse.json({ user: null, message: "Cette adresse mail est déjà utilisée"}, {status: 409})
         } 
 
         // Username exists ?
